@@ -1,0 +1,26 @@
+[
+  {
+    "id": "exc-mp-1",
+    "employee_id": "emp-mp",
+    "type": "vacation",
+    "start_dt": "2026-06-02T00:00:00+03:00",
+    "end_dt": "2026-06-16T23:59:59+03:00",
+    "reason": "Ежегодный отпуск"
+  },
+  {
+    "id": "exc-mp-2",
+    "employee_id": "emp-mp",
+    "type": "sick_leave",
+    "start_dt": "2026-05-05T00:00:00+03:00",
+    "end_dt": "2026-05-09T23:59:59+03:00",
+    "reason": "Больничный лист"
+  },
+  {
+    "id": "exc-mp-3",
+    "employee_id": "emp-mp",
+    "type": "business_trip",
+    "start_dt": "2026-05-26T00:00:00+03:00",
+    "end_dt": "2026-05-28T23:59:59+03:00",
+    "reason": "Командировка в Петербург"
+  }
+]

@@ -1,0 +1,67 @@
+@use '@/styles/colors' as *;
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+  margin-bottom: 24px;
+
+  @media (max-width: 900px) {
+    grid-template-columns: 1fr;
+  }
+}
+
+.card {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.label {
+  font-size: 13px;
+  color: $gray-3;
+  font-weight: 500;
+}
+
+.value {
+  font-size: 40px;
+  line-height: 1;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  color: $gray-1;
+}
+
+.barRow {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-top: 4px;
+}
+
+.percent {
+  font-size: 11px;
+  font-weight: 600;
+  color: $gray-3;
+  font-variant-numeric: tabular-nums;
+  min-width: 32px;
+  text-align: right;
+}
+
+.hint {
+  font-size: 12px;
+  font-weight: 500;
+  color: $gray-2;
+  margin-top: 4px;
+}
+
+.tone_critical {
+  color: $risk-critical;
+}
+
+.tone_high {
+  color: $risk-high;
+}
+
+.tone_success {
+  color: $risk-low;
+}

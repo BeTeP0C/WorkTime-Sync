@@ -1,0 +1,67 @@
+@use '@/styles/colors' as *;
+@use '@/styles/mixins' as *;
+
+.card {
+  @include card;
+
+  display: flex;
+  flex-direction: column;
+}
+
+.padding_none {
+  padding: 0;
+}
+
+.padding_sm {
+  padding: 12px;
+}
+
+.padding_md {
+  padding: 16px 20px;
+}
+
+.padding_lg {
+  padding: 24px;
+}
+
+.hover {
+  cursor: pointer;
+  @include transition(box-shadow, transform);
+
+  @include mediaHover {
+    box-shadow: $shadow-card-hover;
+    transform: translateY(-1px);
+  }
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 16px;
+}
+
+.headerTitle {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 14px;
+  font-weight: 600;
+  color: $gray-1;
+}
+
+.headerIcon {
+  display: inline-flex;
+  color: $gray-3;
+
+  svg {
+    @include square(16px);
+  }
+}
+
+.headerAction {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}

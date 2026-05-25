@@ -1,0 +1,99 @@
+// Базовая палитра
+$white: #ffffff;
+$black: #000000;
+
+// Фоны
+$bg: #f5f7fa;
+$bg-elevated: #ffffff;
+
+// Текст и серые
+$gray-1: #1a1d29; // основной текст
+$gray-2: #4a5070; // вторичный
+$gray-3: #8a93a8; // приглушённый, лейблы
+$gray-4: #cbd3e1; // бордеры
+$gray-5: #e6eaf2; // разделители
+$gray-6: #f0f3f8; // светлый фон ячеек
+$gray-7: #f7f9fc;
+
+// Primary (синий) — основные действия, активные элементы
+$primary: #2563eb;
+$primary-hover: #1d4ed8;
+$primary-pressed: #1e40af;
+$primary-light: #dbe6fe;
+$primary-bg: #eff5ff;
+
+// Accent (фиолетовый) — AI-блоки, градиенты
+$accent: #6366f1;
+$accent-hover: #5457e0;
+$accent-light: #ede9fe;
+$accent-bg: #f5f3ff;
+$accent-gradient: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%);
+$accent-gradient-hover: linear-gradient(135deg, #5457e0 0%, #7c3aed 100%);
+
+// Уровни риска
+$risk-critical: #dc2626;
+$risk-critical-bg: #fee2e2;
+$risk-high: #f97316;
+$risk-high-bg: #ffedd5;
+$risk-medium: #facc15;
+$risk-medium-bg: #fef3c7;
+$risk-low: #16a34a;
+$risk-low-bg: #dcfce7;
+$risk-info: #2563eb;
+$risk-info-bg: #dbe6fe;
+
+// Семантика
+$success: #16a34a;
+$success-bg: #dcfce7;
+$warning: #f59e0b;
+$warning-bg: #fef3c7;
+$error: #dc2626;
+$error-bg: #fee2e2;
+
+// Heatmap (от 0 до 7+ доступных)
+$heatmap-0: #f0f3f8;
+$heatmap-1: #c8d6ef;
+$heatmap-2: #93b5e5;
+$heatmap-3: #5f8cd6;
+$heatmap-4: #2563eb;
+$heatmap-5: #1d4ed8;
+
+// Calendar/Timeline блоки
+$timeline-work: #dbe6fe;
+$timeline-meeting: #2563eb;
+$timeline-conflict: #fda4af;
+$timeline-outside: #fef3c7;
+
+// Тени
+$shadow-card:
+  0 1px 2px rgba(16, 24, 40, 0.06),
+  0 1px 3px rgba(16, 24, 40, 0.04);
+$shadow-card-hover: 0 4px 12px rgba(16, 24, 40, 0.08);
+$shadow-popup: 0 12px 32px rgba(16, 24, 40, 0.12);
+$shadow-tooltip: 0 8px 24px rgba(16, 24, 40, 0.16);
+
+// Радиусы
+$radius-sm: 6px;
+$radius-md: 8px;
+$radius-lg: 12px;
+$radius-xl: 16px;
+$radius-pill: 999px;
+
+// Бордеры
+$border-default: 1px solid $gray-5;
+$border-strong: 1px solid $gray-4;
+
+// Переходы
+$transition-fast: 120ms ease;
+$transition-default: 200ms ease;
+$transition-slow: 320ms ease;
+
+// Sidebar
+$sidebar-width: 224px;
+$sidebar-bg: $white;
+$sidebar-active: $primary-bg;
+
+// Layout
+$header-height: 64px;
+$content-max-width: 1440px;
+$content-padding: 32px;

@@ -1,0 +1,126 @@
+@use '@/styles/colors' as *;
+@use '@/styles/mixins' as *;
+
+.card {
+  height: 100%;
+}
+
+.tabs {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 16px;
+  flex-wrap: wrap;
+}
+
+.tab {
+  height: 28px;
+  padding: 0 12px;
+  border-radius: $radius-md;
+  background: $gray-6;
+  color: $gray-2;
+  font-size: 12px;
+  font-weight: 600;
+  @include transition(background, color);
+
+  @include mediaHover {
+    background: $gray-5;
+    color: $gray-1;
+  }
+}
+
+.tabActive,
+.tabActive:hover {
+  background: $primary-bg;
+  color: $primary;
+}
+
+.dropzone {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  padding: 24px;
+  border: 2px dashed $gray-4;
+  border-radius: $radius-lg;
+  background: $primary-bg;
+  text-align: center;
+  cursor: pointer;
+  @include transition(border-color, background);
+
+  @include mediaHover {
+    border-color: $primary;
+  }
+}
+
+.dropzoneActive {
+  border-color: $primary;
+  background: $primary-light;
+}
+
+.dropIcon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.dropText {
+  font-size: 13px;
+  font-weight: 600;
+  color: $gray-1;
+}
+
+.dropHint {
+  font-size: 11px;
+  color: $gray-3;
+}
+
+.dropActions {
+  display: flex;
+  gap: 8px;
+  margin-top: 4px;
+}
+
+.historyTitle {
+  margin-top: 20px;
+  font-size: 13px;
+  font-weight: 600;
+  color: $gray-1;
+}
+
+.history {
+  margin-top: 8px;
+}
+
+.historyRow {
+  display: grid;
+  grid-template-columns: 1fr 1.5fr 0.8fr 0.8fr;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 4px;
+  border-bottom: 1px solid $gray-6;
+  font-size: 12px;
+
+  &:last-child {
+    border-bottom: none;
+  }
+}
+
+.historyHead {
+  color: $gray-3;
+  font-weight: 600;
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  padding: 4px;
+  border-bottom: none;
+}
+
+.cellMuted {
+  color: $gray-2;
+}
+
+.cellFile {
+  color: $gray-1;
+  font-family: 'SF Mono', Menlo, Consolas, monospace;
+  font-size: 12px;
+}

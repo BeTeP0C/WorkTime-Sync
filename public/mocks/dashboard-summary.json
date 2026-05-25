@@ -1,0 +1,19 @@
+{
+  "total_employees": 24,
+  "total_teams": 3,
+  "employees_by_risk_level": {
+    "low": 12,
+    "medium": 5,
+    "high": 5,
+    "critical": 2
+  },
+  "overloaded_employees_count": 3,
+  "outdated_schedules_count": 7,
+  "outside_schedule_events_count": 12,
+  "average_actuality_score": 0.74,
+  "conflicts_total": 12,
+  "outdated_schedules_delta": 2,
+  "average_actuality_score_delta": 0.06,
+  "conflicts_delta": 3,
+  "last_calculation_at": "2026-05-25T08:00:00+03:00"
+}

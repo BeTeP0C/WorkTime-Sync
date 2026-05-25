@@ -1,0 +1,58 @@
+[
+  {
+    "code": "outdated_schedule",
+    "reason": "График не обновлялся 104 дня — данные сильно устарели",
+    "severity": "critical",
+    "action": "Запросить обновление рабочего графика",
+    "subject_type": "employee",
+    "subject_id": "emp-mn"
+  },
+  {
+    "code": "outdated_schedule",
+    "reason": "График не обновлялся 92 дня — данные сильно устарели",
+    "severity": "critical",
+    "action": "Запросить обновление рабочего графика",
+    "subject_type": "employee",
+    "subject_id": "emp-as"
+  },
+  {
+    "code": "outdated_schedule",
+    "reason": "График не обновлялся 72 дня — приближается к порогу",
+    "severity": "high",
+    "action": "Запросить обновление рабочего графика",
+    "subject_type": "employee",
+    "subject_id": "emp-mp"
+  },
+  {
+    "code": "high_load_level",
+    "reason": "Загрузка 92% превышает допустимый порог 80%",
+    "severity": "high",
+    "action": "Снизить количество встреч на этой неделе",
+    "subject_type": "employee",
+    "subject_id": "emp-ak"
+  },
+  {
+    "code": "high_conflict_rate",
+    "reason": "41% встреч вне рабочего времени",
+    "severity": "high",
+    "action": "Перенести регулярные встречи в рабочее время",
+    "subject_type": "employee",
+    "subject_id": "emp-ns"
+  },
+  {
+    "code": "timezone_mismatch_suspicion",
+    "reason": "В HR указан UTC+3, активность фиксируется в UTC+0",
+    "severity": "medium",
+    "action": "Проверить и обновить часовой пояс",
+    "subject_type": "employee",
+    "subject_id": "emp-dm"
+  },
+  {
+    "code": "events_outside_schedule",
+    "reason": "Встреча по пятницам 19:00 за пределами рабочего времени",
+    "severity": "high",
+    "action": "Перенести регулярную встречу на 15:00–16:00",
+    "subject_type": "team",
+    "subject_id": "team-dev"
+  }
+]

@@ -1,0 +1,243 @@
+@use '@/styles/colors' as *;
+@use '@/styles/mixins' as *;
+
+.empty {
+  padding: 24px 0;
+  text-align: center;
+  color: $gray-3;
+  font-size: 13px;
+}
+
+.hero {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+  margin-bottom: 24px;
+
+  @media (max-width: 700px) {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+}
+
+.heroInfo {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.heroName {
+  font-size: 28px;
+  line-height: 32px;
+  font-weight: 700;
+  color: $gray-1;
+  margin: 0;
+}
+
+.heroPosition {
+  font-size: 14px;
+  color: $gray-2;
+}
+
+.heroTags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-top: 4px;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+
+  @media (max-width: 900px) {
+    grid-template-columns: 1fr;
+  }
+}
+
+.scheduleCard,
+.exceptionsCard {
+  grid-column: 1;
+}
+
+.recsCard,
+.confirmCard {
+  grid-column: 2;
+
+  @media (max-width: 900px) {
+    grid-column: 1;
+  }
+}
+
+.schedule {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.workdays {
+  display: flex;
+  gap: 6px;
+  margin-bottom: 12px;
+}
+
+.dayActive,
+.dayInactive {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.dayActive {
+  background: $primary;
+  color: $white;
+}
+
+.dayInactive {
+  background: $gray-6;
+  color: $gray-3;
+}
+
+.scheduleRow {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 6px 0;
+  font-size: 13px;
+}
+
+.scheduleLabel {
+  color: $gray-3;
+}
+
+.scheduleValue {
+  color: $gray-1;
+  font-weight: 500;
+}
+
+.scheduleStale {
+  color: $risk-high;
+}
+
+.recs {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.recItem {
+  display: grid;
+  grid-template-columns: 12px 1fr auto;
+  align-items: start;
+  gap: 12px;
+  padding: 4px 0;
+}
+
+.recDot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  margin-top: 6px;
+}
+
+.recDot_critical {
+  background: $risk-critical;
+}
+
+.recDot_high {
+  background: $risk-high;
+}
+
+.recDot_medium {
+  background: $risk-medium;
+}
+
+.recBody {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.recTitle {
+  font-size: 13px;
+  font-weight: 600;
+  color: $gray-1;
+}
+
+.recReason {
+  font-size: 12px;
+  color: $gray-3;
+  line-height: 16px;
+}
+
+.exceptions {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.exceptionRow {
+  display: grid;
+  grid-template-columns: 24px 1fr auto;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 0;
+  border-top: 1px solid $gray-6;
+
+  &:first-child {
+    border-top: none;
+  }
+}
+
+.exceptionIcon {
+  font-size: 18px;
+}
+
+.exceptionInfo {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 0;
+}
+
+.exceptionTitle {
+  font-size: 13px;
+  font-weight: 600;
+  color: $gray-1;
+}
+
+.exceptionDates {
+  font-size: 12px;
+  color: $gray-3;
+}
+
+.addExceptionBtn {
+  margin-top: 16px;
+  align-self: flex-start;
+}
+
+.confirmText {
+  font-size: 13px;
+  color: $gray-2;
+  line-height: 18px;
+  margin: 0 0 16px;
+}
+
+.confirmRows {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.confirmStale {
+  color: $risk-critical;
+}

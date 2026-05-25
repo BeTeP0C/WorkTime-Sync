@@ -1,0 +1,18 @@
+[
+  {
+    "code": "outdated_schedule",
+    "reason": "График не обновлялся 68 дней",
+    "severity": "high",
+    "action": "Подтвердить или обновить рабочий график",
+    "subject_type": "employee",
+    "subject_id": "emp-dm"
+  },
+  {
+    "code": "high_conflict_rate",
+    "reason": "35% встреч вне рабочего времени",
+    "severity": "high",
+    "action": "Снизить количество встреч на этой неделе",
+    "subject_type": "employee",
+    "subject_id": "emp-dm"
+  }
+]

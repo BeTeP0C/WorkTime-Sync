@@ -1,0 +1,116 @@
+@use '@/styles/colors' as *;
+@use '@/styles/mixins' as *;
+
+.button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  border-radius: $radius-md;
+  font-weight: 600;
+  white-space: nowrap;
+  cursor: pointer;
+  @include transition(background, color, border-color, box-shadow, transform, opacity);
+
+  &:focus-visible {
+    @include focus-ring;
+  }
+
+  &:disabled {
+    cursor: not-allowed;
+    opacity: 0.5;
+  }
+}
+
+.label {
+  display: inline-block;
+}
+
+.icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  svg {
+    @include square(16px);
+  }
+}
+
+.size_sm {
+  height: 28px;
+  padding: 0 10px;
+  font-size: 12px;
+  line-height: 16px;
+}
+
+.size_md {
+  height: 36px;
+  padding: 0 14px;
+  font-size: 13px;
+  line-height: 18px;
+}
+
+.size_lg {
+  height: 44px;
+  padding: 0 18px;
+  font-size: 14px;
+  line-height: 20px;
+}
+
+.fullWidth {
+  width: 100%;
+}
+
+.variant_primary {
+  background: $primary;
+  color: $white;
+
+  @include mediaHover {
+    background: $primary-hover;
+  }
+
+  &:active:not(:disabled) {
+    background: $primary-pressed;
+  }
+}
+
+.variant_secondary {
+  background: $white;
+  color: $gray-1;
+  border: 1px solid $gray-4;
+
+  @include mediaHover {
+    background: $gray-7;
+    border-color: $gray-3;
+  }
+}
+
+.variant_ghost {
+  background: transparent;
+  color: $gray-2;
+
+  @include mediaHover {
+    background: $gray-7;
+    color: $gray-1;
+  }
+}
+
+.variant_accent {
+  background: $accent-gradient;
+  color: $white;
+
+  @include mediaHover {
+    background: $accent-gradient-hover;
+    box-shadow: 0 6px 16px rgba(99, 102, 241, 0.3);
+  }
+}
+
+.variant_danger {
+  background: $risk-critical-bg;
+  color: $risk-critical;
+  border: 1px solid transparent;
+
+  @include mediaHover {
+    background: lighten($risk-critical, 38%);
+  }
+}

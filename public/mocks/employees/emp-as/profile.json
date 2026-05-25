@@ -1,0 +1,30 @@
+{
+  "id": "emp-as",
+  "vk_user_id": "12018",
+  "role": "employee",
+  "full_name": "Алексей Сергеев",
+  "email": "a.sergeev@worktime.example",
+  "position": "Backend-разработчик",
+  "department": "Команда мобильной разработки",
+  "timezone": "Europe/Moscow",
+  "timezone_label": "UTC+3 Москва",
+  "work_format": "office",
+  "created_at": "2024-12-15T09:00:00+03:00",
+  "updated_at": "2026-02-22T09:00:00+03:00",
+  "team_ids": [
+    "team-mobile"
+  ],
+  "metric": {
+    "id": "metric-as",
+    "employee_id": "emp-as",
+    "calculated_at": "2026-05-25T08:00:00+03:00",
+    "days_since_update": 92,
+    "actuality_score": 0.0,
+    "outside_events_count": 7,
+    "total_events_count": 24,
+    "conflict_rate": 0.29,
+    "load_level": 0.7,
+    "risk_score": 0.65,
+    "risk_level": "high"
+  }
+}

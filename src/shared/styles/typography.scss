@@ -1,0 +1,83 @@
+@use './colors' as *;
+
+// Заголовки
+@mixin h1 {
+  font-size: 28px;
+  line-height: 36px;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+  color: $gray-1;
+}
+
+@mixin h2 {
+  font-size: 22px;
+  line-height: 30px;
+  font-weight: 700;
+  color: $gray-1;
+}
+
+@mixin h3 {
+  font-size: 18px;
+  line-height: 26px;
+  font-weight: 600;
+  color: $gray-1;
+}
+
+@mixin h4 {
+  font-size: 16px;
+  line-height: 24px;
+  font-weight: 600;
+  color: $gray-1;
+}
+
+// Текст
+@mixin text-lg {
+  font-size: 16px;
+  line-height: 24px;
+  font-weight: 400;
+  color: $gray-1;
+}
+
+@mixin text-md {
+  font-size: 14px;
+  line-height: 20px;
+  font-weight: 400;
+  color: $gray-2;
+}
+
+@mixin text-sm {
+  font-size: 13px;
+  line-height: 18px;
+  font-weight: 400;
+  color: $gray-2;
+}
+
+@mixin text-xs {
+  font-size: 12px;
+  line-height: 16px;
+  font-weight: 400;
+  color: $gray-3;
+}
+
+@mixin label {
+  font-size: 12px;
+  line-height: 16px;
+  font-weight: 600;
+  color: $gray-3;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+@mixin metric-value {
+  font-size: 36px;
+  line-height: 44px;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+}
+
+@mixin caption {
+  font-size: 11px;
+  line-height: 14px;
+  font-weight: 500;
+  color: $gray-3;
+}

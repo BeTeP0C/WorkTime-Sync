@@ -1,0 +1,10 @@
+[
+  {
+    "code": "high_load_level",
+    "reason": "Загрузка 84% превышает порог 80%",
+    "severity": "high",
+    "action": "Снизить количество встреч на этой неделе",
+    "subject_type": "employee",
+    "subject_id": "emp-eg"
+  }
+]

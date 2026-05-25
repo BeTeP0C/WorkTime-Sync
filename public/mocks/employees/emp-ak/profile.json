@@ -1,0 +1,30 @@
+{
+  "id": "emp-ak",
+  "vk_user_id": "12003",
+  "role": "employee",
+  "full_name": "Антон Козлов",
+  "email": "a.kozlov@worktime.example",
+  "position": "Backend-разработчик",
+  "department": "Команда разработки",
+  "timezone": "Europe/Moscow",
+  "timezone_label": "UTC+3 Москва",
+  "work_format": "office",
+  "created_at": "2025-01-15T09:00:00+03:00",
+  "updated_at": "2026-04-10T11:00:00+03:00",
+  "team_ids": [
+    "team-dev"
+  ],
+  "metric": {
+    "id": "metric-ak",
+    "employee_id": "emp-ak",
+    "calculated_at": "2026-05-25T08:00:00+03:00",
+    "days_since_update": 45,
+    "actuality_score": 0.51,
+    "outside_events_count": 5,
+    "total_events_count": 28,
+    "conflict_rate": 0.18,
+    "load_level": 0.92,
+    "risk_score": 0.51,
+    "risk_level": "medium"
+  }
+}

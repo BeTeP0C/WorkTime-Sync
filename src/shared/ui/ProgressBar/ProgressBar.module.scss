@@ -1,0 +1,43 @@
+@use '@/styles/colors' as *;
+
+.bar {
+  width: 100%;
+  background: $gray-6;
+  border-radius: $radius-pill;
+  overflow: hidden;
+}
+
+.size_sm {
+  height: 4px;
+}
+
+.size_md {
+  height: 8px;
+}
+
+.fill {
+  height: 100%;
+  border-radius: $radius-pill;
+  transition: width 320ms ease;
+}
+
+.tone_primary {
+  background: $primary;
+}
+
+.tone_success {
+  background: $risk-low;
+}
+
+.tone_warning,
+.tone_medium {
+  background: #facc15;
+}
+
+.tone_high {
+  background: $risk-high;
+}
+
+.tone_critical {
+  background: $risk-critical;
+}

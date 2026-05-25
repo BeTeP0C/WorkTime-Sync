@@ -1,0 +1,30 @@
+{
+  "id": "emp-ts",
+  "vk_user_id": "12010",
+  "role": "employee",
+  "full_name": "Татьяна Смирнова",
+  "email": "t.smirnova@worktime.example",
+  "position": "Android-разработчик",
+  "department": "Команда мобильной разработки",
+  "timezone": "Asia/Yekaterinburg",
+  "timezone_label": "UTC+5 Екатеринбург",
+  "work_format": "remote",
+  "created_at": "2024-12-05T09:00:00+05:00",
+  "updated_at": "2026-05-19T09:00:00+05:00",
+  "team_ids": [
+    "team-mobile"
+  ],
+  "metric": {
+    "id": "metric-ts",
+    "employee_id": "emp-ts",
+    "calculated_at": "2026-05-25T08:00:00+03:00",
+    "days_since_update": 6,
+    "actuality_score": 0.93,
+    "outside_events_count": 1,
+    "total_events_count": 18,
+    "conflict_rate": 0.05,
+    "load_level": 0.61,
+    "risk_score": 0.16,
+    "risk_level": "low"
+  }
+}

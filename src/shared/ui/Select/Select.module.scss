@@ -1,0 +1,39 @@
+@use '@/styles/colors' as *;
+@use '@/styles/mixins' as *;
+
+.select {
+  appearance: none;
+  border: 1px solid $gray-4;
+  border-radius: $radius-md;
+  background:
+    url("data:image/svg+xml;utf8,<svg width='10' height='6' viewBox='0 0 10 6' xmlns='http://www.w3.org/2000/svg'><path d='M1 1l4 4 4-4' stroke='%238a93a8' stroke-width='1.5' fill='none' stroke-linecap='round' stroke-linejoin='round'/></svg>")
+      no-repeat,
+    $white;
+  background-position: right 12px center;
+  padding-right: 32px;
+  color: $gray-1;
+  cursor: pointer;
+  @include transition(border-color, box-shadow);
+
+  @include mediaHover {
+    border-color: $gray-3;
+  }
+
+  &:focus-visible {
+    border-color: $primary;
+    outline: none;
+    box-shadow: 0 0 0 3px $primary-bg;
+  }
+}
+
+.size_sm {
+  height: 32px;
+  padding-left: 12px;
+  font-size: 12px;
+}
+
+.size_md {
+  height: 36px;
+  padding-left: 14px;
+  font-size: 13px;
+}

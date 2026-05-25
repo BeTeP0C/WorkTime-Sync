@@ -1,0 +1,52 @@
+@use '@/styles/colors' as *;
+
+.card {
+  display: flex;
+  flex-direction: column;
+}
+
+.chartWrap {
+  position: relative;
+  width: 100%;
+}
+
+.center {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 28px;
+  font-weight: 700;
+  color: $gray-1;
+}
+
+.legend {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-top: 12px;
+}
+
+.legendRow {
+  display: grid;
+  grid-template-columns: 12px 1fr auto;
+  align-items: center;
+  gap: 10px;
+  font-size: 12px;
+}
+
+.legendDot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+}
+
+.legendName {
+  color: $gray-2;
+}
+
+.legendValue {
+  color: $gray-1;
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+}

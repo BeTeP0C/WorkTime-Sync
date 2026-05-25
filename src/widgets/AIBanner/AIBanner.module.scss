@@ -1,0 +1,64 @@
+@use '@/styles/colors' as *;
+@use '@/styles/mixins' as *;
+
+.banner {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 16px 20px;
+  background: $accent-bg;
+  border: 1px solid #e0dafd;
+  border-radius: $radius-lg;
+  margin-bottom: 24px;
+}
+
+.iconWrap {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  border-radius: $radius-md;
+  background: $accent-gradient;
+  color: $white;
+  flex-shrink: 0;
+}
+
+.text {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.title {
+  font-size: 14px;
+  font-weight: 600;
+  color: $gray-1;
+}
+
+.description {
+  font-size: 13px;
+  color: $gray-2;
+  line-height: 18px;
+}
+
+.action {
+  display: inline-flex;
+  align-items: center;
+  height: 36px;
+  padding: 0 14px;
+  border-radius: $radius-md;
+  background: $primary;
+  color: $white;
+  font-size: 13px;
+  font-weight: 600;
+  flex-shrink: 0;
+  @include transition(background);
+
+  @include mediaHover {
+    background: $primary-hover;
+    color: $white;
+  }
+}

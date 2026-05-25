@@ -1,0 +1,30 @@
+{
+  "id": "emp-zb",
+  "vk_user_id": "12022",
+  "role": "employee",
+  "full_name": "Захар Белов",
+  "email": "z.belov@worktime.example",
+  "position": "Backend-разработчик",
+  "department": "Команда мобильной разработки",
+  "timezone": "Europe/Moscow",
+  "timezone_label": "UTC+3 Москва",
+  "work_format": "office",
+  "created_at": "2024-11-11T09:00:00+03:00",
+  "updated_at": "2026-05-08T09:00:00+03:00",
+  "team_ids": [
+    "team-mobile"
+  ],
+  "metric": {
+    "id": "metric-zb",
+    "employee_id": "emp-zb",
+    "calculated_at": "2026-05-25T08:00:00+03:00",
+    "days_since_update": 17,
+    "actuality_score": 0.81,
+    "outside_events_count": 3,
+    "total_events_count": 22,
+    "conflict_rate": 0.14,
+    "load_level": 1.02,
+    "risk_score": 0.5,
+    "risk_level": "medium"
+  }
+}

@@ -1,0 +1,11 @@
+{
+  "id": "sched-mp",
+  "employee_id": "emp-mp",
+  "work_days": [0, 1, 2, 3, 4],
+  "start_time": "09:00:00",
+  "end_time": "18:00:00",
+  "timezone": "Europe/Moscow",
+  "last_updated_at": "2026-03-08T09:00:00+03:00",
+  "is_active": true,
+  "created_at": "2024-09-10T09:00:00+03:00"
+}

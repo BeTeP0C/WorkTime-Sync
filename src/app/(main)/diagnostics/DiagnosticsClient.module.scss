@@ -1,0 +1,87 @@
+@use '@/styles/colors' as *;
+
+.filters {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 16px;
+  flex-wrap: wrap;
+}
+
+.topRow {
+  display: grid;
+  grid-template-columns: 1fr 280px;
+  gap: 16px;
+  margin-bottom: 16px;
+
+  @media (max-width: 1100px) {
+    grid-template-columns: 1fr;
+  }
+}
+
+.counters {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 12px;
+
+  @media (max-width: 1280px) {
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  @media (max-width: 700px) {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+.counter {
+  min-height: 88px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 8px;
+}
+
+.counterHead {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.counterDot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+}
+
+.counterDot_actual {
+  background: $risk-low;
+}
+
+.counterDot_outdated {
+  background: $risk-critical;
+}
+
+.counterDot_outside_schedule,
+.counterDot_overloaded {
+  background: $risk-high;
+}
+
+.counterDot_pending_confirmation {
+  background: $primary;
+}
+
+.counterLabel {
+  font-size: 12px;
+  color: $gray-2;
+  font-weight: 500;
+}
+
+.counterValue {
+  font-size: 30px;
+  font-weight: 700;
+  line-height: 1;
+  color: $gray-1;
+}
+
+.chartCol {
+  min-width: 0;
+}

@@ -1,0 +1,41 @@
+.avatar {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  color: #ffffff;
+  font-weight: 700;
+  text-transform: uppercase;
+  user-select: none;
+  flex-shrink: 0;
+}
+
+.size_xs {
+  width: 24px;
+  height: 24px;
+  font-size: 10px;
+}
+
+.size_sm {
+  width: 32px;
+  height: 32px;
+  font-size: 12px;
+}
+
+.size_md {
+  width: 40px;
+  height: 40px;
+  font-size: 14px;
+}
+
+.size_lg {
+  width: 56px;
+  height: 56px;
+  font-size: 18px;
+}
+
+.size_xl {
+  width: 96px;
+  height: 96px;
+  font-size: 32px;
+}

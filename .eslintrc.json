@@ -1,0 +1,31 @@
+{
+  "parser": "@typescript-eslint/parser",
+  "plugins": ["simple-import-sort", "@typescript-eslint", "prettier"],
+  "extends": [
+    "next/core-web-vitals",
+    "plugin:@typescript-eslint/recommended",
+    "plugin:prettier/recommended",
+    "prettier"
+  ],
+  "rules": {
+    "simple-import-sort/imports": [
+      "warn",
+      {
+        "groups": [
+          ["^\\u0000"],
+          ["^next", "^react", "^[^.A-Z]"],
+          ["^@/"],
+          ["^\\.\\./[A-Z]", "^\\.\\."],
+          ["^\\./[A-Z]", "^\\."],
+          [".module.scss$", ".scss$"]
+        ]
+      }
+    ],
+    "simple-import-sort/exports": "warn",
+    "no-console": ["warn", { "allow": ["warn", "error"] }],
+    "@typescript-eslint/no-unused-vars": ["warn", { "argsIgnorePattern": "^_" }],
+    "@typescript-eslint/no-explicit-any": "warn",
+    "react/no-unescaped-entities": "off",
+    "semi": "off"
+  }
+}

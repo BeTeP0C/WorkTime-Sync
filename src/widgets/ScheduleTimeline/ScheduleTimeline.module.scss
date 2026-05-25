@@ -1,0 +1,108 @@
+@use '@/styles/colors' as *;
+@use '@/styles/mixins' as *;
+
+.card {
+  display: flex;
+  flex-direction: column;
+}
+
+.scroll {
+  overflow-x: auto;
+  @include scrollbar(6px);
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: 140px 1fr 48px;
+  gap: 8px;
+  align-items: center;
+}
+
+.empty {
+  height: 0;
+}
+
+.hoursRow {
+  display: flex;
+  align-items: center;
+  height: 24px;
+  position: relative;
+}
+
+.hourLabel {
+  font-size: 11px;
+  color: $gray-3;
+  font-variant-numeric: tabular-nums;
+  text-align: left;
+  flex-shrink: 0;
+}
+
+.row {
+  display: contents;
+}
+
+.name {
+  font-size: 12px;
+  color: $gray-2;
+  @include ellipsis;
+  padding-right: 8px;
+}
+
+.track {
+  position: relative;
+  height: 22px;
+  background: $gray-7;
+  border-radius: $radius-sm;
+}
+
+.seg {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  border-radius: $radius-sm;
+}
+
+.seg_work {
+  background: $timeline-work;
+}
+
+.seg_meeting {
+  background: $timeline-meeting;
+}
+
+.seg_conflict {
+  background: $timeline-conflict;
+}
+
+.seg_outside {
+  background: $timeline-outside;
+}
+
+.tz {
+  font-size: 11px;
+  color: $gray-3;
+  text-align: right;
+}
+
+.legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+  margin-top: 16px;
+  padding-top: 12px;
+  border-top: $border-default;
+}
+
+.legendChip {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 11px;
+  color: $gray-2;
+}
+
+.legendSwatch {
+  width: 14px;
+  height: 10px;
+  border-radius: 3px;
+}

@@ -1,0 +1,30 @@
+{
+  "id": "emp-jb",
+  "vk_user_id": "12012",
+  "role": "employee",
+  "full_name": "Ярослав Беляев",
+  "email": "y.belyaev@worktime.example",
+  "position": "Frontend-разработчик",
+  "department": "Команда дизайна",
+  "timezone": "Europe/Moscow",
+  "timezone_label": "UTC+3 Москва",
+  "work_format": "hybrid",
+  "created_at": "2024-10-04T09:00:00+03:00",
+  "updated_at": "2026-04-26T09:00:00+03:00",
+  "team_ids": [
+    "team-design"
+  ],
+  "metric": {
+    "id": "metric-jb",
+    "employee_id": "emp-jb",
+    "calculated_at": "2026-05-25T08:00:00+03:00",
+    "days_since_update": 29,
+    "actuality_score": 0.68,
+    "outside_events_count": 4,
+    "total_events_count": 18,
+    "conflict_rate": 0.22,
+    "load_level": 0.77,
+    "risk_score": 0.42,
+    "risk_level": "medium"
+  }
+}

@@ -1,0 +1,77 @@
+@use '@/styles/colors' as *;
+
+.card {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  min-height: 132px;
+}
+
+.head {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: $gray-3;
+}
+
+.icon {
+  display: inline-flex;
+  width: 18px;
+  height: 18px;
+  align-items: center;
+  justify-content: center;
+}
+
+.label {
+  font-size: 13px;
+  font-weight: 500;
+  color: $gray-3;
+}
+
+.value {
+  font-size: 36px;
+  line-height: 1;
+  font-weight: 700;
+  color: $gray-1;
+  letter-spacing: -0.02em;
+}
+
+.tone_warning .value {
+  color: $risk-high;
+}
+
+.tone_critical .value {
+  color: $risk-critical;
+}
+
+.tone_success .value {
+  color: $risk-low;
+}
+
+.footer {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 12px;
+  color: $gray-3;
+}
+
+.hint {
+  color: $gray-3;
+}
+
+.trend {
+  font-weight: 600;
+}
+
+.trend_up {
+  color: $risk-low;
+}
+
+.trend_down {
+  color: $risk-critical;
+}
+
+.trend_neutral {
+  color: $gray-3;
+}
