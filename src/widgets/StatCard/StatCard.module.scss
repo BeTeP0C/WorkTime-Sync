@@ -23,7 +23,7 @@
 }
 
 .label {
-  font-size: 13px;
+  font-size: 15px;
   font-weight: 500;
   color: $gray-3;
 }
@@ -61,7 +61,17 @@
 }
 
 .trend {
-  font-weight: 600;
+  font-size: 15px;
+  font-weight: 400;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.trendIcon {
+  width: 15px;
+  height: 15px;
+  flex-shrink: 0;
 }
 
 .trend_up {

@@ -17,6 +17,12 @@ function normalize(raw: DashboardSummaryRaw): DashboardSummary {
     averageActualityScoreDelta: raw.average_actuality_score_delta ?? 0,
     conflictsDelta: raw.conflicts_delta ?? 0,
     lastCalculationAt: raw.last_calculation_at,
+    averageRiskScore: raw.average_risk_score ?? 0,
+    averageRiskScoreDelta: raw.average_risk_score_delta ?? 0,
+    conflictsRate: raw.conflicts_rate ?? 0,
+    conflictsRateDelta: raw.conflicts_rate_delta ?? 0,
+    teamSize: raw.team_size ?? raw.total_employees,
+    averageActualityScoreHistory: raw.average_actuality_score_history ?? [],
   }
 }
 

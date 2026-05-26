@@ -1,0 +1,164 @@
+@use '@/styles/colors' as *;
+
+.card {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  min-width: 0;
+
+  // CardHeader иконка — чёрная
+  > div:first-child svg {
+    color: #000000;
+    width: 20px;
+    height: 20px;
+  }
+
+  // CardHeader заголовок — крупнее и темнее по дизайну
+  > div:first-child > div:first-child {
+    font-size: 16px;
+    font-weight: 600;
+    color: $gray-1;
+  }
+}
+
+.scroll {
+  overflow-x: auto;
+  margin: 0 -8px;
+  padding: 0 8px;
+
+  // Тонкий нативный скроллбар
+  &::-webkit-scrollbar {
+    height: 8px;
+  }
+  &::-webkit-scrollbar-thumb {
+    background: $gray-4;
+    border-radius: 4px;
+  }
+  &::-webkit-scrollbar-track {
+    background: transparent;
+  }
+}
+
+.table {
+  min-width: 890px;
+  display: flex;
+  flex-direction: column;
+}
+
+.tableHead,
+.row {
+  display: grid;
+  grid-template-columns: 140px 130px 110px 130px 70px 140px 1fr;
+  align-items: center;
+  gap: 10px;
+  width: 100%;
+}
+
+.tableHead {
+  color: $gray-3;
+  font-size: 12px;
+  font-weight: 500;
+  padding-bottom: 8px;
+  border-bottom: 1px solid $gray-5;
+
+  > div {
+    white-space: nowrap;
+    text-align: center;
+  }
+
+  // Первая колонка (Сотрудник) — выравниваем по левому краю как и аватар+имя
+  > div:first-child {
+    text-align: left;
+  }
+}
+
+.body {
+  display: flex;
+  flex-direction: column;
+}
+
+.row {
+  padding: 12px 0;
+  border-bottom: 1px solid $gray-5;
+  font-size: 13px;
+  color: $gray-1;
+
+  &:last-child {
+    border-bottom: none;
+  }
+}
+
+.colName {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  min-width: 0;
+}
+
+.name {
+  font-weight: 500;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+// Ячейка-обёртка центрирует внутренний блок, а сам блок ставит контент влево
+.metricCell {
+  display: flex;
+  justify-content: center;
+  min-width: 0;
+}
+
+.metricCellInner {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 6px;
+  width: 110px;
+}
+
+.metricValue {
+  font-weight: 500;
+  font-size: 13px;
+  color: #909090;
+}
+
+.metricBar {
+  width: 100%;
+}
+
+.simpleCell {
+  font-weight: 500;
+  text-align: center;
+  color: #909090;
+}
+
+.daysOk {
+  color: $success;
+  font-weight: 500;
+  text-align: center;
+}
+
+.daysHigh {
+  color: $risk-high;
+  font-weight: 500;
+  text-align: center;
+}
+
+.daysCritical {
+  color: $risk-critical;
+  font-weight: 500;
+  text-align: center;
+}
+
+.colStatus {
+  display: flex;
+  justify-content: center;
+}
+
+.empty {
+  padding: 24px 0;
+  color: $gray-3;
+  text-align: center;
+  font-size: 14px;
+}

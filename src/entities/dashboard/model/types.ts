@@ -1,5 +1,10 @@
 import { RiskLevel } from '@/entities/employee/model/types'
 
+export interface ActualityHistoryPoint {
+  month: string
+  value: number
+}
+
 export interface DashboardSummaryRaw {
   total_employees: number
   total_teams: number
@@ -15,6 +20,13 @@ export interface DashboardSummaryRaw {
   average_actuality_score_delta?: number
   conflicts_delta?: number
   total_employees_teams_count?: number
+  // поля для страницы "Расчёт показателей"
+  average_risk_score?: number
+  average_risk_score_delta?: number
+  conflicts_rate?: number
+  conflicts_rate_delta?: number
+  team_size?: number
+  average_actuality_score_history?: ActualityHistoryPoint[]
 }
 
 export interface DashboardSummary {
@@ -30,4 +42,10 @@ export interface DashboardSummary {
   averageActualityScoreDelta: number
   conflictsDelta: number
   lastCalculationAt: string | null
+  averageRiskScore: number
+  averageRiskScoreDelta: number
+  conflictsRate: number
+  conflictsRateDelta: number
+  teamSize: number
+  averageActualityScoreHistory: ActualityHistoryPoint[]
 }

@@ -1,0 +1,112 @@
+@use '@/styles/colors' as *;
+
+.root {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.pillWrap {
+  position: relative;
+}
+
+.pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  height: 32px;
+  padding: 0 12px;
+  border: none;
+  border-radius: 8px;
+  background: #cecece;
+  color: #909090;
+  font-family: inherit;
+  font-size: 13px;
+  font-weight: 500;
+  letter-spacing: 0.06em;
+  cursor: pointer;
+  transition: background $transition-fast;
+
+  svg {
+    color: #909090;
+    flex-shrink: 0;
+  }
+
+  &:hover {
+    background: #dcdcdc;
+  }
+
+  &[aria-expanded='true'] {
+    background: #dcdcdc;
+  }
+}
+
+.exportPill {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  height: 32px;
+  padding: 0 12px;
+  border: none;
+  border-radius: 8px;
+  background: #3b6fe8;
+  color: $white;
+  font-family: inherit;
+  font-size: 13px;
+  font-weight: 500;
+  letter-spacing: 0.06em;
+  cursor: pointer;
+  transition: background $transition-fast;
+
+  svg {
+    color: $white;
+    flex-shrink: 0;
+  }
+
+  &:hover {
+    background: #5687f0;
+  }
+
+  &:active {
+    background: #2e5acc;
+  }
+}
+
+.pillLabel {
+  white-space: nowrap;
+}
+
+.popover {
+  position: absolute;
+  top: calc(100% + 6px);
+  right: 0;
+  z-index: 20;
+  min-width: 200px;
+  padding: 4px;
+  background: $bg-elevated;
+  border-radius: $radius-md;
+  box-shadow: $shadow-popup;
+  display: flex;
+  flex-direction: column;
+}
+
+.popoverItem {
+  display: block;
+  width: 100%;
+  text-align: left;
+  padding: 8px 12px;
+  border: none;
+  background: transparent;
+  border-radius: $radius-sm;
+  color: $gray-1;
+  font-family: inherit;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background $transition-fast;
+
+  &:hover {
+    background: $primary-bg;
+    color: $primary;
+  }
+}

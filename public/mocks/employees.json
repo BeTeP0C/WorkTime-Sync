@@ -24,7 +24,7 @@
       "conflict_rate": 0.34,
       "load_level": 0.87,
       "risk_score": 0.74,
-      "risk_level": "high"
+      "risk_level": "critical"
     }
   },
   {
@@ -108,7 +108,7 @@
       "conflict_rate": 0.35,
       "load_level": 0.66,
       "risk_score": 0.71,
-      "risk_level": "high"
+      "risk_level": "critical"
     }
   },
   {
@@ -444,7 +444,7 @@
       "conflict_rate": 0.42,
       "load_level": 0.81,
       "risk_score": 0.78,
-      "risk_level": "high"
+      "risk_level": "critical"
     }
   },
   {

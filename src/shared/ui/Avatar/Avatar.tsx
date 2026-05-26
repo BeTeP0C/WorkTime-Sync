@@ -8,6 +8,8 @@ interface AvatarProps {
   size?: 'xs' | 'sm' | 'md' | 'lg' | 'xl'
   /** seed-цвет — обычно id сотрудника, чтобы цвет был стабильным */
   colorSeed?: string
+  /** явный цвет фона — переопределяет colorSeed */
+  bg?: string
   className?: string
 }
 
@@ -31,8 +33,8 @@ function pickColor(seed: string): string {
   return PALETTE[Math.abs(hash) % PALETTE.length]
 }
 
-export function Avatar({ initials, fullName, size = 'md', colorSeed, className }: AvatarProps) {
-  const bg = pickColor(colorSeed ?? fullName ?? initials)
+export function Avatar({ initials, fullName, size = 'md', colorSeed, bg: bgProp, className }: AvatarProps) {
+  const bg = bgProp ?? pickColor(colorSeed ?? fullName ?? initials)
 
   return (
     <div

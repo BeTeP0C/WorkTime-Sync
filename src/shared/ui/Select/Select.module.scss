@@ -1,8 +1,30 @@
 @use '@/styles/colors' as *;
 @use '@/styles/mixins' as *;
 
+.wrap {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+}
+
+.icon {
+  position: absolute;
+  left: 14px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  color: $gray-3;
+  pointer-events: none;
+
+  svg {
+    width: 18px;
+    height: 18px;
+  }
+}
+
 .select {
   appearance: none;
+  width: 100%;
   border: 1px solid $gray-4;
   border-radius: $radius-md;
   background:
@@ -24,6 +46,10 @@
     outline: none;
     box-shadow: 0 0 0 3px $primary-bg;
   }
+}
+
+.selectWithIcon {
+  padding-left: 40px;
 }
 
 .size_sm {

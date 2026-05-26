@@ -75,13 +75,13 @@
 }
 
 .variant_secondary {
-  background: $white;
-  color: $gray-1;
-  border: 1px solid $gray-4;
+  background: $gray-6;
+  color: $gray-3;
+  border: none;
 
   @include mediaHover {
-    background: $gray-7;
-    border-color: $gray-3;
+    background: $gray-5;
+    color: $gray-2;
   }
 }
 

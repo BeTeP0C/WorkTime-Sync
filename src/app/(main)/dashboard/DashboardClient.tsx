@@ -5,6 +5,15 @@ import { observer } from 'mobx-react-lite'
 
 import { useDashboardStore, useEmployeesStore } from '@/app-store/context'
 import { formatScore, pluralizeRu } from '@/shared/lib/format'
+import {
+  AddressBookIcon,
+  BellIcon,
+  ChatArrowDownIcon,
+  DashboardsIcon,
+  InfoIcon,
+  UploadIcon,
+  UserIcon,
+} from '@/shared/icons'
 import { Button } from '@/shared/ui/Button'
 import { AIBanner } from '@/widgets/AIBanner'
 import { AppHeader } from '@/widgets/AppHeader'
@@ -14,40 +23,6 @@ import { StatCard } from '@/widgets/StatCard'
 
 import s from './DashboardClient.module.scss'
 
-const ICONS = {
-  people: (
-    <svg width="18" height="18" viewBox="0 0 18 18" fill="none">
-      <circle cx="9" cy="6" r="3" stroke="currentColor" strokeWidth="1.4" />
-      <path
-        d="M3 16a6 6 0 0 1 12 0"
-        stroke="currentColor"
-        strokeWidth="1.4"
-        strokeLinecap="round"
-      />
-    </svg>
-  ),
-  chart: (
-    <svg width="18" height="18" viewBox="0 0 18 18" fill="none">
-      <path
-        d="M3 14V8m4 6V5m4 9v-3m4 3V3"
-        stroke="currentColor"
-        strokeWidth="1.4"
-        strokeLinecap="round"
-      />
-    </svg>
-  ),
-  scale: (
-    <svg width="18" height="18" viewBox="0 0 18 18" fill="none">
-      <path d="M9 2v14M3 6l6-4 6 4" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" />
-    </svg>
-  ),
-  warning: (
-    <svg width="18" height="18" viewBox="0 0 18 18" fill="none">
-      <circle cx="9" cy="9" r="6.5" stroke="currentColor" strokeWidth="1.4" />
-      <path d="M9 5v4M9 12.5v.5" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" />
-    </svg>
-  ),
-}
 
 export const DashboardClient = observer(function DashboardClient() {
   const dashboard = useDashboardStore()
@@ -68,10 +43,15 @@ export const DashboardClient = observer(function DashboardClient() {
         title="Главная"
         action={
           <>
-            <Button variant="ghost" size="md" aria-label="Уведомления">
-              🔔
-            </Button>
-            <Button variant="primary" size="md">
+            <button type="button" className={s.bell} aria-label="Уведомления">
+              <BellIcon width={24} height={25} />
+              <span className={s.bellDot} aria-hidden />
+            </button>
+            <Button
+              variant="primary"
+              size="md"
+              leftIcon={<UploadIcon />}
+            >
               Загрузить данные
             </Button>
           </>
@@ -80,7 +60,7 @@ export const DashboardClient = observer(function DashboardClient() {
 
       {summary && criticalCount > 0 && (
         <AIBanner
-          title={`AI обнаружил ${criticalCount} ${pluralizeRu(criticalCount, ['сотрудника', 'сотрудников', 'сотрудников'])} с критическим риском неактуальности`}
+          title={`AI обнаружил ${criticalCount} ${pluralizeRu(criticalCount, ['сотрудник', 'сотрудника', 'сотрудников'])} с критическим риском неактуальности`}
           description="Рекомендуется отправить запросы на обновление до конца недели. Устаревшие данные влияют на 3 запланированные встречи."
           actionLabel="Посмотреть"
           actionHref="/diagnostics"
@@ -89,13 +69,18 @@ export const DashboardClient = observer(function DashboardClient() {
 
       <div className={s.stats}>
         <StatCard
-          icon={ICONS.people}
+          icon={<UserIcon width={18} height={18} />}
           label="Всего сотрудников"
           value={summary?.totalEmployees ?? '—'}
-          hint={`в ${summary?.totalTeams ?? 0} ${pluralizeRu(summary?.totalTeams ?? 0, ['команде', 'командах', 'командах'])}`}
+          hint={
+            <span className={s.hint}>
+              <AddressBookIcon width={15} height={15} />
+              {`в ${summary?.totalTeams ?? 0} ${pluralizeRu(summary?.totalTeams ?? 0, ['команде', 'командах', 'командах'])}`}
+            </span>
+          }
         />
         <StatCard
-          icon={ICONS.chart}
+          icon={<ChatArrowDownIcon width={18} height={18} />}
           label="Устаревших графиков"
           value={summary?.outdatedSchedulesCount ?? '—'}
           tone="critical"
@@ -109,7 +94,7 @@ export const DashboardClient = observer(function DashboardClient() {
           }
         />
         <StatCard
-          icon={ICONS.scale}
+          icon={<DashboardsIcon width={18} height={18} />}
           label="Средний показатель Ai"
           value={summary ? formatScore(summary.averageActualityScore) : '—'}
           tone="warning"
@@ -123,7 +108,7 @@ export const DashboardClient = observer(function DashboardClient() {
           }
         />
         <StatCard
-          icon={ICONS.warning}
+          icon={<InfoIcon width={18} height={18} />}
           label="Конфликтов"
           value={summary?.conflictsTotal ?? '—'}
           tone="critical"

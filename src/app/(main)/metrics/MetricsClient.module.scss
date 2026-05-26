@@ -1,0 +1,49 @@
+@use '@/styles/colors' as *;
+@use '@/styles/mixins' as *;
+
+.stats {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 16px;
+  margin-bottom: 16px;
+
+  @media (max-width: 1100px) {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 465px;
+  gap: 16px;
+  align-items: stretch;
+
+  @media (max-width: 1200px) {
+    grid-template-columns: 1fr;
+  }
+}
+
+.kpiCard {
+  // Иконка KPI — чёрная по дизайну
+  > div:first-child > span:first-child svg {
+    color: #000000;
+  }
+
+  // Лейбл "Средний Ai" — темнее и жирнее по дизайну
+  > div:first-child > span:last-child {
+    color: $gray-1;
+    font-weight: 600;
+    font-size: 16px;
+  }
+
+  // Тренд: точные цвета из Figma (#22c55e green / #ef4444 red)
+  > div:last-child > span[class*='trend_up'] {
+    color: #22c55e;
+  }
+
+  > div:last-child > span[class*='trend_down'] {
+    color: #ef4444;
+  }
+}
+
+

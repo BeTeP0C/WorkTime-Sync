@@ -1,0 +1,1 @@
+export { RiskAndDynamicsCard } from './RiskAndDynamicsCard'

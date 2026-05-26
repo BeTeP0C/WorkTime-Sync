@@ -21,7 +21,7 @@ const CATEGORIES_ORDER: DiagnosticsCategory[] = [
 
 export const CATEGORY_LABEL_RU: Record<DiagnosticsCategory, string> = {
   actual: 'Актуальны',
-  outdated: 'Устаревший',
+  outdated: 'Устаревшие',
   outside_schedule: 'Встречи вне графика',
   overloaded: 'Высокая нагрузка',
   pending_confirmation: 'Нужно подтвердить',
@@ -118,7 +118,7 @@ export class EmployeesStore {
     if (m.daysSinceUpdate >= 90) return `${m.daysSinceUpdate} дней без обновления`
     if (m.daysSinceUpdate >= 60) return `${m.daysSinceUpdate} дней без обновления`
     if (m.loadLevel > 1.0) return `Li = ${m.loadLevel.toFixed(2)} · перегружен`
-    if (m.loadLevel > 0.8) return `Li = ${m.loadLevel.toFixed(2)} · высокая нагрузка`
+    if (m.loadLevel > 0.8) return `Li = ${m.loadLevel.toFixed(2)} · перегружен`
     if (m.conflictRate >= 0.35)
       return `Ci = ${Math.round(m.conflictRate * 100)}% встреч вне графика`
     return ''

@@ -10,6 +10,7 @@
 
 .hero {
   display: flex;
+  flex-direction: row;
   align-items: center;
   gap: 24px;
   margin-bottom: 24px;
@@ -25,62 +26,85 @@
   min-width: 0;
   display: flex;
   flex-direction: column;
-  gap: 6px;
+  align-items: flex-start;
+  gap: 8px;
 }
 
 .heroName {
   font-size: 28px;
-  line-height: 32px;
+  line-height: 36px;
   font-weight: 700;
   color: $gray-1;
   margin: 0;
 }
 
 .heroPosition {
-  font-size: 14px;
-  color: $gray-2;
+  font-size: 15px;
+  line-height: 20px;
+  font-weight: 400;
+  color: $gray-3;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
 }
 
 .heroTags {
   display: flex;
   flex-wrap: wrap;
+  justify-content: flex-start;
   gap: 6px;
   margin-top: 4px;
 }
 
+.heroRiskBadge {
+  align-self: flex-start;
+  flex-shrink: 0;
+
+  @media (max-width: 700px) {
+    align-self: flex-start;
+  }
+}
+
+.heroRiskIcon {
+  width: 16px;
+  height: 16px;
+  flex-shrink: 0;
+}
+
+.crumbIcon {
+  width: 18px;
+  height: 18px;
+  color: $gray-2;
+  margin-right: 6px;
+  vertical-align: middle;
+}
+
 .grid {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
+  display: flex;
+  align-items: flex-start;
   gap: 16px;
 
   @media (max-width: 900px) {
-    grid-template-columns: 1fr;
+    flex-direction: column;
   }
 }
 
-.scheduleCard,
-.exceptionsCard {
-  grid-column: 1;
-}
-
-.recsCard,
-.confirmCard {
-  grid-column: 2;
-
-  @media (max-width: 900px) {
-    grid-column: 1;
-  }
+.gridCol {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
 }
 
 .schedule {
   display: flex;
   flex-direction: column;
-  gap: 12px;
 }
 
 .workdays {
   display: flex;
-  gap: 6px;
+  gap: 10px;
   margin-bottom: 12px;
 }
 
@@ -111,8 +135,13 @@
   align-items: center;
   justify-content: space-between;
   gap: 12px;
-  padding: 6px 0;
-  font-size: 13px;
+  padding: 10px 0;
+  font-size: 14px;
+  border-top: 1px solid $gray-5;
+
+  &:first-of-type {
+    border-top: none;
+  }
 }
 
 .scheduleLabel {
@@ -125,40 +154,33 @@
 }
 
 .scheduleStale {
-  color: $risk-high;
+  color: $risk-critical;
 }
 
 .recs {
   display: flex;
   flex-direction: column;
-  gap: 14px;
 }
 
 .recItem {
   display: grid;
-  grid-template-columns: 12px 1fr auto;
+  grid-template-columns: 12px 1fr;
   align-items: start;
   gap: 12px;
-  padding: 4px 0;
+  padding: 12px 0;
+  border-top: 1px solid $gray-5;
+
+  &:first-child {
+    border-top: none;
+  }
 }
 
 .recDot {
-  width: 8px;
-  height: 8px;
+  width: 10px;
+  height: 10px;
   border-radius: 50%;
-  margin-top: 6px;
-}
-
-.recDot_critical {
-  background: $risk-critical;
-}
-
-.recDot_high {
+  margin-top: 5px;
   background: $risk-high;
-}
-
-.recDot_medium {
-  background: $risk-medium;
 }
 
 .recBody {
@@ -182,24 +204,59 @@
 .exceptions {
   display: flex;
   flex-direction: column;
-  gap: 4px;
 }
 
 .exceptionRow {
   display: grid;
-  grid-template-columns: 24px 1fr auto;
+  grid-template-columns: 36px 1fr auto;
   align-items: center;
   gap: 12px;
-  padding: 10px 0;
-  border-top: 1px solid $gray-6;
+  padding: 8px 0;
+  border-top: 1px solid $gray-5;
 
   &:first-child {
     border-top: none;
+    padding-top: 0;
   }
 }
 
+.exceptionIconBg {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  border-radius: 10px;
+  flex-shrink: 0;
+}
+
 .exceptionIcon {
-  font-size: 18px;
+  width: 18px;
+  height: 18px;
+}
+
+.exceptionIconBg_vacation {
+  background: $primary-light;
+
+  .exceptionIcon {
+    color: $primary;
+  }
+}
+
+.exceptionIconBg_sick_leave {
+  background: $risk-critical-bg;
+
+  .exceptionIcon {
+    color: $risk-critical;
+  }
+}
+
+.exceptionIconBg_business_trip {
+  background: $warning-bg;
+
+  .exceptionIcon {
+    color: $warning;
+  }
 }
 
 .exceptionInfo {
@@ -210,32 +267,55 @@
 }
 
 .exceptionTitle {
-  font-size: 13px;
+  font-size: 14px;
   font-weight: 600;
   color: $gray-1;
 }
 
 .exceptionDates {
-  font-size: 12px;
+  font-size: 13px;
   color: $gray-3;
 }
 
 .addExceptionBtn {
-  margin-top: 16px;
+  margin-top: 12px;
   align-self: flex-start;
+  background: $primary-bg;
+  color: $primary;
+  font-weight: 500;
+  border-radius: $radius-pill;
+  height: 40px;
+  padding: 0 20px;
+  font-size: 14px;
+
+  @media (hover: hover) {
+    &:hover {
+      background: $primary-light;
+      color: $primary;
+    }
+  }
+}
+
+.addExceptionPlus {
+  font-size: 20px;
+  font-weight: 500;
+  line-height: 1;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .confirmText {
-  font-size: 13px;
-  color: $gray-2;
-  line-height: 18px;
+  font-size: 14px;
+  color: $gray-3;
+  line-height: 20px;
   margin: 0 0 16px;
 }
 
 .confirmRows {
   display: flex;
   flex-direction: column;
-  gap: 4px;
+  border-bottom: 1px solid $gray-5;
 }
 
 .confirmStale {

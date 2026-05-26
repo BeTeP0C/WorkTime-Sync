@@ -9,7 +9,7 @@ interface ProgressBarProps {
   value: number
   max?: number
   tone?: ProgressTone
-  size?: 'sm' | 'md'
+  size?: 'sm' | 'md' | 'lg'
   className?: string
 }
 

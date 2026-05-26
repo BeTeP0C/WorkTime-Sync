@@ -6,6 +6,13 @@ import cn from 'classnames'
 import { observer } from 'mobx-react-lite'
 
 import { useDashboardStore } from '@/app-store/context'
+import {
+  CheckSmallIcon,
+  DatabaseIcon,
+  UploadSyncIcon,
+  WarningSmallIcon,
+  XSmallIcon,
+} from '@/shared/icons'
 import { Badge } from '@/shared/ui/Badge'
 import { Button } from '@/shared/ui/Button'
 import { Card, CardHeader } from '@/shared/ui/Card'
@@ -22,9 +29,15 @@ const STATUS_TONE = {
 }
 
 const STATUS_LABEL = {
-  ok: '✓ Готово',
-  partial: '⚠ Частично',
-  error: '✕ Ошибка',
+  ok: 'Готово',
+  partial: 'Частично',
+  error: 'Ошибка',
+}
+
+const STATUS_ICON = {
+  ok: CheckSmallIcon,
+  partial: WarningSmallIcon,
+  error: XSmallIcon,
 }
 
 export const DataUploader = observer(function DataUploader() {
@@ -43,7 +56,7 @@ export const DataUploader = observer(function DataUploader() {
 
   return (
     <Card padding="md" className={s.card}>
-      <CardHeader title="Загрузка данных" />
+      <CardHeader title="Загрузка данных" icon={<DatabaseIcon width={16} height={16} />} />
 
       <div className={s.tabs}>
         {TABS.map((t) => (
@@ -61,15 +74,7 @@ export const DataUploader = observer(function DataUploader() {
       <div {...getRootProps()} className={cn(s.dropzone, isDragActive && s.dropzoneActive)}>
         <input {...getInputProps()} />
         <div className={s.dropIcon}>
-          <svg width="32" height="32" viewBox="0 0 24 24" fill="none">
-            <path
-              d="M12 3v12m0 0l-4-4m4 4l4-4M5 21h14"
-              stroke="#2563eb"
-              strokeWidth="1.8"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-            />
-          </svg>
+          <UploadSyncIcon />
         </div>
         <div className={s.dropText}>
           {acceptedName ? `Файл выбран: ${acceptedName}` : 'Перетащите CSV или JSON файл сюда'}
@@ -79,13 +84,15 @@ export const DataUploader = observer(function DataUploader() {
           <Button variant="primary" size="sm" type="button">
             Выбрать файл
           </Button>
-          <Button variant="secondary" size="sm" type="button">
+          <Button variant="secondary" size="sm" type="button" className={s.btnOutline}>
             Сгенерировать тестовые данные
           </Button>
         </div>
       </div>
 
-      <div className={s.historyTitle}>Последние загрузки</div>
+      <div className={s.historyHeader}>
+        <span className={s.historyTitle}>Последние загрузки</span>
+      </div>
       <div className={s.history}>
         <div className={cn(s.historyRow, s.historyHead)}>
           <span>Источник</span>
@@ -93,16 +100,20 @@ export const DataUploader = observer(function DataUploader() {
           <span>Дата</span>
           <span>Статус</span>
         </div>
-        {dashboard.importHistory.map((row) => (
-          <div key={row.id} className={s.historyRow}>
-            <span className={s.cellMuted}>{row.source}</span>
-            <span className={s.cellFile}>{row.file}</span>
-            <span className={s.cellMuted}>{row.date}</span>
-            <Badge tone={STATUS_TONE[row.status]} size="sm">
-              {STATUS_LABEL[row.status]}
-            </Badge>
-          </div>
-        ))}
+        {dashboard.importHistory.map((row) => {
+          const StatusIcon = STATUS_ICON[row.status]
+          return (
+            <div key={row.id} className={s.historyRow}>
+              <span className={s.cellSource}>{row.source}</span>
+              <span className={s.cellFile}>{row.file}</span>
+              <span className={s.cellMuted}>{row.date}</span>
+              <Badge tone={STATUS_TONE[row.status]} size="sm" pill className={s.cellStatus}>
+                <StatusIcon className={s.statusIcon} />
+                {STATUS_LABEL[row.status]}
+              </Badge>
+            </div>
+          )
+        })}
       </div>
     </Card>
   )

@@ -1,19 +1,25 @@
 @use '@/styles/colors' as *;
 
 .header {
+  position: sticky;
+  top: 0;
+  z-index: 10;
   display: flex;
   align-items: center;
   justify-content: space-between;
   gap: 16px;
-  padding: 20px 0 24px;
+  height: 64px;
+  padding: 0 32px;
+  background: $white;
   border-bottom: $border-default;
-  margin-bottom: 24px;
+  margin: 0 -32px 24px;
 }
 
 .titleBlock {
   display: flex;
-  flex-direction: column;
-  gap: 4px;
+  flex-direction: row;
+  align-items: center;
+  gap: 8px;
   min-width: 0;
 }
 
@@ -21,11 +27,15 @@
   display: flex;
   align-items: center;
   gap: 6px;
-  font-size: 12px;
-  color: $gray-3;
+  font-family: 'Inter', sans-serif;
+  font-size: 24px;
+  font-weight: 400;
+  line-height: 28px;
+  color: #909090;
+  white-space: nowrap;
 
   a {
-    color: $gray-3;
+    color: #909090;
 
     &:hover {
       color: $gray-1;
@@ -33,12 +43,20 @@
   }
 }
 
+.breadcrumbArrow {
+  width: 14px;
+  height: 14px;
+  flex-shrink: 0;
+  color: #909090;
+}
+
 .title {
-  font-size: 22px;
+  font-size: 24px;
   line-height: 28px;
-  font-weight: 700;
+  font-weight: 600;
   color: $gray-1;
   margin: 0;
+  white-space: nowrap;
 }
 
 .action {

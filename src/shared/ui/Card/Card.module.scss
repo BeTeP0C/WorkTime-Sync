@@ -53,10 +53,12 @@
 
 .headerIcon {
   display: inline-flex;
+  flex-shrink: 0;
   color: $gray-3;
 
   svg {
     @include square(16px);
+    flex-shrink: 0;
   }
 }
 

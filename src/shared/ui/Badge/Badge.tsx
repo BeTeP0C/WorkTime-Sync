@@ -15,7 +15,7 @@ export type BadgeTone =
   | 'low'
   | 'info'
 
-export type BadgeSize = 'sm' | 'md'
+export type BadgeSize = 'sm' | 'md' | 'lg'
 
 interface BadgeProps extends HTMLAttributes<HTMLSpanElement> {
   tone?: BadgeTone

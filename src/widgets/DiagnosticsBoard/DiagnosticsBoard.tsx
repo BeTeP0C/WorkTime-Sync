@@ -1,23 +1,36 @@
 'use client'
 
 import Link from 'next/link'
+import cn from 'classnames'
 import { observer } from 'mobx-react-lite'
 
 import { CATEGORY_LABEL_RU, DiagnosticsCategory } from '@/app-store/stores/EmployeesStore'
-import { Employee, RISK_SHORT_LABEL_RU } from '@/entities/employee/model/types'
+import { Employee } from '@/entities/employee/model/types'
 import { Avatar } from '@/shared/ui/Avatar'
-import { Badge, BadgeTone } from '@/shared/ui/Badge'
 import { Button } from '@/shared/ui/Button'
-import { ProgressBar } from '@/shared/ui/ProgressBar'
+import { ProgressBar, ProgressTone } from '@/shared/ui/ProgressBar'
 
 import s from './DiagnosticsBoard.module.scss'
 
-const CATEGORY_TONE: Record<DiagnosticsCategory, BadgeTone> = {
-  actual: 'low',
+const COLUMN_TITLE: Partial<Record<DiagnosticsCategory, string>> = {
+  outside_schedule: 'Вне графика',
+  pending_confirmation: 'Подтвердить',
+}
+
+const CATEGORY_AVATAR_BG: Record<DiagnosticsCategory, string> = {
+  actual: '#22c55e',
+  outdated: '#ef4444',
+  outside_schedule: '#f97316',
+  overloaded: '#f59e0b',
+  pending_confirmation: '#3b6fe8',
+}
+
+const CATEGORY_BAR_TONE: Record<DiagnosticsCategory, ProgressTone> = {
+  actual: 'success',
   outdated: 'critical',
   outside_schedule: 'high',
-  overloaded: 'high',
-  pending_confirmation: 'info',
+  overloaded: 'medium',
+  pending_confirmation: 'primary',
 }
 
 interface DiagnosticsBoardProps {
@@ -36,10 +49,9 @@ export const DiagnosticsBoard = observer(function DiagnosticsBoard({
       {categoriesOrder.map((category) => {
         const list = byCategory[category]
         return (
-          <div key={category} className={s.column}>
+          <div key={category} className={cn(s.column, s[`column_${category}`])}>
             <div className={s.columnHeader}>
-              <span className={`${s.dot} ${s[`dot_${category}`]}`} />
-              <span className={s.columnTitle}>{CATEGORY_LABEL_RU[category]}</span>
+              <span className={s.columnTitle}>{COLUMN_TITLE[category] ?? CATEGORY_LABEL_RU[category]}</span>
               <span className={s.columnCount}>{list.length}</span>
             </div>
 
@@ -70,48 +82,43 @@ interface CardProps {
 function EmployeeKanbanCard({ emp, category, reason }: CardProps) {
   const m = emp.metric
   if (!m) return null
-  const tone = CATEGORY_TONE[category]
   const buttonLabel =
-    category === 'outdated' || category === 'outside_schedule'
+    category === 'outdated'
       ? 'Запросить'
-      : category === 'overloaded'
-        ? 'Рекомендации'
-        : category === 'pending_confirmation'
-          ? 'Повторить запрос'
-          : 'Профиль'
-
-  const buttonVariant = category === 'actual' ? 'secondary' : 'primary'
+      : category === 'outside_schedule'
+        ? 'Конфликты'
+        : category === 'overloaded'
+          ? 'Рекомендации'
+          : category === 'pending_confirmation'
+            ? 'Повторить запрос'
+            : 'Профиль'
 
   return (
     <div className={s.card}>
       <div className={s.cardHead}>
-        <Avatar initials={emp.initials} fullName={emp.fullName} colorSeed={emp.id} size="sm" />
+        <Avatar
+          initials={emp.initials}
+          fullName={emp.fullName}
+          bg={CATEGORY_AVATAR_BG[category]}
+          size="lg"
+        />
         <div className={s.cardInfo}>
           <div className={s.cardName}>{shortName(emp.fullName)}</div>
           <div className={s.cardPosition}>{shortPosition(emp.position)}</div>
         </div>
+      </div>
+      <div className={s.cardBarRow}>
+        <ProgressBar
+          value={m.actualityScore}
+          tone={CATEGORY_BAR_TONE[category]}
+          size="md"
+          className={s.bar}
+        />
         <span className={s.score}>{m.actualityScore.toFixed(2)}</span>
       </div>
-      <ProgressBar
-        value={m.actualityScore}
-        tone={
-          m.riskLevel === 'critical'
-            ? 'critical'
-            : m.riskLevel === 'high'
-              ? 'high'
-              : m.riskLevel === 'medium'
-                ? 'medium'
-                : 'success'
-        }
-        size="sm"
-        className={s.bar}
-      />
       <div className={s.reason}>{reason || labelByCategory(category, emp)}</div>
-      <Badge tone={tone} size="sm" className={s.badge}>
-        {RISK_SHORT_LABEL_RU[m.riskLevel]}
-      </Badge>
       <Link href={`/employees/${emp.id}`} className={s.btnLink}>
-        <Button variant={buttonVariant} size="sm" fullWidth>
+        <Button size="md" fullWidth className={cn(s.cardBtn, s[`cardBtn_${category}`])}>
           {buttonLabel}
         </Button>
       </Link>

@@ -2,15 +2,28 @@
 
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
+
 import cn from 'classnames'
 
-import { Avatar } from '@/shared/ui/Avatar'
+import {
+  ChartHistogramIcon,
+  ChartPieIcon,
+  ChartTreeIcon,
+  HomeIcon,
+  InterrogationIcon,
+  LogoIcon,
+  UserAddIcon,
+  UserIcon,
+} from '@/shared/icons'
 
 import s from './AppSidebar.module.scss'
+
+type IconComponent = (props: React.SVGProps<SVGSVGElement>) => JSX.Element
 
 interface NavItem {
   href: string
   label: string
+  icon: IconComponent
   match: (pathname: string) => boolean
 }
 
@@ -22,7 +35,14 @@ interface NavSection {
 const SECTIONS: NavSection[] = [
   {
     title: 'Главная',
-    items: [{ href: '/dashboard', label: 'Главная', match: (p) => p === '/dashboard' }],
+    items: [
+      {
+        href: '/dashboard',
+        label: 'Главная',
+        icon: HomeIcon,
+        match: (p) => p === '/dashboard',
+      },
+    ],
   },
   {
     title: 'Сотрудники',
@@ -30,19 +50,49 @@ const SECTIONS: NavSection[] = [
       {
         href: '/employees/emp-mp',
         label: 'Профиль сотрудника',
+        icon: UserIcon,
         match: (p) => p.startsWith('/employees/'),
       },
-      { href: '/diagnostics', label: 'Диагностика', match: (p) => p === '/diagnostics' },
+      {
+        href: '/diagnostics',
+        label: 'Диагностика',
+        icon: ChartPieIcon,
+        match: (p) => p === '/diagnostics',
+      },
+      {
+        href: '/metrics',
+        label: 'Расчёт показателей',
+        icon: ChartHistogramIcon,
+        match: (p) => p === '/metrics',
+      },
     ],
   },
   {
     title: 'Команда',
-    items: [{ href: '/teams/team-dev', label: 'Команда', match: (p) => p.startsWith('/teams/') }],
+    items: [
+      {
+        href: '/teams/team-dev',
+        label: 'Команда',
+        icon: ChartTreeIcon,
+        match: (p) => p.startsWith('/teams/') && p !== '/teams/create',
+      },
+      {
+        href: '/teams/create',
+        label: 'Создание команды',
+        icon: UserAddIcon,
+        match: (p) => p === '/teams/create',
+      },
+    ],
   },
   {
     title: 'Планирование',
     items: [
-      { href: '/recommendations', label: 'Рекомендации', match: (p) => p === '/recommendations' },
+      {
+        href: '/recommendations',
+        label: 'Рекомендации',
+        icon: InterrogationIcon,
+        match: (p) => p === '/recommendations',
+      },
     ],
   },
 ]
@@ -52,19 +102,15 @@ export function AppSidebar() {
 
   return (
     <aside className={s.sidebar}>
-      <Link href="/dashboard" className={s.logo}>
-        <span className={s.logoIcon}>
-          <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
-            <rect width="20" height="20" rx="5" fill="#2563eb" />
-            <circle cx="10" cy="10" r="5" stroke="white" strokeWidth="1.5" fill="none" />
-            <path d="M10 7v3l2 1.5" stroke="white" strokeWidth="1.5" strokeLinecap="round" />
-          </svg>
-        </span>
-        <span className={s.logoText}>
+      <div className={s.logo}>
+        <LogoIcon className={s.logoIcon} />
+        <div className={s.logoText}>
           <span className={s.logoTitle}>WorkTime</span>
           <span className={s.logoSubtitle}>Sync</span>
-        </span>
-      </Link>
+        </div>
+      </div>
+
+      <div className={s.divider} />
 
       <nav className={s.nav}>
         {SECTIONS.map((section) => (
@@ -72,14 +118,15 @@ export function AppSidebar() {
             <div className={s.sectionTitle}>{section.title}</div>
             {section.items.map((item) => {
               const active = item.match(pathname)
+              const Icon = item.icon
               return (
                 <Link
                   key={item.href}
                   href={item.href}
                   className={cn(s.navLink, active && s.navLinkActive)}
                 >
-                  <span className={s.navDot} aria-hidden />
-                  <span>{item.label}</span>
+                  <Icon className={s.navIcon} />
+                  <span className={s.navLabel}>{item.label}</span>
                 </Link>
               )
             })}
@@ -87,10 +134,12 @@ export function AppSidebar() {
         ))}
       </nav>
 
+      <div className={s.divider} />
+
       <div className={s.profile}>
-        <Avatar initials="АИ" fullName="Алиса Иванова" colorSeed="head" size="md" />
+        <div className={s.profileAvatar}>АИ</div>
         <div className={s.profileInfo}>
-          <div className={s.profileName}>Алиса Иванова</div>
+          <div className={s.profileName}>Алексей Иванов</div>
           <div className={s.profileRole}>Руководитель</div>
         </div>
       </div>

@@ -1,7 +1,7 @@
 'use client'
 
 import Link from 'next/link'
-import { useEffect, useState } from 'react'
+import { ComponentType, SVGProps, useEffect, useState } from 'react'
 import { observer } from 'mobx-react-lite'
 
 import { EmployeeProfileStore } from '@/app-store/stores/EmployeeProfileStore'
@@ -11,8 +11,16 @@ import {
   EXCEPTION_STATUS_RU,
   ScheduleException,
 } from '@/entities/exception/model/types'
-import { Recommendation, SEVERITY_LABEL_RU } from '@/entities/recommendation/model/types'
 import { WEEKDAY_LABEL_RU, WeekDayIndex } from '@/entities/schedule/model/types'
+import {
+  PencilIcon,
+  PlaneIcon,
+  PokerChipIcon,
+  ShieldExclamationIcon,
+  SignOutIcon,
+  SnowflakeIcon,
+  UserIcon,
+} from '@/shared/icons'
 import { formatDateMonth, formatDateRange, formatRelativeUpdated } from '@/shared/lib/format'
 import { Avatar } from '@/shared/ui/Avatar'
 import { Badge, BadgeTone } from '@/shared/ui/Badge'
@@ -29,16 +37,10 @@ const EXCEPTION_TONE: Record<string, BadgeTone> = {
   business_trip: 'medium',
 }
 
-const EXCEPTION_ICON: Record<string, string> = {
-  vacation: '🏖',
-  sick_leave: '🤒',
-  business_trip: '✈',
-}
-
-const SEVERITY_TONE: Record<Recommendation['severity'], BadgeTone> = {
-  critical: 'critical',
-  high: 'high',
-  medium: 'medium',
+const EXCEPTION_ICON: Record<string, ComponentType<SVGProps<SVGSVGElement>>> = {
+  vacation: PokerChipIcon,
+  sick_leave: SnowflakeIcon,
+  business_trip: PlaneIcon,
 }
 
 interface Props {
@@ -84,18 +86,17 @@ export const EmployeeProfileClient = observer(function EmployeeProfileClient({
       <AppHeader
         breadcrumb={
           <>
+            <UserIcon className={s.crumbIcon} />
             <Link href="/diagnostics">Профили</Link>
-            <span>›</span>
-            <span>{employee.fullName}</span>
           </>
         }
         title={employee.fullName}
         action={
           <>
-            <Button variant="secondary" size="md">
+            <Button variant="secondary" size="md" leftIcon={<PencilIcon />}>
               Редактировать
             </Button>
-            <Button variant="primary" size="md">
+            <Button variant="primary" size="md" leftIcon={<SignOutIcon />}>
               Запросить обновление
             </Button>
           </>
@@ -107,6 +108,7 @@ export const EmployeeProfileClient = observer(function EmployeeProfileClient({
       {m && <EmployeeMetricsCards metric={m} />}
 
       <div className={s.grid}>
+        <div className={s.gridCol}>
         <Card padding="lg" className={s.scheduleCard}>
           <CardHeader title="Рабочий график" />
           {schedule ? (
@@ -131,35 +133,13 @@ export const EmployeeProfileClient = observer(function EmployeeProfileClient({
                 value={WORK_FORMAT_LABEL_RU[employee.workFormat]}
               />
               <ScheduleRow
-                label="Последнее обновление"
+                label="Последние обновления"
                 value={formatDateMonth(schedule.lastUpdatedAt)}
                 valueClassName={s.scheduleStale}
               />
             </div>
           ) : (
             <div className={s.empty}>График не задан</div>
-          )}
-        </Card>
-
-        <Card padding="lg" className={s.recsCard}>
-          <CardHeader title="Рекомендации AI" />
-          {recommendations.length === 0 ? (
-            <div className={s.empty}>Рекомендаций нет — данные актуальны</div>
-          ) : (
-            <ul className={s.recs}>
-              {recommendations.map((rec, idx) => (
-                <li key={`${rec.code}-${idx}`} className={s.recItem}>
-                  <span className={`${s.recDot} ${s[`recDot_${rec.severity}`]}`} />
-                  <div className={s.recBody}>
-                    <div className={s.recTitle}>{rec.title}</div>
-                    <div className={s.recReason}>{rec.reason}</div>
-                  </div>
-                  <Badge tone={SEVERITY_TONE[rec.severity]} size="sm">
-                    {SEVERITY_LABEL_RU[rec.severity]}
-                  </Badge>
-                </li>
-              ))}
-            </ul>
           )}
         </Card>
 
@@ -174,9 +154,35 @@ export const EmployeeProfileClient = observer(function EmployeeProfileClient({
               ))}
             </div>
           )}
-          <Button variant="secondary" size="sm" className={s.addExceptionBtn}>
-            + Добавить исключение
+          <Button
+            variant="primary"
+            size="md"
+            className={s.addExceptionBtn}
+            leftIcon={<span className={s.addExceptionPlus}>+</span>}
+          >
+            Добавить исключение
           </Button>
+        </Card>
+        </div>
+
+        <div className={s.gridCol}>
+        <Card padding="lg" className={s.recsCard}>
+          <CardHeader title="Рекомендации AI" />
+          {recommendations.length === 0 ? (
+            <div className={s.empty}>Рекомендаций нет — данные актуальны</div>
+          ) : (
+            <ul className={s.recs}>
+              {recommendations.map((rec, idx) => (
+                <li key={`${rec.code}-${idx}`} className={s.recItem}>
+                  <span className={s.recDot} />
+                  <div className={s.recBody}>
+                    <div className={s.recTitle}>{rec.title}</div>
+                    <div className={s.recReason}>{rec.reason}</div>
+                  </div>
+                </li>
+              ))}
+            </ul>
+          )}
         </Card>
 
         <Card padding="lg" className={s.confirmCard}>
@@ -190,6 +196,7 @@ export const EmployeeProfileClient = observer(function EmployeeProfileClient({
             <ScheduleRow label="Статус ответа" value="Нет ответа" valueClassName={s.confirmStale} />
           </div>
         </Card>
+        </div>
       </div>
     </>
   )
@@ -207,23 +214,25 @@ function ProfileHero({ employee, riskTone }: { employee: Employee; riskTone: Bad
       <div className={s.heroInfo}>
         <h2 className={s.heroName}>{employee.fullName}</h2>
         <div className={s.heroPosition}>
-          {employee.position} · {employee.department}
+          <span>{employee.position}</span>
+          <span>{employee.department}</span>
         </div>
         <div className={s.heroTags}>
-          <Badge tone="primary" size="md">
+          <Badge tone="primary" size="lg">
             {WORK_FORMAT_LABEL_RU[employee.workFormat]}
           </Badge>
-          <Badge tone="success" size="md">
+          <Badge tone="success" size="lg">
             {employee.timezoneLabel}
           </Badge>
-          <Badge tone="warning" size="md">
+          <Badge tone="warning" size="lg">
             {formatRelativeUpdated(employee.updatedAt)}
           </Badge>
         </div>
       </div>
       {employee.metric && (
-        <Badge tone={riskTone} size="md" pill>
-          ⚠ {RISK_LABEL_RU[employee.metric.riskLevel]} риск
+        <Badge tone={riskTone} size="lg" className={s.heroRiskBadge}>
+          <ShieldExclamationIcon className={s.heroRiskIcon} />
+          {RISK_LABEL_RU[employee.metric.riskLevel]} риск
         </Badge>
       )}
     </Card>
@@ -248,14 +257,17 @@ function ScheduleRow({
 }
 
 function ExceptionRow({ exc }: { exc: ScheduleException }) {
+  const Icon = EXCEPTION_ICON[exc.type]
   return (
     <div className={s.exceptionRow}>
-      <span className={s.exceptionIcon}>{EXCEPTION_ICON[exc.type]}</span>
+      <div className={`${s.exceptionIconBg} ${s[`exceptionIconBg_${exc.type}`] ?? ''}`}>
+        {Icon && <Icon className={s.exceptionIcon} />}
+      </div>
       <div className={s.exceptionInfo}>
         <div className={s.exceptionTitle}>{EXCEPTION_LABEL_RU[exc.type]}</div>
         <div className={s.exceptionDates}>{formatDateRange(exc.startDt, exc.endDt)}</div>
       </div>
-      <Badge tone={EXCEPTION_TONE[exc.type]} size="sm">
+      <Badge tone={EXCEPTION_TONE[exc.type]} size="lg" pill>
         {EXCEPTION_STATUS_RU[exc.status]}
       </Badge>
     </div>

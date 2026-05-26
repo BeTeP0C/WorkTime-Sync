@@ -31,7 +31,7 @@ export function RiskDistributionChart({ distribution }: RiskDistributionChartPro
 
   return (
     <Card padding="md" className={s.card}>
-      <CardHeader title="Распределение по риску" />
+      <CardHeader title="Распределение по риску" className={s.title} />
 
       <div className={s.chartWrap}>
         <ResponsiveContainer width="100%" height={160}>

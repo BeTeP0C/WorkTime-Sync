@@ -20,85 +20,111 @@
   display: flex;
   flex-direction: column;
   gap: 12px;
+  padding: 16px;
+  background: $gray-6;
+  border-radius: $radius-lg;
 }
 
 .columnHeader {
   display: flex;
   align-items: center;
   gap: 8px;
-  padding: 10px 12px;
-  background: $bg-elevated;
-  border: $border-default;
-  border-radius: $radius-md;
-}
-
-.dot {
-  width: 8px;
-  height: 8px;
-  border-radius: 50%;
-  flex-shrink: 0;
-}
-
-.dot_actual {
-  background: $risk-low;
-}
-
-.dot_outdated {
-  background: $risk-critical;
-}
-
-.dot_outside_schedule,
-.dot_overloaded {
-  background: $risk-high;
-}
-
-.dot_pending_confirmation {
-  background: $primary;
 }
 
 .columnTitle {
   flex: 1;
-  font-size: 13px;
+  font-size: 14px;
   font-weight: 600;
-  color: $gray-1;
 }
 
 .columnCount {
-  font-size: 12px;
+  font-size: 13px;
   font-weight: 600;
-  color: $gray-3;
-  background: $gray-7;
-  border-radius: $radius-pill;
-  padding: 2px 8px;
+  border-radius: $radius-md;
+  padding: 2px 10px;
+}
+
+.column_actual {
+  .columnTitle {
+    color: $risk-low;
+  }
+
+  .columnCount {
+    background: rgba($risk-low, 0.2);
+    color: #009c39;
+  }
+}
+
+.column_outdated {
+  .columnTitle {
+    color: $risk-critical;
+  }
+
+  .columnCount {
+    background: rgba($risk-critical, 0.2);
+    color: $risk-critical;
+  }
+}
+
+.column_outside_schedule {
+  .columnTitle {
+    color: $risk-high;
+  }
+
+  .columnCount {
+    background: rgba($risk-high, 0.2);
+    color: $risk-high;
+  }
+}
+
+.column_overloaded {
+  .columnTitle {
+    color: #f59e0b;
+  }
+
+  .columnCount {
+    background: rgba(#f59e0b, 0.2);
+    color: #c37a00;
+  }
+}
+
+.column_pending_confirmation {
+  .columnTitle {
+    color: $primary;
+  }
+
+  .columnCount {
+    background: rgba($primary, 0.2);
+    color: $primary;
+  }
 }
 
 .list {
   display: flex;
   flex-direction: column;
-  gap: 8px;
+  gap: 12px;
 }
 
 .empty {
-  padding: 8px 12px;
-  font-size: 12px;
+  padding: 8px 4px;
+  font-size: 13px;
   color: $gray-3;
 }
 
 .card {
-  background: $bg-elevated;
-  border: $border-default;
-  border-radius: $radius-md;
-  padding: 12px;
+  background: $white;
+  border-radius: $radius-lg;
+  padding: 14px;
   display: flex;
   flex-direction: column;
-  gap: 6px;
+  gap: 12px;
   box-shadow: $shadow-card;
 }
 
 .cardHead {
   display: flex;
   align-items: center;
-  gap: 8px;
+  gap: 10px;
 }
 
 .cardInfo {
@@ -107,39 +133,111 @@
 }
 
 .cardName {
-  font-size: 13px;
-  font-weight: 600;
+  font-size: 14px;
+  font-weight: 500;
   color: $gray-1;
   @include ellipsis;
 }
 
 .cardPosition {
-  font-size: 11px;
+  font-size: 12px;
   color: $gray-3;
+  font-weight: 500;
 }
 
-.score {
-  font-size: 12px;
-  font-weight: 700;
-  color: $gray-1;
-  font-variant-numeric: tabular-nums;
+.cardBarRow {
+  display: flex;
+  align-items: center;
+  gap: 10px;
 }
 
 .bar {
-  margin: 2px 0 4px;
+  flex: 1;
+}
+
+.score {
+  font-size: 13px;
+  font-weight: 500;
+  color: $gray-3;
+  font-variant-numeric: tabular-nums;
+  flex-shrink: 0;
 }
 
 .reason {
-  font-size: 11px;
+  font-size: 13px;
   color: $gray-3;
-  line-height: 14px;
-  min-height: 14px;
-}
-
-.badge {
-  align-self: flex-start;
+  line-height: 18px;
+  font-weight: 500;
+  min-height: 18px;
 }
 
 .btnLink {
-  margin-top: 4px;
+  margin-top: auto;
+}
+
+.cardBtn {
+  height: 44px;
+  font-weight: 600;
+  font-size: 14px;
+  border-radius: $radius-lg;
+}
+
+.cardBtn_actual {
+  background: rgba($risk-low, 0.2);
+  color: #009c39;
+
+  @media (hover: hover) {
+    &:hover {
+      background: rgba($risk-low, 0.3);
+      color: #009c39;
+    }
+  }
+}
+
+.cardBtn_outdated {
+  background: rgba(#ef4444, 0.2);
+  color: #ef4444;
+
+  @media (hover: hover) {
+    &:hover {
+      background: rgba(#ef4444, 0.3);
+      color: #ef4444;
+    }
+  }
+}
+
+.cardBtn_outside_schedule {
+  background: rgba(#f97316, 0.2);
+  color: #f97316;
+
+  @media (hover: hover) {
+    &:hover {
+      background: rgba(#f97316, 0.3);
+      color: #f97316;
+    }
+  }
+}
+
+.cardBtn_overloaded {
+  background: rgba(#f59e0b, 0.2);
+  color: #f59e0b;
+
+  @media (hover: hover) {
+    &:hover {
+      background: rgba(#f59e0b, 0.3);
+      color: #f59e0b;
+    }
+  }
+}
+
+.cardBtn_pending_confirmation {
+  background: rgba($primary, 0.2);
+  color: $primary;
+
+  @media (hover: hover) {
+    &:hover {
+      background: rgba($primary, 0.3);
+      color: $primary;
+    }
+  }
 }

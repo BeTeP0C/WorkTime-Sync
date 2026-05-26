@@ -2,15 +2,33 @@
 
 .filters {
   display: flex;
-  gap: 8px;
-  margin-bottom: 16px;
+  gap: 12px;
   flex-wrap: wrap;
+}
+
+.filterBtn {
+  height: 44px;
+  padding: 0 20px;
+  background: $white;
+  color: $gray-3;
+  font-weight: 500;
+  font-size: 14px;
+  border-radius: $radius-lg;
+  box-shadow: $shadow-card;
+
+  @media (hover: hover) {
+    &:hover {
+      background: $gray-7;
+      color: $gray-2;
+    }
+  }
 }
 
 .topRow {
   display: grid;
   grid-template-columns: 1fr 280px;
-  gap: 16px;
+  align-items: start;
+  gap: 32px;
   margin-bottom: 16px;
 
   @media (max-width: 1100px) {
@@ -18,38 +36,40 @@
   }
 }
 
+.leftCol {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  min-width: 0;
+}
+
 .counters {
-  display: grid;
-  grid-template-columns: repeat(5, 1fr);
+  display: flex;
+  flex-wrap: wrap;
   gap: 12px;
-
-  @media (max-width: 1280px) {
-    grid-template-columns: repeat(3, 1fr);
-  }
-
-  @media (max-width: 700px) {
-    grid-template-columns: repeat(2, 1fr);
-  }
 }
 
 .counter {
-  min-height: 88px;
   display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  gap: 8px;
+  flex-direction: row;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 16px;
+  min-width: 160px;
 }
 
-.counterHead {
+.counterText {
   display: flex;
-  align-items: center;
-  gap: 6px;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 0;
 }
 
 .counterDot {
-  width: 8px;
-  height: 8px;
+  width: 10px;
+  height: 10px;
   border-radius: 50%;
+  flex-shrink: 0;
 }
 
 .counterDot_actual {
