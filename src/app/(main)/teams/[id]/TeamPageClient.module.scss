@@ -6,6 +6,24 @@
   color: $gray-3;
 }
 
+.crumbLink {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  color: #909090;
+  transition: color 0.15s ease;
+
+  &:hover {
+    color: $gray-1;
+  }
+}
+
+.crumbIcon {
+  width: 24px;
+  height: 24px;
+  color: currentColor;
+}
+
 .titleRow {
   display: inline-flex;
   align-items: center;

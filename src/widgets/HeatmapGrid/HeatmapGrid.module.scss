@@ -22,11 +22,9 @@
 }
 
 .headerCell {
-  font-size: 11px;
-  font-weight: 600;
-  color: $gray-3;
-  text-transform: uppercase;
-  letter-spacing: 0.04em;
+  font-size: 14px;
+  font-weight: 400;
+  color: #909090;
   padding: 8px 4px;
   text-align: center;
 }
@@ -36,13 +34,13 @@
 }
 
 .hourCell {
-  font-size: 12px;
-  color: $gray-3;
-  font-weight: 500;
+  font-size: 14px;
+  color: #909090;
+  font-weight: 400;
   padding: 0 8px;
   display: flex;
   align-items: center;
-  height: 32px;
+  height: 40px;
   font-variant-numeric: tabular-nums;
 }
 
@@ -50,9 +48,9 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  height: 32px;
+  height: 40px;
   border-radius: 6px;
-  font-size: 13px;
+  font-size: 16px;
   font-weight: 600;
   cursor: default;
   transition: transform 120ms ease;
@@ -65,10 +63,10 @@
 .legend {
   display: flex;
   align-items: center;
-  gap: 10px;
-  margin-top: 12px;
-  font-size: 11px;
-  color: $gray-3;
+  gap: 12px;
+  margin-top: 16px;
+  font-size: 14px;
+  color: #292929;
 }
 
 .legendBar {
@@ -78,8 +76,8 @@
 
 .legendChip {
   display: inline-block;
-  width: 24px;
-  height: 12px;
+  width: 28px;
+  height: 14px;
   border-radius: 3px;
 }
 

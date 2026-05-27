@@ -1,0 +1,142 @@
+@use '@/styles/colors' as *;
+@use '@/styles/mixins' as *;
+
+.root {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 24px;
+  width: 100%;
+  max-width: 480px;
+  padding: 40px;
+  background: $bg-elevated;
+  border-radius: $radius-lg;
+  box-shadow: $shadow-card;
+
+  @media (min-width: 2048px) {
+    max-width: 560px;
+    padding: 48px;
+    gap: 28px;
+  }
+
+  @media (max-width: 1024px) {
+    max-width: 440px;
+    padding: 32px;
+    gap: 20px;
+  }
+
+  @media (max-width: 375px) {
+    max-width: 100%;
+    padding: 24px;
+    gap: 16px;
+    border-radius: $radius-md;
+  }
+}
+
+.iconWrap {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 128px;
+  height: 128px;
+  border-radius: 50%;
+  background: $primary-bg;
+  color: $primary;
+  flex-shrink: 0;
+
+  @media (min-width: 2048px) {
+    width: 156px;
+    height: 156px;
+  }
+
+  @media (max-width: 1024px) {
+    width: 112px;
+    height: 112px;
+  }
+
+  @media (max-width: 375px) {
+    width: 88px;
+    height: 88px;
+  }
+}
+
+.icon {
+  width: 96px;
+  height: 96px;
+
+  @media (min-width: 2048px) {
+    width: 120px;
+    height: 120px;
+  }
+
+  @media (max-width: 1024px) {
+    width: 80px;
+    height: 80px;
+  }
+
+  @media (max-width: 375px) {
+    width: 64px;
+    height: 64px;
+  }
+}
+
+.title {
+  margin: 0;
+  font-size: 28px;
+  line-height: 36px;
+  font-weight: 700;
+  color: $gray-1;
+  letter-spacing: -0.01em;
+
+  @media (min-width: 2048px) {
+    font-size: 32px;
+    line-height: 40px;
+  }
+
+  @media (max-width: 1024px) {
+    font-size: 24px;
+    line-height: 30px;
+  }
+
+  @media (max-width: 375px) {
+    font-size: 20px;
+    line-height: 26px;
+  }
+}
+
+.text {
+  margin: 0;
+  font-size: 15px;
+  line-height: 22px;
+  font-weight: 400;
+  color: $gray-3;
+  max-width: 380px;
+
+  @media (min-width: 2048px) {
+    font-size: 17px;
+    line-height: 24px;
+    max-width: 440px;
+  }
+
+  @media (max-width: 1024px) {
+    font-size: 14px;
+    line-height: 20px;
+    max-width: 340px;
+  }
+
+  @media (max-width: 375px) {
+    font-size: 13px;
+    line-height: 18px;
+    max-width: 100%;
+  }
+}
+
+.retryBtn {
+  margin-top: 4px;
+
+  @media (max-width: 375px) {
+    width: 100%;
+    margin-top: 0;
+  }
+}

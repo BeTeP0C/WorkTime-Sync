@@ -29,6 +29,8 @@ import { Card, CardHeader } from '@/shared/ui/Card'
 import { AppHeader } from '@/widgets/AppHeader'
 import { EmployeeMetricsCards } from '@/widgets/EmployeeMetricsCards'
 
+import { EmployeeProfileSkeleton } from './EmployeeProfileSkeleton'
+
 import s from './EmployeeProfileClient.module.scss'
 
 const EXCEPTION_TONE: Record<string, BadgeTone> = {
@@ -62,12 +64,7 @@ export const EmployeeProfileClient = observer(function EmployeeProfileClient({
   const recommendations = store.recommendations.value
 
   if (store.loadingStage.isLoading || !employee) {
-    return (
-      <>
-        <AppHeader title="Загрузка..." />
-        <div className={s.empty}>Загружаем профиль…</div>
-      </>
-    )
+    return <EmployeeProfileSkeleton />
   }
 
   const m = employee.metric
@@ -109,93 +106,97 @@ export const EmployeeProfileClient = observer(function EmployeeProfileClient({
 
       <div className={s.grid}>
         <div className={s.gridCol}>
-        <Card padding="lg" className={s.scheduleCard}>
-          <CardHeader title="Рабочий график" />
-          {schedule ? (
-            <div className={s.schedule}>
-              <div className={s.workdays}>
-                {([0, 1, 2, 3, 4, 5, 6] as WeekDayIndex[]).map((d) => (
-                  <span
-                    key={d}
-                    className={schedule.workDays.includes(d) ? s.dayActive : s.dayInactive}
-                  >
-                    {WEEKDAY_LABEL_RU[d]}
-                  </span>
+          <Card padding="lg" className={s.scheduleCard}>
+            <CardHeader title="Рабочий график" />
+            {schedule ? (
+              <div className={s.schedule}>
+                <div className={s.workdays}>
+                  {([0, 1, 2, 3, 4, 5, 6] as WeekDayIndex[]).map((d) => (
+                    <span
+                      key={d}
+                      className={schedule.workDays.includes(d) ? s.dayActive : s.dayInactive}
+                    >
+                      {WEEKDAY_LABEL_RU[d]}
+                    </span>
+                  ))}
+                </div>
+                <ScheduleRow
+                  label="Рабочие часы"
+                  value={`${schedule.startTime} — ${schedule.endTime}`}
+                />
+                <ScheduleRow label="Часовой пояс" value={employee.timezoneLabel} />
+                <ScheduleRow
+                  label="Формат работы"
+                  value={WORK_FORMAT_LABEL_RU[employee.workFormat]}
+                />
+                <ScheduleRow
+                  label="Последние обновления"
+                  value={formatDateMonth(schedule.lastUpdatedAt)}
+                  valueClassName={s.scheduleStale}
+                />
+              </div>
+            ) : (
+              <div className={s.empty}>График не задан</div>
+            )}
+          </Card>
+
+          <Card padding="lg" className={s.exceptionsCard}>
+            <CardHeader title="Исключения" />
+            {exceptions.length === 0 ? (
+              <div className={s.empty}>Запланированных исключений нет</div>
+            ) : (
+              <div className={s.exceptions}>
+                {exceptions.map((exc) => (
+                  <ExceptionRow key={exc.id} exc={exc} />
                 ))}
               </div>
-              <ScheduleRow
-                label="Рабочие часы"
-                value={`${schedule.startTime} — ${schedule.endTime}`}
-              />
-              <ScheduleRow label="Часовой пояс" value={employee.timezoneLabel} />
-              <ScheduleRow
-                label="Формат работы"
-                value={WORK_FORMAT_LABEL_RU[employee.workFormat]}
-              />
-              <ScheduleRow
-                label="Последние обновления"
-                value={formatDateMonth(schedule.lastUpdatedAt)}
-                valueClassName={s.scheduleStale}
-              />
-            </div>
-          ) : (
-            <div className={s.empty}>График не задан</div>
-          )}
-        </Card>
-
-        <Card padding="lg" className={s.exceptionsCard}>
-          <CardHeader title="Исключения" />
-          {exceptions.length === 0 ? (
-            <div className={s.empty}>Запланированных исключений нет</div>
-          ) : (
-            <div className={s.exceptions}>
-              {exceptions.map((exc) => (
-                <ExceptionRow key={exc.id} exc={exc} />
-              ))}
-            </div>
-          )}
-          <Button
-            variant="primary"
-            size="md"
-            className={s.addExceptionBtn}
-            leftIcon={<span className={s.addExceptionPlus}>+</span>}
-          >
-            Добавить исключение
-          </Button>
-        </Card>
+            )}
+            <Button
+              variant="primary"
+              size="md"
+              className={s.addExceptionBtn}
+              leftIcon={<span className={s.addExceptionPlus}>+</span>}
+            >
+              Добавить исключение
+            </Button>
+          </Card>
         </div>
 
         <div className={s.gridCol}>
-        <Card padding="lg" className={s.recsCard}>
-          <CardHeader title="Рекомендации AI" />
-          {recommendations.length === 0 ? (
-            <div className={s.empty}>Рекомендаций нет — данные актуальны</div>
-          ) : (
-            <ul className={s.recs}>
-              {recommendations.map((rec, idx) => (
-                <li key={`${rec.code}-${idx}`} className={s.recItem}>
-                  <span className={s.recDot} />
-                  <div className={s.recBody}>
-                    <div className={s.recTitle}>{rec.title}</div>
-                    <div className={s.recReason}>{rec.reason}</div>
-                  </div>
-                </li>
-              ))}
-            </ul>
-          )}
-        </Card>
+          <Card padding="lg" className={s.recsCard}>
+            <CardHeader title="Рекомендации AI" />
+            {recommendations.length === 0 ? (
+              <div className={s.empty}>Рекомендаций нет — данные актуальны</div>
+            ) : (
+              <ul className={s.recs}>
+                {recommendations.map((rec, idx) => (
+                  <li key={`${rec.code}-${idx}`} className={s.recItem}>
+                    <span className={s.recDot} />
+                    <div className={s.recBody}>
+                      <div className={s.recTitle}>{rec.title}</div>
+                      <div className={s.recReason}>{rec.reason}</div>
+                    </div>
+                  </li>
+                ))}
+              </ul>
+            )}
+          </Card>
 
-        <Card padding="lg" className={s.confirmCard}>
-          <CardHeader title="Подтверждение актуальности" />
-          <p className={s.confirmText}>
-            Сотрудник не подтверждал актуальность данных {m?.daysSinceUpdate ?? 0} дня. Отправьте
-            запрос на подтверждение или обновление графика.
-          </p>
-          <div className={s.confirmRows}>
-            <ScheduleRow label="Последний запрос" value="15 апр 2026" />
-            <ScheduleRow label="Статус ответа" value="Нет ответа" valueClassName={s.confirmStale} />
-          </div>
-        </Card>
+          <Card padding="lg" className={s.confirmCard}>
+            <CardHeader title="Подтверждение актуальности" />
+            <p className={s.confirmText}>
+              Сотрудник не подтверждал актуальность данных {m?.daysSinceUpdate ?? 0} дня. Отправьте
+              запрос на подтверждение или обновление графика.
+            </p>
+            <div className={s.confirmRows}>
+              <ScheduleRow label="Последний запрос" value="15 апр 2026" />
+              <ScheduleRow
+                label="Статус ответа"
+                value="Нет ответа"
+                valueClassName={s.confirmStale}
+              />
+            </div>
+          </Card>
         </div>
       </div>
     </>

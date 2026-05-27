@@ -1,0 +1,1 @@
+export { DiagnosticsSkeleton } from './DiagnosticsSkeleton'

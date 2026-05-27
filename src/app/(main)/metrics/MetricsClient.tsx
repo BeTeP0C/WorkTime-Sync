@@ -12,10 +12,10 @@ import {
   ShieldCheckIcon,
 } from '@/shared/icons'
 import { AppHeader } from '@/widgets/AppHeader'
-import { EmployeeMetricsTable } from '@/widgets/EmployeeMetricsTable'
+import { EmployeeMetricsTable, EmployeeMetricsTableSkeleton } from '@/widgets/EmployeeMetricsTable'
 import { MetricsHeaderControls } from '@/widgets/MetricsHeaderControls'
-import { RiskAndDynamicsCard } from '@/widgets/RiskAndDynamicsCard'
-import { StatCard } from '@/widgets/StatCard'
+import { RiskAndDynamicsCard, RiskAndDynamicsCardSkeleton } from '@/widgets/RiskAndDynamicsCard'
+import { StatCard, StatCardSkeleton } from '@/widgets/StatCard'
 
 import s from './MetricsClient.module.scss'
 
@@ -41,73 +41,71 @@ export const MetricsClient = observer(function MetricsClient() {
   }, [dashboard, employees, teams])
 
   const summary = dashboard.summary.value
+  const isDashboardLoading = dashboard.loadingStage.isInitial || !summary
+  const isTableLoading = employees.list.loadingStage.isInitial
 
   return (
     <>
       <AppHeader title="Расчёт показателей" action={<MetricsHeaderControls />} />
 
       <div className={s.stats}>
-        <StatCard
-          className={s.kpiCard}
-          showTrendIcon={false}
-          icon={<ActivityIcon width={18} height={18} />}
-          label="Средний Ai"
-          value={summary ? formatScore(summary.averageActualityScore) : '—'}
-          valueColor="#f59e0b"
-          trend={
-            summary
-              ? {
-                  value: formatDelta(summary.averageActualityScoreDelta, 'score'),
-                  tone: summary.averageActualityScoreDelta >= 0 ? 'up' : 'down',
-                }
-              : undefined
-          }
-        />
-        <StatCard
-          className={s.kpiCard}
-          showTrendIcon={false}
-          icon={<ShieldCheckIcon width={18} height={18} />}
-          label="Средний RI"
-          value={summary ? formatScore(summary.averageRiskScore) : '—'}
-          valueColor="#f97316"
-          trend={
-            summary
-              ? {
-                  value: formatDelta(summary.averageRiskScoreDelta, 'score'),
-                  tone: summary.averageRiskScoreDelta > 0 ? 'down' : 'up',
-                }
-              : undefined
-          }
-        />
-        <StatCard
-          className={s.kpiCard}
-          showTrendIcon={false}
-          icon={<CalendarXIcon width={18} height={18} />}
-          label="Конфликтов CI"
-          value={summary ? `${Math.round(summary.conflictsRate * 100)}%` : '—'}
-          valueColor="#ef4444"
-          trend={
-            summary
-              ? {
-                  value: formatDelta(summary.conflictsRateDelta, 'percent'),
-                  tone: summary.conflictsRateDelta > 0 ? 'down' : 'up',
-                }
-              : undefined
-          }
-        />
-        <StatCard
-          className={s.kpiCard}
-          icon={<FireIcon width={18} height={18} />}
-          label="Перегруженных"
-          value={summary?.overloadedEmployeesCount ?? '—'}
-          valueColor="#f97316"
-          hint={summary ? `из ${summary.teamSize} в команде` : undefined}
-        />
+        {isDashboardLoading ? (
+          Array.from({ length: 4 }).map((_, i) => <StatCardSkeleton key={i} />)
+        ) : (
+          <>
+            <StatCard
+              className={s.kpiCard}
+              showTrendIcon={false}
+              icon={<ActivityIcon width={18} height={18} />}
+              label="Средний Ai"
+              value={formatScore(summary.averageActualityScore)}
+              valueColor="#f59e0b"
+              trend={{
+                value: formatDelta(summary.averageActualityScoreDelta, 'score'),
+                tone: summary.averageActualityScoreDelta >= 0 ? 'up' : 'down',
+              }}
+            />
+            <StatCard
+              className={s.kpiCard}
+              showTrendIcon={false}
+              icon={<ShieldCheckIcon width={18} height={18} />}
+              label="Средний RI"
+              value={formatScore(summary.averageRiskScore)}
+              valueColor="#f97316"
+              trend={{
+                value: formatDelta(summary.averageRiskScoreDelta, 'score'),
+                tone: summary.averageRiskScoreDelta > 0 ? 'down' : 'up',
+              }}
+            />
+            <StatCard
+              className={s.kpiCard}
+              showTrendIcon={false}
+              icon={<CalendarXIcon width={18} height={18} />}
+              label="Конфликтов CI"
+              value={`${Math.round(summary.conflictsRate * 100)}%`}
+              valueColor="#ef4444"
+              trend={{
+                value: formatDelta(summary.conflictsRateDelta, 'percent'),
+                tone: summary.conflictsRateDelta > 0 ? 'down' : 'up',
+              }}
+            />
+            <StatCard
+              className={s.kpiCard}
+              icon={<FireIcon width={18} height={18} />}
+              label="Перегруженных"
+              value={summary.overloadedEmployeesCount}
+              valueColor="#f97316"
+              hint={`из ${summary.teamSize} в команде`}
+            />
+          </>
+        )}
       </div>
 
       <div className={s.grid}>
-        <EmployeeMetricsTable />
-        {summary && (
+        {isTableLoading ? <EmployeeMetricsTableSkeleton /> : <EmployeeMetricsTable />}
+        {isDashboardLoading ? (
+          <RiskAndDynamicsCardSkeleton />
+        ) : (
           <RiskAndDynamicsCard
             distribution={summary.employeesByRiskLevel}
             history={summary.averageActualityScoreHistory}

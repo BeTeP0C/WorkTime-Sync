@@ -34,3 +34,7 @@ export function useTeamsStore() {
 export function useDashboardStore() {
   return useRootStore().dashboardStore
 }
+
+export function useAuthStore() {
+  return useRootStore().authStore
+}

@@ -1,4 +1,8 @@
 export const API_URLS = {
+  authLogin: () => '/auth/login',
+  authRegister: () => '/auth/register',
+  authMe: () => '/auth/me',
+
   dashboardSummary: () => '/dashboard/summary',
 
   employees: () => '/employees',

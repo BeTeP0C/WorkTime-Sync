@@ -1,10 +1,12 @@
 'use client'
 
+import Link from 'next/link'
 import { useEffect, useMemo, useState } from 'react'
 import { addDays } from 'date-fns'
 import { observer } from 'mobx-react-lite'
 
 import { TeamPageStore } from '@/app-store/stores/TeamPageStore'
+import { CalendarIcon, ChartTreeIcon, SignOutIcon } from '@/shared/icons'
 import { formatDateRange } from '@/shared/lib/format'
 import { Avatar } from '@/shared/ui/Avatar'
 import { Badge } from '@/shared/ui/Badge'
@@ -75,6 +77,12 @@ export const TeamPageClient = observer(function TeamPageClient({ teamId }: Props
   return (
     <>
       <AppHeader
+        breadcrumb={
+          <Link href="/teams/team-dev" className={s.crumbLink}>
+            <ChartTreeIcon className={s.crumbIcon} />
+            Команда
+          </Link>
+        }
         title={
           <span className={s.titleRow}>
             {team.name}
@@ -95,10 +103,15 @@ export const TeamPageClient = observer(function TeamPageClient({ teamId }: Props
         }
         action={
           <>
-            <Button variant="secondary" size="md">
-              📅 {formatDateRange(weekStart.toISOString(), weekEnd.toISOString())}
+            <Button variant="secondary" size="md" leftIcon={<CalendarIcon />}>
+              {formatDateRange(weekStart.toISOString(), weekEnd.toISOString())}
             </Button>
-            <Button variant="primary" size="md" onClick={() => store.findMeeting()}>
+            <Button
+              variant="primary"
+              size="md"
+              leftIcon={<SignOutIcon />}
+              onClick={() => store.findMeeting()}
+            >
               Найти время для встречи
             </Button>
           </>

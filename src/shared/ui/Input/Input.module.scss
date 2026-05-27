@@ -1,0 +1,127 @@
+@use '@/styles/colors' as *;
+@use '@/styles/mixins' as *;
+
+.root {
+  display: inline-flex;
+  flex-direction: column;
+  gap: 6px;
+  min-width: 0;
+}
+
+.fullWidth {
+  width: 100%;
+}
+
+.label {
+  font-size: 13px;
+  font-weight: 500;
+  line-height: 16px;
+  color: $gray-2;
+
+  @media (max-width: 375px) {
+    font-size: 12px;
+  }
+}
+
+.field {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: $white;
+  border: 1px solid $gray-4;
+  border-radius: $radius-md;
+  padding: 0 12px;
+  min-width: 0;
+  width: 100%;
+  color: $gray-1;
+  @include transition(border-color, box-shadow);
+
+  &:focus-within {
+    border-color: $primary;
+    box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.15);
+  }
+}
+
+.fieldError {
+  border-color: $error;
+
+  &:focus-within {
+    border-color: $error;
+    box-shadow: 0 0 0 3px rgba(220, 38, 38, 0.15);
+  }
+}
+
+.size_sm {
+  height: 28px;
+  font-size: 12px;
+  line-height: 16px;
+}
+
+.size_md {
+  height: 36px;
+  font-size: 13px;
+  line-height: 18px;
+}
+
+.size_lg {
+  height: 44px;
+  font-size: 14px;
+  line-height: 20px;
+
+  @media (max-width: 375px) {
+    height: 40px;
+  }
+}
+
+.input {
+  flex: 1;
+  min-width: 0;
+  height: 100%;
+  border: none;
+  outline: none;
+  background: transparent;
+  color: inherit;
+  font: inherit;
+  padding: 0;
+
+  &::placeholder {
+    color: $gray-3;
+  }
+
+  &:disabled {
+    color: $gray-3;
+    cursor: not-allowed;
+  }
+}
+
+.leftIcon,
+.rightSlot {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  color: $gray-3;
+  line-height: 0;
+
+  svg {
+    @include square(16px);
+  }
+}
+
+.rightSlot {
+  margin-right: -4px;
+}
+
+.message {
+  font-size: 12px;
+  line-height: 16px;
+  color: $gray-3;
+
+  @media (max-width: 375px) {
+    font-size: 11px;
+  }
+}
+
+.messageError {
+  color: $error;
+}

@@ -4,6 +4,20 @@
   display: flex;
   gap: 12px;
   flex-wrap: wrap;
+
+  @media (min-width: 2048px) {
+    gap: 16px;
+  }
+
+  @media (max-width: 1024px) {
+    gap: 10px;
+  }
+
+  @media (max-width: 375px) {
+    flex-direction: column;
+    gap: 8px;
+    width: 100%;
+  }
 }
 
 .filterBtn {
@@ -22,6 +36,26 @@
       color: $gray-2;
     }
   }
+
+  @media (min-width: 2048px) {
+    height: 52px;
+    padding: 0 24px;
+    font-size: 15px;
+  }
+
+  @media (max-width: 1024px) {
+    height: 42px;
+    padding: 0 16px;
+    font-size: 13px;
+  }
+
+  @media (max-width: 375px) {
+    width: 100%;
+    height: 42px;
+    padding: 0 14px;
+    font-size: 13px;
+    justify-content: flex-start;
+  }
 }
 
 .topRow {
@@ -31,8 +65,20 @@
   gap: 32px;
   margin-bottom: 16px;
 
-  @media (max-width: 1100px) {
+  @media (min-width: 2048px) {
+    grid-template-columns: 1fr 360px;
+    gap: 48px;
+    margin-bottom: 24px;
+  }
+
+  @media (max-width: 1024px) {
     grid-template-columns: 1fr;
+    gap: 20px;
+  }
+
+  @media (max-width: 375px) {
+    gap: 16px;
+    margin-bottom: 12px;
   }
 }
 
@@ -41,12 +87,35 @@
   flex-direction: column;
   gap: 16px;
   min-width: 0;
+
+  @media (min-width: 2048px) {
+    gap: 24px;
+  }
+
+  @media (max-width: 375px) {
+    gap: 12px;
+  }
 }
 
 .counters {
   display: flex;
   flex-wrap: wrap;
   gap: 12px;
+
+  @media (min-width: 2048px) {
+    gap: 16px;
+  }
+
+  @media (max-width: 1024px) {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 10px;
+  }
+
+  @media (max-width: 375px) {
+    grid-template-columns: 1fr;
+    gap: 8px;
+  }
 }
 
 .counter {
@@ -56,6 +125,21 @@
   gap: 12px;
   padding: 12px 16px;
   min-width: 160px;
+
+  @media (min-width: 2048px) {
+    min-width: 200px;
+    padding: 16px 20px;
+    gap: 16px;
+  }
+
+  @media (max-width: 1024px) {
+    min-width: 0;
+  }
+
+  @media (max-width: 375px) {
+    padding: 10px 12px;
+    gap: 10px;
+  }
 }
 
 .counterText {
@@ -70,6 +154,11 @@
   height: 10px;
   border-radius: 50%;
   flex-shrink: 0;
+
+  @media (min-width: 2048px) {
+    width: 12px;
+    height: 12px;
+  }
 }
 
 .counterDot_actual {
@@ -93,6 +182,14 @@
   font-size: 12px;
   color: $gray-2;
   font-weight: 500;
+
+  @media (min-width: 2048px) {
+    font-size: 13px;
+  }
+
+  @media (max-width: 375px) {
+    font-size: 11px;
+  }
 }
 
 .counterValue {
@@ -100,8 +197,30 @@
   font-weight: 700;
   line-height: 1;
   color: $gray-1;
+
+  @media (min-width: 2048px) {
+    font-size: 36px;
+  }
+
+  @media (max-width: 1024px) {
+    font-size: 26px;
+  }
+
+  @media (max-width: 375px) {
+    font-size: 24px;
+  }
 }
 
 .chartCol {
   min-width: 0;
+
+  @media (max-width: 1024px) {
+    max-width: 360px;
+    width: 100%;
+    align-self: center;
+  }
+
+  @media (max-width: 375px) {
+    max-width: 100%;
+  }
 }

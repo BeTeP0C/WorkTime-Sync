@@ -1,0 +1,76 @@
+@use '@/styles/colors' as *;
+
+.card {
+  justify-content: space-between;
+}
+
+.icon {
+  width: 18px;
+  height: 18px;
+  flex-shrink: 0;
+}
+
+.label {
+  width: 60%;
+  max-width: 160px;
+  height: 14px;
+
+  @media (min-width: 2048px) {
+    height: 15px;
+    max-width: 200px;
+  }
+
+  @media (max-width: 1024px) {
+    height: 13px;
+    max-width: 140px;
+  }
+
+  @media (max-width: 375px) {
+    height: 12px;
+  }
+}
+
+.value {
+  width: 88px;
+  height: 36px;
+
+  @media (min-width: 2048px) {
+    width: 108px;
+    height: 42px;
+  }
+
+  @media (max-width: 1440px) {
+    width: 76px;
+    height: 32px;
+  }
+
+  @media (max-width: 1024px) {
+    width: 64px;
+    height: 28px;
+  }
+
+  @media (max-width: 375px) {
+    width: 56px;
+    height: 26px;
+  }
+}
+
+.trend {
+  width: 140px;
+  height: 14px;
+
+  @media (min-width: 2048px) {
+    width: 160px;
+    height: 15px;
+  }
+
+  @media (max-width: 1024px) {
+    width: 120px;
+    height: 13px;
+  }
+
+  @media (max-width: 375px) {
+    width: 100px;
+    height: 12px;
+  }
+}

@@ -1,10 +1,13 @@
 'use client'
 
 import Link from 'next/link'
-import { usePathname } from 'next/navigation'
+import { usePathname, useRouter } from 'next/navigation'
+import { observer } from 'mobx-react-lite'
 
 import cn from 'classnames'
 
+import { useAuthStore } from '@/app-store/context'
+import { USER_ROLE_LABEL_RU } from '@/entities/auth/model/types'
 import {
   ChartHistogramIcon,
   ChartPieIcon,
@@ -12,6 +15,7 @@ import {
   HomeIcon,
   InterrogationIcon,
   LogoIcon,
+  SignOutIcon,
   UserAddIcon,
   UserIcon,
 } from '@/shared/icons'
@@ -97,8 +101,16 @@ const SECTIONS: NavSection[] = [
   },
 ]
 
-export function AppSidebar() {
+export const AppSidebar = observer(function AppSidebar() {
   const pathname = usePathname() ?? ''
+  const auth = useAuthStore()
+  const router = useRouter()
+  const user = auth.currentUser.value
+
+  const handleLogout = () => {
+    auth.logout()
+    router.replace('/auth/login')
+  }
 
   return (
     <aside className={s.sidebar}>
@@ -137,12 +149,25 @@ export function AppSidebar() {
       <div className={s.divider} />
 
       <div className={s.profile}>
-        <div className={s.profileAvatar}>АИ</div>
+        <div className={s.profileAvatar}>{user?.initials ?? '??'}</div>
         <div className={s.profileInfo}>
-          <div className={s.profileName}>Алексей Иванов</div>
-          <div className={s.profileRole}>Руководитель</div>
+          <div className={s.profileName}>{user?.fullName ?? 'Гость'}</div>
+          <div className={s.profileRole}>
+            {user ? USER_ROLE_LABEL_RU[user.role] : 'Не авторизован'}
+          </div>
         </div>
+        {user && (
+          <button
+            type="button"
+            className={s.logout}
+            onClick={handleLogout}
+            aria-label="Выйти"
+            title="Выйти"
+          >
+            <SignOutIcon className={s.logoutIcon} />
+          </button>
+        )}
       </div>
     </aside>
   )
-}
+})

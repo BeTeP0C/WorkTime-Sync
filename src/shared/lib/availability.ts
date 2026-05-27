@@ -31,12 +31,13 @@ export function buildHeatmapMatrix(
 ): HeatmapMatrix {
   const { startDate, daysCount, startHour, endHour } = config
 
+  const SHORT_WEEKDAYS = ['Вс', 'Пн', 'Вт', 'Ср', 'Чт', 'Пт', 'Сб']
   const days = Array.from({ length: daysCount }, (_, i) => {
     const date = addDays(startDate, i)
     return {
       date,
       label: format(date, 'd', { locale: ru }),
-      weekdayLabel: format(date, 'EE', { locale: ru }),
+      weekdayLabel: SHORT_WEEKDAYS[date.getDay()],
     }
   })
 

@@ -56,7 +56,8 @@ function windowsToSegments(windows: { startDt: string; endDt: string }[], date: 
 export function ScheduleTimeline({ availability, members, date }: ScheduleTimelineProps) {
   const hours: number[] = []
   for (let h = HOUR_START; h <= HOUR_END; h += 2) hours.push(h)
-  const dateLabel = `${format(date, 'EEEE', { locale: ru })} ${format(date, 'd MMMM', { locale: ru })}`
+  const weekday = format(date, 'EEEE', { locale: ru })
+  const dateLabel = `${weekday.charAt(0).toUpperCase()}${weekday.slice(1)} ${format(date, 'd MMMM', { locale: ru })}`
   const memberById = new Map(members.map((m) => [m.id, m]))
 
   return (
@@ -82,7 +83,9 @@ export function ScheduleTimeline({ availability, members, date }: ScheduleTimeli
 
             return (
               <div key={empAv.employeeId} className={s.row}>
-                <div className={s.name}>{shorten(member.fullName)}</div>
+                <div className={s.name} title={member.fullName}>
+                  {member.fullName}
+                </div>
                 <div
                   className={s.track}
                   style={{ width: (HOUR_END - HOUR_START) * (HOUR_WIDTH / 2) }}
@@ -103,10 +106,10 @@ export function ScheduleTimeline({ availability, members, date }: ScheduleTimeli
       </div>
 
       <div className={s.legend}>
-        <LegendChip color="#dbe6fe" label="Рабочее время" />
-        <LegendChip color="#2563eb" label="Занят / встреча" />
-        <LegendChip color="#fda4af" label="Конфликт" />
-        <LegendChip color="#fef3c7" label="Вне графика (другой ТЗ)" />
+        <LegendChip color="rgba(59, 111, 232, 0.5)" label="Рабочее время" />
+        <LegendChip color="#3b6fe8" label="Занят / встреча" />
+        <LegendChip color="rgba(239, 68, 68, 0.5)" label="Конфликт" />
+        <LegendChip color="rgba(255, 252, 81, 0.5)" label="Вне графика (другой ТЗ)" />
       </div>
     </Card>
   )
@@ -119,12 +122,6 @@ function LegendChip({ color, label }: { color: string; label: string }) {
       {label}
     </span>
   )
-}
-
-function shorten(fullName: string): string {
-  const parts = fullName.split(' ')
-  if (parts.length < 2) return fullName
-  return `${parts[0]} ${parts[1][0]}.`
 }
 
 function tzShort(label: string): string {

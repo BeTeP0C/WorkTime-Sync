@@ -1,0 +1,397 @@
+@use '@/styles/colors' as *;
+
+/* === AppHeader === */
+.crumb {
+  width: 110px;
+  height: 22px;
+
+  @media (max-width: 1024px) {
+    width: 90px;
+    height: 18px;
+  }
+
+  @media (max-width: 375px) {
+    width: 70px;
+    height: 14px;
+  }
+}
+
+.title {
+  width: 320px;
+  height: 26px;
+
+  @media (min-width: 2048px) {
+    width: 400px;
+    height: 30px;
+  }
+
+  @media (max-width: 1024px) {
+    width: 240px;
+    height: 22px;
+  }
+
+  @media (max-width: 375px) {
+    width: 150px;
+    height: 18px;
+  }
+}
+
+.actionBtn {
+  width: 150px;
+  height: 40px;
+
+  @media (max-width: 375px) {
+    width: 100px;
+    height: 36px;
+  }
+}
+
+.actionBtnWide {
+  width: 200px;
+  height: 40px;
+
+  @media (max-width: 375px) {
+    width: 130px;
+    height: 36px;
+  }
+}
+
+/* === Hero === */
+.avatar {
+  width: 80px;
+  height: 80px;
+
+  @media (min-width: 2048px) {
+    width: 96px;
+    height: 96px;
+  }
+
+  @media (max-width: 1024px) {
+    width: 72px;
+    height: 72px;
+  }
+
+  @media (max-width: 375px) {
+    width: 64px;
+    height: 64px;
+  }
+}
+
+.heroName {
+  width: 320px;
+  height: 32px;
+
+  @media (min-width: 2048px) {
+    width: 400px;
+    height: 40px;
+  }
+
+  @media (max-width: 1024px) {
+    width: 240px;
+    height: 26px;
+  }
+
+  @media (max-width: 375px) {
+    width: 80%;
+    max-width: 240px;
+    height: 22px;
+  }
+}
+
+.heroPosA {
+  width: 180px;
+  height: 18px;
+
+  @media (max-width: 1024px) {
+    width: 160px;
+    height: 16px;
+  }
+
+  @media (max-width: 375px) {
+    width: 60%;
+    max-width: 200px;
+    height: 14px;
+  }
+}
+
+.heroPosB {
+  width: 140px;
+  height: 18px;
+
+  @media (max-width: 1024px) {
+    width: 120px;
+    height: 16px;
+  }
+
+  @media (max-width: 375px) {
+    width: 80%;
+    max-width: 220px;
+    height: 14px;
+  }
+}
+
+.tag1 {
+  width: 96px;
+  height: 26px;
+
+  @media (max-width: 375px) {
+    width: 78px;
+    height: 22px;
+  }
+}
+
+.tag2 {
+  width: 120px;
+  height: 26px;
+
+  @media (max-width: 375px) {
+    width: 96px;
+    height: 22px;
+  }
+}
+
+.tag3 {
+  width: 160px;
+  height: 26px;
+
+  @media (max-width: 375px) {
+    width: 130px;
+    height: 22px;
+  }
+}
+
+.riskBadge {
+  width: 140px;
+  height: 32px;
+
+  @media (min-width: 2048px) {
+    width: 156px;
+    height: 34px;
+  }
+
+  @media (max-width: 375px) {
+    width: 120px;
+    height: 28px;
+  }
+}
+
+/* === Metrics (EmployeeMetricsCards) === */
+.metricLabel {
+  width: 120px;
+  height: 14px;
+
+  @media (max-width: 375px) {
+    width: 100px;
+    height: 13px;
+  }
+}
+
+.metricValue {
+  width: 96px;
+  height: 48px;
+  margin-top: 4px;
+
+  @media (max-width: 1024px) {
+    width: 84px;
+    height: 42px;
+  }
+
+  @media (max-width: 375px) {
+    width: 72px;
+    height: 36px;
+  }
+}
+
+.metricBar {
+  flex: 1 1 auto;
+  height: 10px;
+  width: auto;
+}
+
+.metricPercent {
+  width: 32px;
+  height: 12px;
+}
+
+.metricHint {
+  width: 160px;
+  height: 13px;
+  margin-top: 6px;
+
+  @media (max-width: 375px) {
+    width: 130px;
+    height: 12px;
+  }
+}
+
+/* === Card title === */
+.cardTitle {
+  width: 160px;
+  height: 18px;
+
+  @media (max-width: 375px) {
+    width: 130px;
+    height: 16px;
+  }
+}
+
+.cardTitleWide {
+  width: 240px;
+  height: 18px;
+
+  @media (max-width: 375px) {
+    width: 80%;
+    max-width: 220px;
+    height: 16px;
+  }
+}
+
+/* === Schedule === */
+.workDay {
+  width: 32px;
+  height: 32px;
+
+  @media (min-width: 2048px) {
+    width: 36px;
+    height: 36px;
+  }
+
+  @media (max-width: 375px) {
+    width: 28px;
+    height: 28px;
+  }
+}
+
+.rowLabel {
+  width: 120px;
+  height: 14px;
+
+  @media (max-width: 375px) {
+    width: 100px;
+    height: 12px;
+  }
+}
+
+.rowValue {
+  width: 100px;
+  height: 14px;
+
+  @media (max-width: 375px) {
+    width: 80px;
+    height: 12px;
+  }
+}
+
+/* === Exceptions === */
+.exceptionIcon {
+  width: 36px;
+  height: 36px;
+
+  @media (max-width: 375px) {
+    width: 32px;
+    height: 32px;
+  }
+}
+
+.exceptionTitle {
+  width: 70%;
+  max-width: 200px;
+  height: 14px;
+
+  @media (max-width: 375px) {
+    height: 13px;
+  }
+}
+
+.exceptionDates {
+  width: 55%;
+  max-width: 140px;
+  height: 12px;
+}
+
+.exceptionBadge {
+  width: 100px;
+  height: 26px;
+
+  @media (max-width: 375px) {
+    width: 86px;
+    height: 22px;
+  }
+}
+
+.addBtn {
+  width: 200px;
+  height: 40px;
+  margin-top: 12px;
+  align-self: flex-start;
+
+  @media (max-width: 375px) {
+    width: 100%;
+    height: 38px;
+    align-self: stretch;
+  }
+}
+
+/* === Recommendations === */
+.recDot {
+  width: 10px;
+  height: 10px;
+  margin-top: 5px;
+
+  @media (max-width: 375px) {
+    width: 8px;
+    height: 8px;
+    margin-top: 4px;
+  }
+}
+
+.recTitle {
+  width: 70%;
+  max-width: 280px;
+  height: 14px;
+  margin-bottom: 4px;
+
+  @media (max-width: 375px) {
+    height: 12px;
+  }
+}
+
+.recReason {
+  width: 90%;
+  height: 12px;
+
+  @media (max-width: 375px) {
+    height: 11px;
+  }
+}
+
+/* === Confirmation === */
+.confirmText {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin: 0 0 16px;
+
+  @media (max-width: 375px) {
+    margin: 0 0 12px;
+    gap: 5px;
+  }
+}
+
+.confirmLine {
+  width: 100%;
+  height: 14px;
+
+  @media (max-width: 375px) {
+    height: 13px;
+  }
+}
+
+.confirmLineShort {
+  width: 60%;
+  height: 14px;
+
+  @media (max-width: 375px) {
+    height: 13px;
+  }
+}

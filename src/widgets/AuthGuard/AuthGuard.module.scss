@@ -1,0 +1,30 @@
+@use '@/styles/colors' as *;
+
+.splash {
+  position: fixed;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: $bg;
+  z-index: 100;
+}
+
+.splashLogo {
+  width: 48px;
+  height: 48px;
+  color: $primary;
+  animation: pulse 1.4s ease-in-out infinite;
+}
+
+@keyframes pulse {
+  0%,
+  100% {
+    opacity: 0.4;
+    transform: scale(0.96);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}

@@ -1,0 +1,85 @@
+@use '@/styles/colors' as *;
+
+.root {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 24px;
+  padding: 32px 16px;
+  background: $bg;
+
+  @media (min-width: 2048px) {
+    gap: 32px;
+    padding: 48px 24px;
+  }
+
+  @media (max-width: 1024px) {
+    gap: 20px;
+    padding: 28px 16px;
+  }
+
+  @media (max-width: 375px) {
+    gap: 16px;
+    padding: 20px 12px;
+    justify-content: flex-start;
+    padding-top: 32px;
+  }
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.brandIcon {
+  width: 36px;
+  height: 36px;
+  color: $primary;
+
+  @media (min-width: 2048px) {
+    width: 44px;
+    height: 44px;
+  }
+
+  @media (max-width: 375px) {
+    width: 30px;
+    height: 30px;
+  }
+}
+
+.brandText {
+  display: flex;
+  flex-direction: column;
+  line-height: 1;
+}
+
+.brandTitle {
+  font-family: 'Inter', sans-serif;
+  font-weight: 600;
+  font-size: 20px;
+  line-height: 24px;
+  color: $gray-1;
+
+  @media (min-width: 2048px) {
+    font-size: 24px;
+    line-height: 28px;
+  }
+}
+
+.brandSubtitle {
+  font-family: 'Inter', sans-serif;
+  font-weight: 600;
+  font-size: 12px;
+  line-height: 14px;
+  color: $gray-3;
+  letter-spacing: 0.04em;
+}
+
+.content {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}

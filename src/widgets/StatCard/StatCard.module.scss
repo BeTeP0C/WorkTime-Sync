@@ -5,6 +5,21 @@
   flex-direction: column;
   gap: 12px;
   min-height: 132px;
+
+  @media (min-width: 2048px) {
+    min-height: 148px;
+    gap: 14px;
+  }
+
+  @media (max-width: 1024px) {
+    min-height: 116px;
+    gap: 10px;
+  }
+
+  @media (max-width: 375px) {
+    min-height: 0;
+    gap: 8px;
+  }
 }
 
 .head {
@@ -26,6 +41,18 @@
   font-size: 15px;
   font-weight: 500;
   color: $gray-3;
+
+  @media (min-width: 2048px) {
+    font-size: 16px;
+  }
+
+  @media (max-width: 1024px) {
+    font-size: 14px;
+  }
+
+  @media (max-width: 375px) {
+    font-size: 13px;
+  }
 }
 
 .value {
@@ -34,6 +61,22 @@
   font-weight: 700;
   color: $gray-1;
   letter-spacing: -0.02em;
+
+  @media (min-width: 2048px) {
+    font-size: 42px;
+  }
+
+  @media (max-width: 1440px) {
+    font-size: 32px;
+  }
+
+  @media (max-width: 1024px) {
+    font-size: 28px;
+  }
+
+  @media (max-width: 375px) {
+    font-size: 26px;
+  }
 }
 
 .tone_warning .value {
@@ -54,6 +97,7 @@
   gap: 8px;
   font-size: 12px;
   color: $gray-3;
+  flex-wrap: wrap;
 }
 
 .hint {
@@ -66,6 +110,14 @@
   display: inline-flex;
   align-items: center;
   gap: 4px;
+
+  @media (max-width: 1024px) {
+    font-size: 13px;
+  }
+
+  @media (max-width: 375px) {
+    font-size: 12px;
+  }
 }
 
 .trendIcon {

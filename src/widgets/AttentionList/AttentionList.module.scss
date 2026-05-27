@@ -41,6 +41,41 @@
   @include mediaHover {
     background: $gray-7;
   }
+
+  @media (max-width: 1024px) {
+    gap: 8px;
+    padding: 8px 6px;
+  }
+
+  @media (max-width: 375px) {
+    grid-template-columns: 28px 1fr auto;
+    grid-template-areas:
+      'avatar info badge'
+      'avatar metric metric';
+    column-gap: 10px;
+    row-gap: 6px;
+    padding: 10px 6px;
+
+    > :nth-child(1) {
+      grid-area: avatar;
+      align-self: start;
+    }
+
+    .info {
+      grid-area: info;
+    }
+
+    .metric {
+      grid-area: metric;
+      width: 100%;
+    }
+
+    > :last-child {
+      grid-area: badge;
+      align-self: start;
+      justify-self: end;
+    }
+  }
 }
 
 .info {
@@ -68,6 +103,10 @@
   align-items: center;
   gap: 6px;
   width: 80px;
+
+  @media (max-width: 1024px) {
+    width: 70px;
+  }
 }
 
 .bar {
@@ -89,4 +128,8 @@
 
 .bulk {
   white-space: nowrap;
+
+  @media (max-width: 375px) {
+    width: 100%;
+  }
 }

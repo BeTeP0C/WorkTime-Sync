@@ -13,8 +13,9 @@
 
 .grid {
   display: grid;
-  grid-template-columns: 140px 1fr 48px;
-  gap: 8px;
+  grid-template-columns: 160px 1fr 56px;
+  column-gap: 12px;
+  row-gap: 12px;
   align-items: center;
 }
 
@@ -30,8 +31,9 @@
 }
 
 .hourLabel {
-  font-size: 11px;
-  color: $gray-3;
+  font-size: 14px;
+  font-weight: 500;
+  color: #909090;
   font-variant-numeric: tabular-nums;
   text-align: left;
   flex-shrink: 0;
@@ -42,67 +44,71 @@
 }
 
 .name {
-  font-size: 12px;
-  color: $gray-2;
+  font-size: 15px;
+  font-weight: 500;
+  color: #000000;
   @include ellipsis;
   padding-right: 8px;
 }
 
 .track {
   position: relative;
-  height: 22px;
-  background: $gray-7;
-  border-radius: $radius-sm;
+  height: 32px;
+  background: rgba(217, 217, 217, 0.6);
+  border-radius: 10px;
 }
 
 .seg {
   position: absolute;
   top: 0;
   bottom: 0;
-  border-radius: $radius-sm;
+  border-radius: 10px;
 }
 
 .seg_work {
-  background: $timeline-work;
+  background: rgba(59, 111, 232, 0.5);
 }
 
 .seg_meeting {
-  background: $timeline-meeting;
+  background: #3b6fe8;
 }
 
 .seg_conflict {
-  background: $timeline-conflict;
+  background: rgba(239, 68, 68, 0.5);
 }
 
 .seg_outside {
-  background: $timeline-outside;
+  background: rgba(255, 252, 81, 0.5);
 }
 
 .tz {
-  font-size: 11px;
-  color: $gray-3;
+  font-size: 14px;
+  font-weight: 500;
+  color: #909090;
   text-align: right;
+  font-variant-numeric: tabular-nums;
 }
 
 .legend {
   display: flex;
   flex-wrap: wrap;
-  gap: 16px;
-  margin-top: 16px;
-  padding-top: 12px;
+  gap: 18px;
+  margin-top: 20px;
+  padding-top: 16px;
   border-top: $border-default;
 }
 
 .legendChip {
   display: inline-flex;
   align-items: center;
-  gap: 6px;
-  font-size: 11px;
-  color: $gray-2;
+  gap: 8px;
+  font-size: 14px;
+  font-weight: 500;
+  color: #909090;
 }
 
 .legendSwatch {
-  width: 14px;
-  height: 10px;
-  border-radius: 3px;
+  width: 40px;
+  height: 18px;
+  border-radius: 9px;
 }

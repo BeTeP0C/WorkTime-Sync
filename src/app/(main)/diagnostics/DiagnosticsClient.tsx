@@ -20,6 +20,8 @@ import { AppHeader } from '@/widgets/AppHeader'
 import { DiagnosticsBoard } from '@/widgets/DiagnosticsBoard'
 import { RiskDistributionChart } from '@/widgets/RiskDistributionChart'
 
+import { DiagnosticsSkeleton } from './skeletons'
+
 import s from './DiagnosticsClient.module.scss'
 
 export const DiagnosticsClient = observer(function DiagnosticsClient() {
@@ -31,7 +33,6 @@ export const DiagnosticsClient = observer(function DiagnosticsClient() {
     teams.fetch()
   }, [employees, teams])
 
-  const categories = employees.byCategory
   const distribution = useMemo<Record<RiskLevel, number>>(() => {
     const result: Record<RiskLevel, number> = { low: 0, medium: 0, high: 0, critical: 0 }
     for (const e of employees.filteredItems) {
@@ -39,6 +40,12 @@ export const DiagnosticsClient = observer(function DiagnosticsClient() {
     }
     return result
   }, [employees.filteredItems])
+
+  if (!employees.list.loadingStage.isFinished) {
+    return <DiagnosticsSkeleton />
+  }
+
+  const categories = employees.byCategory
 
   return (
     <>

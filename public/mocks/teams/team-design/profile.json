@@ -1,0 +1,39 @@
+{
+  "id": "team-design",
+  "name": "Команда дизайна",
+  "description": "Продуктовый и системный дизайн",
+  "created_at": "2024-03-10T09:00:00+03:00",
+  "updated_at": "2026-05-10T09:00:00+03:00",
+  "members": [
+    {
+      "team_id": "team-design",
+      "employee_id": "emp-ai",
+      "role_in_team": "pm",
+      "created_at": "2024-07-22T09:00:00+03:00"
+    },
+    {
+      "team_id": "team-design",
+      "employee_id": "emp-sk",
+      "role_in_team": "lead",
+      "created_at": "2025-03-10T09:00:00+03:00"
+    },
+    {
+      "team_id": "team-design",
+      "employee_id": "emp-jb",
+      "role_in_team": "member",
+      "created_at": "2024-10-04T09:00:00+03:00"
+    },
+    {
+      "team_id": "team-design",
+      "employee_id": "emp-im",
+      "role_in_team": "member",
+      "created_at": "2025-03-15T09:00:00+03:00"
+    },
+    {
+      "team_id": "team-design",
+      "employee_id": "emp-od",
+      "role_in_team": "member",
+      "created_at": "2025-03-25T09:00:00+02:00"
+    }
+  ]
+}

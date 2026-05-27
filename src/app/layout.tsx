@@ -2,6 +2,7 @@ import { Metadata } from 'next'
 import { ReactNode } from 'react'
 
 import { RootStoreProvider } from '@/app-store/context'
+import { OfflineOverlay } from '@/widgets/OfflineStub'
 
 import './globals.scss'
 
@@ -18,7 +19,10 @@ export default function RootLayout({ children }: RootLayoutProps) {
   return (
     <html lang="ru">
       <body>
-        <RootStoreProvider>{children}</RootStoreProvider>
+        <RootStoreProvider>
+          {children}
+          <OfflineOverlay />
+        </RootStoreProvider>
       </body>
     </html>
   )

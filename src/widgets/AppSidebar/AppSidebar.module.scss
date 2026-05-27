@@ -16,6 +16,42 @@
   height: 100vh;
   overflow-y: auto;
   @include scrollbar(4px);
+
+  @media (min-width: 2048px) {
+    width: 260px;
+    padding: 18px 20px 16px;
+  }
+
+  @media (max-width: 1440px) {
+    width: 200px;
+  }
+
+  @media (max-width: 1024px) {
+    width: 180px;
+    padding: 12px 12px 10px;
+  }
+
+  @media (max-width: 768px) {
+    position: sticky;
+    top: 0;
+    width: 100%;
+    height: auto;
+    max-height: none;
+    padding: 8px 16px;
+    flex-direction: row;
+    align-items: center;
+    gap: 12px;
+    border-right: none;
+    border-bottom: 1px solid #d3d3d3;
+    overflow-x: auto;
+    overflow-y: hidden;
+    z-index: 11;
+  }
+
+  @media (max-width: 375px) {
+    padding: 8px 12px;
+    gap: 8px;
+  }
 }
 
 // ─── Logo ─────────────────────────────────────────────────────────────────────
@@ -23,18 +59,32 @@
   display: flex;
   align-items: flex-start;
   gap: 7px;
+
+  @media (max-width: 768px) {
+    flex-shrink: 0;
+    align-items: center;
+  }
 }
 
 .logoIcon {
   width: 31px;
   height: 31px;
   flex-shrink: 0;
+
+  @media (max-width: 375px) {
+    width: 26px;
+    height: 26px;
+  }
 }
 
 .logoText {
   display: flex;
   flex-direction: column;
   line-height: 1;
+
+  @media (max-width: 375px) {
+    display: none;
+  }
 }
 
 .logoTitle {
@@ -43,6 +93,11 @@
   font-size: 18px;
   line-height: 22px;
   color: $gray-1;
+
+  @media (min-width: 2048px) {
+    font-size: 20px;
+    line-height: 24px;
+  }
 }
 
 .logoSubtitle {
@@ -58,6 +113,18 @@
   height: 1px;
   background: #d3d3d3;
   margin: 12px -16px 6px;
+
+  @media (min-width: 2048px) {
+    margin: 14px -20px 8px;
+  }
+
+  @media (max-width: 1024px) {
+    margin: 10px -12px 4px;
+  }
+
+  @media (max-width: 768px) {
+    display: none;
+  }
 }
 
 // ─── Nav ──────────────────────────────────────────────────────────────────────
@@ -66,11 +133,27 @@
   display: flex;
   flex-direction: column;
   gap: 12px;
+
+  @media (max-width: 768px) {
+    flex-direction: row;
+    align-items: center;
+    gap: 4px;
+    flex: 1;
+    min-width: 0;
+    overflow-x: auto;
+    @include scrollbar(0);
+  }
 }
 
 .section {
   display: flex;
   flex-direction: column;
+
+  @media (max-width: 768px) {
+    flex-direction: row;
+    align-items: center;
+    gap: 4px;
+  }
 }
 
 .sectionTitle {
@@ -83,6 +166,10 @@
   color: #cecece;
   padding: 0 4px;
   margin-bottom: 8px;
+
+  @media (max-width: 768px) {
+    display: none;
+  }
 }
 
 .navLink {
@@ -109,6 +196,20 @@
       color: $gray-1;
     }
   }
+
+  @media (min-width: 2048px) {
+    padding: 6px 10px;
+    font-size: 14.5px;
+    line-height: 18px;
+    margin-bottom: 10px;
+  }
+
+  @media (max-width: 768px) {
+    padding: 6px;
+    margin-bottom: 0;
+    gap: 0;
+    flex-shrink: 0;
+  }
 }
 
 .navLinkActive {
@@ -134,10 +235,24 @@
   height: 16px;
   flex-shrink: 0;
   color: #909090;
+
+  @media (min-width: 2048px) {
+    width: 18px;
+    height: 18px;
+  }
+
+  @media (max-width: 768px) {
+    width: 20px;
+    height: 20px;
+  }
 }
 
 .navLabel {
   @include ellipsis;
+
+  @media (max-width: 768px) {
+    display: none;
+  }
 }
 
 // ─── Profile (bottom) ─────────────────────────────────────────────────────────
@@ -146,6 +261,11 @@
   align-items: center;
   gap: 6px;
   padding: 4px 0;
+
+  @media (max-width: 768px) {
+    flex-shrink: 0;
+    padding: 0;
+  }
 }
 
 .profileAvatar {
@@ -163,12 +283,48 @@
   align-items: center;
   justify-content: center;
   flex-shrink: 0;
+
+  @media (min-width: 2048px) {
+    width: 32px;
+    height: 32px;
+    font-size: 13px;
+  }
 }
 
 .profileInfo {
   display: flex;
   flex-direction: column;
   min-width: 0;
+  flex: 1;
+
+  @media (max-width: 768px) {
+    display: none;
+  }
+}
+
+.logout {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  border-radius: $radius-md;
+  border: none;
+  background: transparent;
+  color: $gray-3;
+  cursor: pointer;
+  flex-shrink: 0;
+  @include transition(background, color);
+
+  @include mediaHover {
+    background: $gray-6;
+    color: $gray-1;
+  }
+}
+
+.logoutIcon {
+  width: 16px;
+  height: 16px;
 }
 
 .profileName {

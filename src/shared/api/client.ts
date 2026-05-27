@@ -1,6 +1,7 @@
 import qs from 'qs'
 
 import { API_BASE, USE_MOCKS } from '@/shared/config/env'
+import { safeGetRaw } from '@/shared/lib/localStorage'
 
 import { HttpMethod } from './apiUrls'
 import { mockFetch } from './mockClient'
@@ -11,6 +12,8 @@ export interface ApiClientOptions {
   headers?: Record<string, string>
   signal?: AbortSignal
 }
+
+export const AUTH_TOKEN_STORAGE_KEY = 'auth.token'
 
 export class ApiError extends Error {
   status: number
@@ -30,21 +33,34 @@ function buildUrl(endpoint: string, query?: Record<string, unknown>): string {
   return `${endpoint}${qsStr}`
 }
 
+function readAuthToken(): string | null {
+  const raw = safeGetRaw(AUTH_TOKEN_STORAGE_KEY)
+  if (!raw) return null
+  try {
+    const parsed = JSON.parse(raw)
+    return typeof parsed === 'string' ? parsed : null
+  } catch {
+    return raw
+  }
+}
+
 export async function apiClient<T>(
   method: HttpMethod,
   endpoint: string,
   options: ApiClientOptions = {}
 ): Promise<T> {
   const path = buildUrl(endpoint, options.query)
+  const token = readAuthToken()
 
   if (USE_MOCKS) {
-    return mockFetch<T>(method, path)
+    return mockFetch<T>(method, path, { body: options.body, token })
   }
 
   const res = await fetch(`${API_BASE}${path}`, {
     method,
     headers: {
       'Content-Type': 'application/json',
+      ...(token ? { Authorization: `Bearer ${token}` } : {}),
       ...options.headers,
     },
     body: options.body ? JSON.stringify(options.body) : undefined,

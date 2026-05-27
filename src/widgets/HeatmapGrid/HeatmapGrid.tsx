@@ -3,7 +3,7 @@
 import { Employee } from '@/entities/employee/model/types'
 import { TeamAvailability } from '@/entities/team/model/types'
 import { buildHeatmapMatrix } from '@/shared/lib/availability'
-import { HEATMAP_LEGEND_COLORS, heatmapColor, heatmapTextColor } from '@/shared/lib/colorScale'
+import { buildHeatmapLegendColors, heatmapColor, heatmapTextColor } from '@/shared/lib/colorScale'
 import { Card, CardHeader } from '@/shared/ui/Card'
 import { Tooltip } from '@/shared/ui/Tooltip'
 
@@ -34,7 +34,7 @@ export function HeatmapGrid({ availability, members, startDate, meta }: HeatmapG
   return (
     <Card padding="md" className={s.card}>
       <CardHeader
-        title="Тепловая карта доступности"
+        title="Командная карта доступности"
         action={meta && <span className={s.meta}>{meta}</span>}
       />
 
@@ -64,8 +64,8 @@ export function HeatmapGrid({ availability, members, startDate, meta }: HeatmapG
       <div className={s.legend}>
         <span className={s.legendLabel}>0 чел.</span>
         <div className={s.legendBar}>
-          {HEATMAP_LEGEND_COLORS.map((color) => (
-            <span key={color} className={s.legendChip} style={{ background: color }} />
+          {buildHeatmapLegendColors(matrix.totalMembers).map((color, i) => (
+            <span key={i} className={s.legendChip} style={{ background: color }} />
           ))}
         </div>
         <span className={s.legendLabel}>{matrix.totalMembers} чел.</span>
@@ -114,7 +114,7 @@ function Row({ hour, counts, available, totalMembers, employeeById, days }: RowP
             }
           >
             <div className={s.cell} style={{ background: bg, color }}>
-              {count > 0 ? count : ''}
+              {count}
             </div>
           </Tooltip>
         )

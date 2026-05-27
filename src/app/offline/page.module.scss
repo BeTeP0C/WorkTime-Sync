@@ -1,0 +1,18 @@
+@use '@/styles/colors' as *;
+
+.root {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  padding: 24px;
+  background: $bg;
+
+  @media (min-width: 2048px) {
+    padding: 32px;
+  }
+
+  @media (max-width: 375px) {
+    padding: 16px;
+  }
+}
