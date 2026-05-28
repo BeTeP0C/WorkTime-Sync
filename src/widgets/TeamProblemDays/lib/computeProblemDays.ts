@@ -50,8 +50,7 @@ export function computeProblemDays(
     majorityTimezone = null,
   } = options
 
-  const total = availability.employees.length
-  if (total === 0) return []
+  if (availability.employees.length === 0) return []
 
   const employeesById = new Map(members.map((m) => [m.id, m]))
 
@@ -63,6 +62,10 @@ export function computeProblemDays(
     const unavailableIds: string[] = []
     const onLeaveIds: string[] = []
     const outsiderIds: string[] = []
+    // «Вовлечён в день» = у сотрудника есть availableWindows или явное out-of-schedule
+    // на этот день. Это отделяет реальные рабочие дни от естественных выходных
+    // (Mon-Fri сотрудник на субботу: 0 available + 0 OOS → не вовлечён, день не наш).
+    let engaged = 0
 
     for (const empAvail of availability.employees) {
       const availableHours = empAvail.availableWindows.reduce((acc, w) => {
@@ -72,13 +75,19 @@ export function computeProblemDays(
         return acc + (end.getTime() - start.getTime()) / 3_600_000
       }, 0)
 
+      const hasOutOfScheduleAllDay = empAvail.outOfScheduleWindows.some((w) => {
+        const s = parseISO(w.startDt)
+        return startOfDay(s).getTime() === dayStart
+      })
+
+      const hasAnyAvailable = availableHours > 0
+      const isEngaged = hasAnyAvailable || hasOutOfScheduleAllDay
+      if (!isEngaged) continue
+      engaged++
+
       if (availableHours < workHoursPerDay * 0.25) {
         unavailableIds.push(empAvail.employeeId)
         // Если есть out_of_schedule на весь день — это вне графика (отпуск/командировка).
-        const hasOutOfScheduleAllDay = empAvail.outOfScheduleWindows.some((w) => {
-          const s = parseISO(w.startDt)
-          return startOfDay(s).getTime() === dayStart
-        })
         if (hasOutOfScheduleAllDay) onLeaveIds.push(empAvail.employeeId)
       }
 
@@ -87,7 +96,10 @@ export function computeProblemDays(
       }
     }
 
-    const ratio = unavailableIds.length / total
+    // Никто из команды не работает в этот день (выходной) — не показываем как проблему.
+    if (engaged === 0) continue
+
+    const ratio = unavailableIds.length / engaged
     if (ratio < warningRatio) continue
 
     const severity: ProblemSeverity = ratio >= errorRatio ? 'error' : 'warning'

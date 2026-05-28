@@ -1,0 +1,87 @@
+@use '@/styles/colors' as *;
+@use '@/styles/mixins' as *;
+
+.card {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.empty {
+  font-size: 13px;
+  color: $gray-3;
+}
+
+.list {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.item {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  padding: 12px 14px;
+  border-radius: 10px;
+  background: $gray-7;
+}
+
+.itemHeader {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.itemTitle {
+  margin: 0;
+  font-size: 14px;
+  font-weight: 600;
+  color: $gray-1;
+}
+
+.itemReason {
+  margin: 0;
+  font-size: 13px;
+  color: $gray-2;
+  line-height: 1.45;
+}
+
+.toggle {
+  align-self: flex-start;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 8px;
+  margin: 2px 0 0 -8px;
+  font-size: 12px;
+  font-weight: 500;
+  color: $primary;
+  background: transparent;
+  border: none;
+  border-radius: $radius-sm;
+  cursor: pointer;
+  @include transition(background, color);
+
+  @include mediaHover {
+    background: $gray-6;
+  }
+}
+
+.toggleOpen {
+  color: $gray-1;
+}
+
+.caret {
+  display: inline-block;
+  font-size: 10px;
+  width: 10px;
+}
+
+.body {
+  margin-top: 4px;
+}

@@ -1,6 +1,7 @@
 'use client'
 
 import Link from 'next/link'
+import { useState } from 'react'
 import cn from 'classnames'
 
 import { Employee } from '@/entities/employee/model/types'
@@ -15,6 +16,7 @@ import { Avatar } from '@/shared/ui/Avatar'
 import { Badge, BadgeTone } from '@/shared/ui/Badge'
 import { Button } from '@/shared/ui/Button'
 import { Card } from '@/shared/ui/Card'
+import { AiRiBreakdownCard } from '@/widgets/AiRiBreakdownCard'
 
 import s from './RecommendationCard.module.scss'
 
@@ -52,7 +54,9 @@ export function RecommendationCard({
   onDefer,
   onIgnore,
 }: RecommendationCardProps) {
+  const [explainOpen, setExplainOpen] = useState(false)
   const isEmployee = recommendation.subjectType === 'employee'
+  const canExplain = isEmployee && Boolean(employee?.metric)
 
   const subjectInitials = isEmployee
     ? (employee?.initials ?? '??')
@@ -107,6 +111,24 @@ export function RecommendationCard({
       </div>
 
       <p className={s.reason}>{recommendation.reason}</p>
+
+      {canExplain && (
+        <button
+          type="button"
+          className={cn(s.explainToggle, explainOpen && s.explainToggleOpen)}
+          onClick={() => setExplainOpen((v) => !v)}
+          aria-expanded={explainOpen}
+        >
+          <span className={s.explainCaret}>{explainOpen ? '▾' : '▸'}</span>
+          {explainOpen ? 'Скрыть объяснение' : 'Почему?'}
+        </button>
+      )}
+
+      {explainOpen && employee?.metric && (
+        <div className={s.explainBody}>
+          <AiRiBreakdownCard employeeId={employee.id} metric={employee.metric} />
+        </div>
+      )}
 
       <div className={s.actions}>
         <Button

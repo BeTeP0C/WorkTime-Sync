@@ -17,6 +17,7 @@ import { AppHeader } from '@/widgets/AppHeader'
 import { ConfirmActualityPanel } from '@/widgets/ConfirmActualityPanel'
 import { EditScheduleDrawer } from '@/widgets/EditScheduleDrawer'
 import { MyMetricsCards } from '@/widgets/MyMetricsCards'
+import { MyRecommendationsList } from '@/widgets/MyRecommendationsList'
 import { ProfileChangeHistory } from '@/widgets/ProfileChangeHistory'
 import { ProfileContactForm } from '@/widgets/ProfileContactForm'
 
@@ -150,6 +151,11 @@ export const MyProfileClient = observer(function MyProfileClient() {
             onSubmit={(payload) => store.updateProfile(payload)}
           />
           {metric && <MyMetricsCards metric={metric} />}
+          <MyRecommendationsList
+            employeeId={employeeId}
+            metric={metric}
+            recommendations={store.recommendations.value}
+          />
         </div>
 
         <div className={s.sideCol}>

@@ -68,11 +68,14 @@ export const API_URLS = {
   conflictAlternatives: (eventId: string) => `/conflicts/${eventId}/alternatives`,
   conflictProposeReschedule: (eventId: string) => `/conflicts/${eventId}/propose-reschedule`,
 
-  importEventsCsv: () => '/import/events/csv',
-  importEventsJson: () => '/import/events/json',
+  importEventsCsv: (source?: string | null) =>
+    source ? `/import/events/csv?source=${encodeURIComponent(source)}` : '/import/events/csv',
+  importEventsJson: (source?: string | null) =>
+    source ? `/import/events/json?source=${encodeURIComponent(source)}` : '/import/events/json',
   eventsManual: () => '/events/manual',
 
   aiChat: () => '/ai/chat',
+  aiChatStream: () => '/ai/chat/stream',
   aiExplainEmployee: (id: string) => `/ai/employees/${id}/explain`,
 } as const
 

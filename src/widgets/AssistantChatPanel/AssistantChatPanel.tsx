@@ -81,7 +81,7 @@ export const AssistantChatPanel = observer(function AssistantChatPanel({
         {messages.map((message) => (
           <MessageBubble key={message.id} message={message} />
         ))}
-        {isLoading && (
+        {isLoading && !hasStreamingPlaceholder(messages) && (
           <div className={s.thinking}>
             <span className={s.dot} />
             <span className={s.dot} />
@@ -114,6 +114,11 @@ export const AssistantChatPanel = observer(function AssistantChatPanel({
   )
 })
 
+function hasStreamingPlaceholder(messages: ChatMessage[]): boolean {
+  const last = messages[messages.length - 1]
+  return Boolean(last && last.role === 'assistant' && last.streamingText !== undefined)
+}
+
 function MessageBubble({ message }: { message: ChatMessage }) {
   if (message.role === 'user') {
     return (
@@ -140,6 +145,11 @@ function MessageBubble({ message }: { message: ChatMessage }) {
           missingData={message.payload.missingData}
           usedContext={message.payload.usedContext}
         />
+      ) : message.streamingText !== undefined ? (
+        <div className={s.bubbleText}>
+          {message.streamingText}
+          <span className={s.cursor} aria-hidden="true" />
+        </div>
       ) : (
         <div className={s.bubbleText}>{message.text}</div>
       )}

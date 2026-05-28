@@ -2,31 +2,28 @@
 @use '@/styles/mixins' as *;
 
 .board {
-  display: grid;
-  grid-template-columns: repeat(5, 1fr);
+  display: flex;
   gap: 16px;
   overflow-x: auto;
+  padding-bottom: 8px;
+  @include scrollbar(8px);
 
   @media (min-width: 2048px) {
     gap: 24px;
   }
 
-  @media (max-width: 1440px) {
-    grid-template-columns: repeat(3, 1fr);
-  }
-
   @media (max-width: 1024px) {
-    grid-template-columns: repeat(2, 1fr);
     gap: 12px;
   }
 
   @media (max-width: 375px) {
-    grid-template-columns: 1fr;
     gap: 10px;
   }
 }
 
 .column {
+  flex: 0 0 240px;
+  min-width: 240px;
   display: flex;
   flex-direction: column;
   gap: 12px;
@@ -35,11 +32,15 @@
   border-radius: $radius-lg;
 
   @media (min-width: 2048px) {
+    flex-basis: 280px;
+    min-width: 280px;
     padding: 20px;
     gap: 14px;
   }
 
   @media (max-width: 375px) {
+    flex-basis: 220px;
+    min-width: 220px;
     padding: 12px;
     gap: 10px;
   }

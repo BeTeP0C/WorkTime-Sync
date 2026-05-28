@@ -23,11 +23,14 @@ import { DiagnosticsSkeleton } from './skeletons'
 
 import s from './DiagnosticsClient.module.scss'
 
+// §18 ТЗ требует 6 групп диагностики, включая «конфликт часового пояса».
+// Порядок: от самой острой проблемы к актуальным.
 const DIAGNOSTICS_VISIBLE_CATEGORIES: DiagnosticsCategory[] = [
   'actual',
   'outdated',
   'outside_schedule',
   'overloaded',
+  'timezone_conflict',
   'no_response',
 ]
 

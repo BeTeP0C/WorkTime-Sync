@@ -57,6 +57,9 @@ export interface ChatMessage {
   role: ChatMessageRole
   text?: string
   payload?: AiChatResponse
+  /** Промежуточный текст ассистента, который ещё стримится. Когда `payload` не
+   *  пустой — сообщение завершено и `streamingText` больше не нужен. */
+  streamingText?: string
   createdAt: string
 }
 

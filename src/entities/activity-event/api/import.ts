@@ -11,20 +11,28 @@ function normalize(raw: ActivityEventImportResultRaw): ActivityEventImportResult
   }
 }
 
-export async function uploadActivityEventsCsv(file: File): Promise<ActivityEventImportResult> {
+export async function uploadActivityEventsCsv(
+  file: File,
+  source?: string | null
+): Promise<ActivityEventImportResult> {
   const formData = new FormData()
   formData.append('file', file)
-  const raw = await apiClient<ActivityEventImportResultRaw>('POST', API_URLS.importEventsCsv(), {
-    body: formData,
-  })
+  const raw = await apiClient<ActivityEventImportResultRaw>(
+    'POST',
+    API_URLS.importEventsCsv(source),
+    { body: formData }
+  )
   return normalize(raw)
 }
 
 export async function uploadActivityEventsJson(
-  payload: unknown[]
+  payload: unknown[],
+  source?: string | null
 ): Promise<ActivityEventImportResult> {
-  const raw = await apiClient<ActivityEventImportResultRaw>('POST', API_URLS.importEventsJson(), {
-    body: payload,
-  })
+  const raw = await apiClient<ActivityEventImportResultRaw>(
+    'POST',
+    API_URLS.importEventsJson(source),
+    { body: payload }
+  )
   return normalize(raw)
 }

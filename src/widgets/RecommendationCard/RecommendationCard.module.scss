@@ -91,6 +91,41 @@
   }
 }
 
+.explainToggle {
+  align-self: flex-start;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 8px;
+  margin: -4px 0 0 -8px;
+  font-size: 13px;
+  font-weight: 500;
+  color: $primary;
+  background: transparent;
+  border: none;
+  border-radius: $radius-sm;
+  cursor: pointer;
+  @include transition(background, color);
+
+  @include mediaHover {
+    background: $gray-7;
+  }
+}
+
+.explainToggleOpen {
+  color: $gray-1;
+}
+
+.explainCaret {
+  display: inline-block;
+  font-size: 11px;
+  width: 10px;
+}
+
+.explainBody {
+  margin-top: 4px;
+}
+
 .actions {
   display: flex;
   flex-wrap: wrap;

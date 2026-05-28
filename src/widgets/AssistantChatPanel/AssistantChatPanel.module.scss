@@ -108,6 +108,23 @@
   white-space: pre-wrap;
 }
 
+.cursor {
+  display: inline-block;
+  width: 6px;
+  height: 14px;
+  margin-left: 2px;
+  vertical-align: text-bottom;
+  background: $primary;
+  border-radius: 1px;
+  animation: cursorBlink 1s steps(2, start) infinite;
+}
+
+@keyframes cursorBlink {
+  to {
+    visibility: hidden;
+  }
+}
+
 .thinking {
   align-self: flex-start;
   display: inline-flex;

@@ -11,6 +11,18 @@ import { buildSampleActivityEvents } from '@/widgets/DataUploader/sampleData'
 
 export type ImportSource = 'Календарь' | 'HR-система' | 'Таск-трекер' | 'Табель'
 
+/**
+ * Маппинг RU-вкладок в backend source-коды (App importer принимает их через
+ * query-параметр `source` и проставляет в строки без своего source).
+ * Соответствует §18 ТЗ: «Имитация данных из календаря, HR-системы, таск-трекера, табеля».
+ */
+const IMPORT_SOURCE_API_CODE: Record<ImportSource, string> = {
+  Календарь: 'calendar',
+  'HR-система': 'hr',
+  'Таск-трекер': 'tracker',
+  Табель: 'timesheet',
+}
+
 export interface ImportHistoryRow {
   id: string
   source: ImportSource
@@ -79,11 +91,13 @@ export class DashboardStore {
   }
 
   async uploadCsv(source: ImportSource, file: File): Promise<void> {
-    await this._runUpload(source, file.name, () => uploadActivityEventsCsv(file))
+    const apiSource = IMPORT_SOURCE_API_CODE[source]
+    await this._runUpload(source, file.name, () => uploadActivityEventsCsv(file, apiSource))
   }
 
   async uploadJson(source: ImportSource, payload: unknown[], fileLabel: string): Promise<void> {
-    await this._runUpload(source, fileLabel, () => uploadActivityEventsJson(payload))
+    const apiSource = IMPORT_SOURCE_API_CODE[source]
+    await this._runUpload(source, fileLabel, () => uploadActivityEventsJson(payload, apiSource))
   }
 
   async generateSample(source: ImportSource): Promise<void> {
@@ -115,7 +129,7 @@ export class DashboardStore {
         return
       }
       const events = await buildSampleActivityEvents()
-      const result = await uploadActivityEventsJson(events)
+      const result = await uploadActivityEventsJson(events, IMPORT_SOURCE_API_CODE[source])
       runInAction(() => {
         this.lastImportResult = result
         this.importHistory = [

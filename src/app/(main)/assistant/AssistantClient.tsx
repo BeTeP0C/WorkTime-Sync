@@ -4,7 +4,7 @@ import { useSearchParams } from 'next/navigation'
 import { useEffect, useMemo, useRef, useState } from 'react'
 import { observer } from 'mobx-react-lite'
 
-import { useEmployeesStore, useTeamsStore } from '@/app-store/context'
+import { useAuthStore, useEmployeesStore, useTeamsStore } from '@/app-store/context'
 import { ChatStore } from '@/app-store/stores/ChatStore'
 import { Button } from '@/shared/ui/Button'
 import { Card, CardHeader } from '@/shared/ui/Card'
@@ -21,11 +21,18 @@ const SUGGESTED_QUESTIONS = [
 ]
 
 export const AssistantClient = observer(function AssistantClient() {
-  const [store] = useState(() => new ChatStore())
+  const auth = useAuthStore()
+  const currentUserId = auth.currentUser.value?.id ?? null
+  const [store] = useState(() => new ChatStore(currentUserId))
   const employeesStore = useEmployeesStore()
   const teamsStore = useTeamsStore()
   const searchParams = useSearchParams()
   const prefilledHandledRef = useRef(false)
+
+  // Если юзер сменился (logout/login на том же табе) — переключаем скоуп истории.
+  useEffect(() => {
+    store.setScope(currentUserId)
+  }, [currentUserId, store])
 
   useEffect(() => {
     if (!employeesStore.list.loadingStage.isSuccessful) employeesStore.fetch()
