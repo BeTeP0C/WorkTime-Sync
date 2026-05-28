@@ -16,6 +16,7 @@ interface ReviewMember {
 
 interface ReviewStepProps {
   teamName: string
+  description?: string
   avatarUrl: string | null
   members: ReviewMember[]
   majorityTimezone: string | null
@@ -24,6 +25,7 @@ interface ReviewStepProps {
 
 export function ReviewStep({
   teamName,
+  description,
   avatarUrl,
   members,
   majorityTimezone,
@@ -61,6 +63,7 @@ export function ReviewStep({
         />
         <div className={s.identityInfo}>
           <div className={s.teamName}>{teamName}</div>
+          {description && <div className={s.teamDescription}>{description}</div>}
           <div className={s.identityMeta}>
             {members.length} {members.length === 1 ? 'участник' : 'участников'}
             {majorityLabel && (

@@ -1,6 +1,6 @@
 import { makeAutoObservable, runInAction } from 'mobx'
 
-import { extractStreamingAnswer, isAiNotConfiguredError, streamAi } from '@/entities/ai/api'
+import { extractStreamingProgress, isAiNotConfiguredError, streamAi } from '@/entities/ai/api'
 import { ChatMessage } from '@/entities/ai/model/types'
 import { safeGetRaw, safeRemove, safeSet } from '@/shared/lib/localStorage'
 import { LoadingStageModel, ValueModel } from '@/shared/model'
@@ -51,6 +51,8 @@ export class ChatStore {
   input = new ValueModel<string>('')
   targetEmployeeId = new ValueModel<string | null>(null)
   targetTeamId = new ValueModel<string | null>(null)
+  /** Включает поиск в загруженных AI-документах (бэковый use_rag). */
+  useRag = new ValueModel<boolean>(true)
   askStage = new LoadingStageModel()
   lastError: string | null = null
 
@@ -134,6 +136,7 @@ export class ChatStore {
       id: placeholderId,
       role: 'assistant',
       streamingText: '',
+      streamingSummary: '',
       createdAt: new Date().toISOString(),
     }
 
@@ -148,21 +151,34 @@ export class ChatStore {
     this.streamBuffer = ''
     this.streamingMessageId = placeholderId
 
+    // aborted живёт в замыкании этого вызова: при cancelStreaming/смене скоупа
+    // /unmount-е стора флаг становится true, и все ещё-в-полёте onDelta/onDone/
+    // onError становятся no-op — не дёргают runInAction на «чужом» состоянии.
+    let aborted = false
+
     await new Promise<void>((resolve) => {
-      this.currentStream = streamAi(
+      const stream = streamAi(
         {
           question,
           employeeId: this.targetEmployeeId.value,
           teamId: this.targetTeamId.value,
-          useRag: true,
+          useRag: this.useRag.value,
         },
         {
           onDelta: (chunk) => {
+            if (aborted) return
             this.streamBuffer += chunk
-            const progress = extractStreamingAnswer(this.streamBuffer)
-            if (progress !== null) this.updateStreamingPlaceholder({ streamingText: progress })
+            const progress = extractStreamingProgress(this.streamBuffer)
+            const patch: Partial<ChatMessage> = {}
+            if (progress.summary !== null) patch.streamingSummary = progress.summary
+            if (progress.answer !== null) patch.streamingText = progress.answer
+            if (Object.keys(patch).length > 0) this.updateStreamingPlaceholder(patch)
           },
           onDone: (response) => {
+            if (aborted) {
+              resolve()
+              return
+            }
             runInAction(() => {
               this.replaceMessage(placeholderId, {
                 id: placeholderId,
@@ -179,6 +195,10 @@ export class ChatStore {
             resolve()
           },
           onError: (detail, status) => {
+            if (aborted) {
+              resolve()
+              return
+            }
             const text =
               status === 503 || isAiNotConfiguredError(detail)
                 ? AI_NOT_CONFIGURED_MESSAGE
@@ -201,6 +221,14 @@ export class ChatStore {
           },
         }
       )
+      // currentStream хранит обёртку, которая помечает локальный aborted и
+      // прокидывает cancel в SSE-reader. cancelStreaming() ниже использует её.
+      this.currentStream = {
+        cancel: () => {
+          aborted = true
+          stream.cancel()
+        },
+      }
     })
   }
 

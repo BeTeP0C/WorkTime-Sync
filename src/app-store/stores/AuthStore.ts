@@ -37,6 +37,12 @@ export class AuthStore {
   hydrationStage = new LoadingStageModel()
 
   private refreshTimerId: ReturnType<typeof setTimeout> | null = null
+  /**
+   * Single-flight для proactive refresh: если два триггера (таймер + 401-handler)
+   * совпали по времени, второй ждёт результат первого, а не запускает второй
+   * рефреш. Без этого в localStorage оказывался токен от более старого ответа.
+   */
+  private refreshInFlight: Promise<void> | null = null
 
   constructor() {
     makeAutoObservable(this, {}, { autoBind: true })
@@ -135,6 +141,17 @@ export class AuthStore {
 
   /** Proactive refresh: вызывается по таймеру за ~минуту до истечения access. */
   async refreshAccessToken(): Promise<void> {
+    if (this.refreshInFlight) {
+      return this.refreshInFlight
+    }
+    const promise = this.runRefresh().finally(() => {
+      this.refreshInFlight = null
+    })
+    this.refreshInFlight = promise
+    return promise
+  }
+
+  private async runRefresh(): Promise<void> {
     try {
       const res = await refreshAuth()
       runInAction(() => {

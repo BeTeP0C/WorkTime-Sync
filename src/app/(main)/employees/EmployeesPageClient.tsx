@@ -429,13 +429,13 @@ function EmployeeRow({ emp, teamsMap }: EmployeeRowProps) {
 
   return (
     <div className={cn(s.row, s.bodyRow)}>
-      <div className={s.cellEmployee}>
+      <Link href={`/employees/${emp.id}`} className={s.cellEmployee}>
         <Avatar initials={emp.initials} fullName={emp.fullName} colorSeed={emp.id} size="sm" />
         <div className={s.empText}>
           <span className={s.empName}>{emp.fullName}</span>
           {emp.position && <span className={s.empPosition}>{emp.position}</span>}
         </div>
-      </div>
+      </Link>
       <span className={s.cellTeams}>
         {teamNames.length > 0 ? (
           <>

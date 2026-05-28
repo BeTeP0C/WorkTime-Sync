@@ -57,9 +57,11 @@ export interface ChatMessage {
   role: ChatMessageRole
   text?: string
   payload?: AiChatResponse
-  /** Промежуточный текст ассистента, который ещё стримится. Когда `payload` не
-   *  пустой — сообщение завершено и `streamingText` больше не нужен. */
+  /** Частично пришедший `answer` ассистента во время стрима. Когда `payload`
+   *  не пустой — сообщение завершено и `streaming*` поля больше не нужны. */
   streamingText?: string
+  /** Частично пришедший `summary` ассистента во время стрима. */
+  streamingSummary?: string
   createdAt: string
 }
 

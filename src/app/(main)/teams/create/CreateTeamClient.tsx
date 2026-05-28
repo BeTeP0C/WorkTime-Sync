@@ -37,6 +37,12 @@ const STEP_LABELS: Record<StepKey, string> = {
 const MIN_MEMBERS = 5
 const MAX_MEMBERS = 10
 const DEFAULT_TEAM_NAME = 'Новая команда'
+// Бэк: TeamCreate.name = Field(..., min_length=1, max_length=150),
+// avatar_url = Field(default=None, max_length=512). description без лимита, но
+// длинные тексты неудобны в карточках — ограничиваем 300 символами на фронте.
+const NAME_MAX = 150
+const AVATAR_URL_MAX = 512
+const DESCRIPTION_MAX = 300
 
 function pickMajorityTz(members: Employee[]): string | null {
   if (members.length === 0) return null
@@ -58,13 +64,16 @@ export const CreateTeamClient = observer(function CreateTeamClient() {
   const searchRef = useRef<HTMLInputElement | null>(null)
 
   const [step, setStep] = useState<StepKey>('identity')
-  const [teamName, setTeamName] = useState(DEFAULT_TEAM_NAME)
+  const [teamName, setTeamName] = useState('')
+  const [description, setDescription] = useState('')
   const [avatarUrl, setAvatarUrl] = useState('')
   const [selectedIds, setSelectedIds] = useState<string[]>([])
   const [rolesById, setRolesById] = useState<Record<string, TeamRole>>({})
   const [submitError, setSubmitError] = useState<string | null>(null)
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [validationError, setValidationError] = useState<string | null>(null)
+  const [nameFieldError, setNameFieldError] = useState<string | null>(null)
+  const [urlFieldError, setUrlFieldError] = useState<string | null>(null)
 
   useEffect(() => {
     if (employeesStore.list.isEmpty && !employeesStore.list.loadingStage.isLoading) {
@@ -130,13 +139,39 @@ export const CreateTeamClient = observer(function CreateTeamClient() {
     setSubmitError(null)
   }
 
+  const validateIdentity = (): boolean => {
+    let ok = true
+    const trimmedName = teamName.trim()
+    if (!trimmedName) {
+      setNameFieldError('Название обязательно')
+      ok = false
+    } else if (trimmedName.length > NAME_MAX) {
+      setNameFieldError(`Не больше ${NAME_MAX} символов`)
+      ok = false
+    } else {
+      setNameFieldError(null)
+    }
+    const trimmedUrl = avatarUrl.trim()
+    if (trimmedUrl) {
+      if (trimmedUrl.length > AVATAR_URL_MAX) {
+        setUrlFieldError(`Слишком длинный URL (макс. ${AVATAR_URL_MAX})`)
+        ok = false
+      } else if (!/^https?:\/\//i.test(trimmedUrl)) {
+        setUrlFieldError('URL должен начинаться с http:// или https://')
+        ok = false
+      } else {
+        setUrlFieldError(null)
+      }
+    } else {
+      setUrlFieldError(null)
+    }
+    return ok
+  }
+
   const handleNext = () => {
     setValidationError(null)
     if (step === 'identity') {
-      if (!teamName.trim()) {
-        setValidationError('Введите название команды')
-        return
-      }
+      if (!validateIdentity()) return
       setStep('members')
       return
     }
@@ -165,6 +200,10 @@ export const CreateTeamClient = observer(function CreateTeamClient() {
 
   const handleSubmit = async () => {
     setSubmitError(null)
+    if (!validateIdentity()) {
+      setStep('identity')
+      return
+    }
     if (selectedIds.length < MIN_MEMBERS || selectedIds.length > MAX_MEMBERS) {
       setValidationError(`Нужно от ${MIN_MEMBERS} до ${MAX_MEMBERS} участников`)
       setStep('members')
@@ -174,9 +213,10 @@ export const CreateTeamClient = observer(function CreateTeamClient() {
     setIsSubmitting(true)
     try {
       const trimmedUrl = avatarUrl.trim()
+      const trimmedDescription = description.trim()
       const team = await teamsStore.create({
         name: teamName.trim() || DEFAULT_TEAM_NAME,
-        description: '',
+        description: trimmedDescription,
         avatarUrl: trimmedUrl ? trimmedUrl : null,
         members: selectedIds.map((id) => ({
           employeeId: id,
@@ -269,9 +309,10 @@ export const CreateTeamClient = observer(function CreateTeamClient() {
       {step === 'identity' && (
         <Card padding="lg" className={s.card}>
           <div className={s.cardHeader}>
-            <h2 className={s.cardTitle}>Идентичность команды</h2>
+            <h2 className={s.cardTitle}>Основная информация</h2>
             <p className={s.cardSubtitle}>
-              Название и иконка отображаются в списке команд и в шапке профиля.
+              Название, описание и иконка отображаются в списке команд, шапке профиля и в
+              рекомендациях AI.
             </p>
           </div>
 
@@ -285,30 +326,70 @@ export const CreateTeamClient = observer(function CreateTeamClient() {
               size="lg"
             />
             <div className={s.identityFields}>
-              <label className={s.fieldLabel}>
-                <span>Название</span>
-                <Input
-                  size="md"
-                  value={teamName}
-                  placeholder={DEFAULT_TEAM_NAME}
-                  onChange={(e) => setTeamName(e.target.value)}
-                  fullWidth
+              <Input
+                size="md"
+                fullWidth
+                label={
+                  <span className={s.labelRow}>
+                    <span>
+                      Название <span className={s.required}>*</span>
+                    </span>
+                    <span className={s.counter}>
+                      {teamName.length}/{NAME_MAX}
+                    </span>
+                  </span>
+                }
+                value={teamName}
+                placeholder="Например, Frontend Платформа"
+                maxLength={NAME_MAX}
+                onChange={(e) => {
+                  setTeamName(e.target.value)
+                  if (nameFieldError) setNameFieldError(null)
+                }}
+                onBlur={() => {
+                  if (!teamName.trim()) setNameFieldError('Название обязательно')
+                }}
+                error={nameFieldError ?? undefined}
+                aria-required
+              />
+
+              <div className={s.descriptionField}>
+                <label className={s.descriptionLabel} htmlFor="team-description">
+                  <span>Описание (необязательно)</span>
+                  <span className={s.counter}>
+                    {description.length}/{DESCRIPTION_MAX}
+                  </span>
+                </label>
+                <textarea
+                  id="team-description"
+                  className={s.descriptionInput}
+                  value={description}
+                  placeholder="Чем занимается команда, какие у неё цели или зоны ответственности"
+                  rows={3}
+                  maxLength={DESCRIPTION_MAX}
+                  onChange={(e) => setDescription(e.target.value)}
                 />
-              </label>
-              <label className={s.fieldLabel}>
-                <span>URL иконки (опционально)</span>
-                <Input
-                  size="md"
-                  type="url"
-                  value={avatarUrl}
-                  placeholder="https://example.com/icon.png"
-                  onChange={(e) => setAvatarUrl(e.target.value)}
-                  fullWidth
-                />
-                <span className={s.fieldHint}>
-                  Если пусто — отображаются инициалы на цветном фоне.
-                </span>
-              </label>
+              </div>
+
+              <Input
+                size="md"
+                type="url"
+                fullWidth
+                label="URL иконки (опционально)"
+                value={avatarUrl}
+                placeholder="https://example.com/icon.png"
+                maxLength={AVATAR_URL_MAX}
+                onChange={(e) => {
+                  setAvatarUrl(e.target.value)
+                  if (urlFieldError) setUrlFieldError(null)
+                }}
+                error={urlFieldError ?? undefined}
+                hint={
+                  urlFieldError
+                    ? undefined
+                    : 'Если пусто — слева отобразятся инициалы на цветном фоне.'
+                }
+              />
             </div>
           </div>
 
@@ -391,6 +472,7 @@ export const CreateTeamClient = observer(function CreateTeamClient() {
 
           <ReviewStep
             teamName={teamName.trim() || DEFAULT_TEAM_NAME}
+            description={description.trim()}
             avatarUrl={avatarUrl.trim() || null}
             members={selectedMembers.map((emp) => ({
               employee: emp,

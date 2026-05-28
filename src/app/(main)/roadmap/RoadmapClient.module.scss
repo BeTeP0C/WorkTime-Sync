@@ -235,3 +235,95 @@
   font-size: 13px;
   color: $gray-3;
 }
+
+.resultModal {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  padding: 24px;
+}
+
+.resultModalTitle {
+  margin: 0;
+  font-family: 'Inter', sans-serif;
+  font-size: 18px;
+  font-weight: 600;
+  color: $gray-1;
+}
+
+.resultModalLead {
+  margin: 0;
+  font-family: 'Inter', sans-serif;
+  font-size: 14px;
+  line-height: 1.5;
+  color: $gray-2;
+}
+
+.resultModalStats {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+  margin: 4px 0 0;
+  padding: 0;
+}
+
+.resultModalStat {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  padding: 14px 16px;
+  border: 1px solid $gray-5;
+  border-radius: $radius-md;
+  background: $gray-7;
+
+  dt {
+    font-family: 'Inter', sans-serif;
+    font-size: 12px;
+    font-weight: 500;
+    color: $gray-3;
+    margin: 0;
+  }
+
+  dd {
+    margin: 0;
+    font-family: 'Inter', sans-serif;
+    font-size: 24px;
+    font-weight: 700;
+    line-height: 1;
+  }
+}
+
+.resultModalStatValueCreated {
+  color: $success;
+}
+
+.resultModalStatValueSkipped {
+  color: $warning;
+}
+
+.resultModalStatValueNeutral {
+  color: $gray-2;
+}
+
+.resultModalHint {
+  margin: 0;
+  font-family: 'Inter', sans-serif;
+  font-size: 13px;
+  line-height: 1.5;
+  color: $gray-2;
+}
+
+.resultModalLink {
+  color: $primary;
+  text-decoration: none;
+
+  &:hover {
+    text-decoration: underline;
+  }
+}
+
+.resultModalActions {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 4px;
+}

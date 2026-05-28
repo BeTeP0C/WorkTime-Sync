@@ -116,7 +116,19 @@ export const AssistantChatPanel = observer(function AssistantChatPanel({
 
 function hasStreamingPlaceholder(messages: ChatMessage[]): boolean {
   const last = messages[messages.length - 1]
-  return Boolean(last && last.role === 'assistant' && last.streamingText !== undefined)
+  return Boolean(
+    last &&
+    last.role === 'assistant' &&
+    (last.streamingText !== undefined || last.streamingSummary !== undefined)
+  )
+}
+
+function isStreamingMessage(message: ChatMessage): boolean {
+  return (
+    message.role === 'assistant' &&
+    message.payload === undefined &&
+    (message.streamingText !== undefined || message.streamingSummary !== undefined)
+  )
 }
 
 function MessageBubble({ message }: { message: ChatMessage }) {
@@ -145,14 +157,39 @@ function MessageBubble({ message }: { message: ChatMessage }) {
           missingData={message.payload.missingData}
           usedContext={message.payload.usedContext}
         />
-      ) : message.streamingText !== undefined ? (
-        <div className={s.bubbleText}>
-          {message.streamingText}
-          <span className={s.cursor} aria-hidden="true" />
-        </div>
+      ) : isStreamingMessage(message) ? (
+        <StreamingBubble
+          summary={message.streamingSummary ?? ''}
+          answer={message.streamingText ?? ''}
+        />
       ) : (
         <div className={s.bubbleText}>{message.text}</div>
       )}
+    </div>
+  )
+}
+
+function StreamingBubble({ summary, answer }: { summary: string; answer: string }) {
+  const hasText = summary.length > 0 || answer.length > 0
+  if (!hasText) {
+    return (
+      <div className={s.streamingThinking}>
+        <span>Думаю</span>
+        <span className={s.thinkingDots}>
+          <span className={s.thinkingDot} />
+          <span className={s.thinkingDot} />
+          <span className={s.thinkingDot} />
+        </span>
+      </div>
+    )
+  }
+  return (
+    <div className={s.streaming}>
+      {summary && <div className={s.streamingSummary}>{summary}</div>}
+      <div className={s.bubbleText}>
+        {answer}
+        <span className={s.cursor} aria-hidden="true" />
+      </div>
     </div>
   )
 }

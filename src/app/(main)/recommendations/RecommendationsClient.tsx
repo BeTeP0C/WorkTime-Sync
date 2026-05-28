@@ -1,6 +1,6 @@
 'use client'
 
-import { useEffect } from 'react'
+import { useEffect, useMemo } from 'react'
 import cn from 'classnames'
 import { observer } from 'mobx-react-lite'
 
@@ -29,6 +29,7 @@ import { Button } from '@/shared/ui/Button'
 import { Card } from '@/shared/ui/Card'
 import { useConfirm } from '@/shared/ui/ConfirmDialog'
 import { ProgressBar } from '@/shared/ui/ProgressBar'
+import { Select, SelectOption } from '@/shared/ui/Select'
 import { AiRiBreakdownCard } from '@/widgets/AiRiBreakdownCard'
 import { AppHeader } from '@/widgets/AppHeader'
 import { RecommendationCard } from '@/widgets/RecommendationCard'
@@ -63,14 +64,35 @@ export const RecommendationsClient = observer(function RecommendationsClient() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [showSelfBreakdown, currentUser?.id])
 
+  // Фильтр по команде учитывает оба субъекта рекомендации:
+  //  team — прямое сравнение subjectId с filterTeamId
+  //  employee — через teamIds сотрудника (из employees store)
+  // ВАЖНО: хуки до раннего return со skeleton'ом, иначе React ругается
+  // «Rendered more hooks than during the previous render».
+  const filterTeamId = store.filterTeamId.value
+  const items = useMemo(() => {
+    const base = store.filteredItems
+    if (!filterTeamId) return base
+    return base.filter((rec) => {
+      if (rec.subjectType === 'team') return rec.subjectId === filterTeamId
+      const employee = employees.list.getEntity(rec.subjectId)
+      return employee?.teamIds.includes(filterTeamId) ?? false
+    })
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [store.filteredItems, filterTeamId, employees.list.items])
+
   if (!store.list.loadingStage.isFinished) {
     return <RecommendationsSkeleton />
   }
 
   const counts = store.countsByCategory
-  const items = store.filteredItems
   const activeCategory = store.filterCategory.value
   const monthProgress = store.doneCount / Math.max(store.monthTotal, 1)
+
+  const teamOptions: SelectOption[] = teams.list.items.map((team) => ({
+    value: team.id,
+    label: team.name,
+  }))
 
   const handleResolve = (rec: Recommendation) => store.setStatus(rec, 'done')
   const handleDefer = (rec: Recommendation) => store.setStatus(rec, 'deferred')
@@ -96,14 +118,15 @@ export const RecommendationsClient = observer(function RecommendationsClient() {
         title="Рекомендации"
         action={
           <>
-            <Button
-              variant="secondary"
+            <Select
+              value={filterTeamId ?? ''}
+              onValueChange={(value) => store.filterTeamId.change(value || null)}
+              options={teamOptions}
+              placeholder="Все команды"
               size="md"
               leftIcon={<ChartTreeIcon />}
               className={s.headerBtn}
-            >
-              Все команды
-            </Button>
+            />
             <Button
               variant="primary"
               size="md"

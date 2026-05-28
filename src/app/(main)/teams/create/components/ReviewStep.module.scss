@@ -33,6 +33,14 @@
   @include ellipsis;
 }
 
+.teamDescription {
+  font-family: 'Inter', sans-serif;
+  font-size: 13px;
+  line-height: 18px;
+  color: $gray-2;
+  white-space: pre-wrap;
+}
+
 .identityMeta {
   display: flex;
   align-items: center;

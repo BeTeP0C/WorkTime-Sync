@@ -34,9 +34,9 @@ const DIAGNOSTICS_VISIBLE_CATEGORIES: DiagnosticsCategory[] = [
   'no_response',
 ]
 
-function formatCurrentWeekLabel(now: Date): string {
-  const start = startOfWeek(now, { weekStartsOn: 1 })
-  const end = endOfWeek(now, { weekStartsOn: 1 })
+function formatWeekLabel(weekStart: Date): string {
+  const start = startOfWeek(weekStart, { weekStartsOn: 1 })
+  const end = endOfWeek(weekStart, { weekStartsOn: 1 })
   const sameMonth = start.getMonth() === end.getMonth()
   const startStr = sameMonth
     ? format(start, 'd', { locale: ru })
@@ -83,7 +83,13 @@ export const DiagnosticsClient = observer(function DiagnosticsClient({
     return result
   }, [employees.list.items])
 
-  const weekLabel = useMemo(() => formatCurrentWeekLabel(new Date()), [])
+  // Лейбл текущей недели — статичен. Фильтр диагностики по произвольной неделе
+  // бэком пока не поддерживается (метрики считаются на фиксированном 14-дневном окне),
+  // поэтому переключатель убран до появления API.
+  const weekLabel = useMemo(
+    () => formatWeekLabel(startOfWeek(new Date(), { weekStartsOn: 1 })),
+    []
+  )
 
   if (!employees.list.loadingStage.isFinished) {
     return <DiagnosticsSkeleton />
@@ -116,7 +122,13 @@ export const DiagnosticsClient = observer(function DiagnosticsClient({
         title="Диагностика сотрудников"
         action={
           <>
-            <Button variant="secondary" size="md" leftIcon={<CalendarIcon />}>
+            <Button
+              variant="secondary"
+              size="md"
+              leftIcon={<CalendarIcon />}
+              disabled
+              title="Метрики считаются на фиксированном 14-дневном окне"
+            >
               {weekLabel}
             </Button>
             <Button

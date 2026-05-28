@@ -3,6 +3,7 @@
 import { createContext, ReactNode, useContext, useState } from 'react'
 
 import { ConfirmProvider } from '@/shared/ui/ConfirmDialog'
+import { PromptProvider } from '@/shared/ui/PromptDialog'
 
 import { RootStore } from './RootStore'
 
@@ -16,7 +17,9 @@ export function RootStoreProvider({ children }: RootStoreProviderProps) {
   const [store] = useState(() => new RootStore())
   return (
     <RootStoreContext.Provider value={store}>
-      <ConfirmProvider>{children}</ConfirmProvider>
+      <ConfirmProvider>
+        <PromptProvider>{children}</PromptProvider>
+      </ConfirmProvider>
     </RootStoreContext.Provider>
   )
 }

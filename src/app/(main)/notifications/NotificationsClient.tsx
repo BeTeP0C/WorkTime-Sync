@@ -9,6 +9,7 @@ import { ScheduleConfirmationRequest } from '@/entities/confirmation/model/types
 import { formatDateMonth } from '@/shared/lib/format'
 import { Button } from '@/shared/ui/Button'
 import { Card, CardHeader } from '@/shared/ui/Card'
+import { usePrompt } from '@/shared/ui/PromptDialog'
 import { AiDailyTip } from '@/widgets/AiDailyTip'
 import { AppHeader } from '@/widgets/AppHeader'
 
@@ -17,6 +18,7 @@ import s from './NotificationsClient.module.scss'
 export const NotificationsClient = observer(function NotificationsClient() {
   const auth = useAuthStore()
   const notifications = useNotificationsStore()
+  const prompt = usePrompt()
 
   const userId = auth.currentUser.value?.id ?? null
 
@@ -42,9 +44,15 @@ export const NotificationsClient = observer(function NotificationsClient() {
   }
 
   const handleDecline = async (request: ScheduleConfirmationRequest) => {
-    const note =
-      typeof window !== 'undefined' ? window.prompt('Комментарий к отказу (опционально)?') : ''
-    await notifications.decline(userId, request.id, note && note.trim() ? note.trim() : null)
+    const note = await prompt({
+      title: 'Отклонить запрос?',
+      body: 'Запрос будет помечен как отклонённый. Комментарий увидит HR.',
+      placeholder: 'Например: график вернётся к стандартному после спринта',
+      confirmLabel: 'Отклонить',
+      multiline: true,
+    })
+    if (note === null) return // отмена — не отклоняем запрос
+    await notifications.decline(userId, request.id, note.length > 0 ? note : null)
   }
 
   const currentUser = auth.currentUser.value

@@ -207,24 +207,44 @@ function handleSseEvent(rawEvent: string, cb: StreamAiCallbacks): void {
   }
 }
 
+export interface StreamingProgress {
+  summary: string | null
+  answer: string | null
+}
+
 /**
- * Из накопленного буфера сырого JSON извлекает текущее значение поля `answer`
- * (для typewriter-эффекта: показываем ответ по мере его генерации до того,
- * как пришла финальная валидация). Возвращает `null`, если поле ещё не начало
- * появляться.
+ * Извлекает текущие значения полей `summary` и `answer` из накопленного буфера
+ * частично-валидного JSON (для typewriter-эффекта во время стрима). Каждое поле —
+ * `null`, если оно ещё не начало приходить.
+ *
+ * Прикинутый ответ LLM выглядит так:
+ * `{"summary":"...","answer":"...","reasons":[...]}` — `summary` приходит
+ * первым и часто полностью пуст в первые 1-2 секунды стрима, поэтому пузырь
+ * долго был пустой. Теперь сразу показываем то, что есть.
  */
-export function extractStreamingAnswer(buffer: string): string | null {
-  const match = buffer.match(/"answer"\s*:\s*"((?:[^"\\]|\\.)*)/)
+export function extractStreamingProgress(buffer: string): StreamingProgress {
+  return {
+    summary: extractJsonStringField(buffer, 'summary'),
+    answer: extractJsonStringField(buffer, 'answer'),
+  }
+}
+
+function extractJsonStringField(buffer: string, field: string): string | null {
+  const re = new RegExp(`"${field}"\\s*:\\s*"((?:[^"\\\\]|\\\\.)*)`)
+  const match = buffer.match(re)
   if (!match) return null
   const raw = match[1]
-  // Пытаемся декодировать JSON-escape'ы; если незавершённая escape (например, `\`
-  // в конце) — обрезаем её, чтобы JSON.parse не упал.
   const safe = raw.endsWith('\\') ? raw.slice(0, -1) : raw
   try {
     return JSON.parse(`"${safe}"`) as string
   } catch {
     return safe
   }
+}
+
+/** @deprecated используйте {@link extractStreamingProgress}. Оставлено для обратной совместимости. */
+export function extractStreamingAnswer(buffer: string): string | null {
+  return extractJsonStringField(buffer, 'answer')
 }
 
 /** Гарантия, что причина — отказ AI из-за отсутствия ключа OpenRouter. */

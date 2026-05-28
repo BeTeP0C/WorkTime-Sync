@@ -117,11 +117,48 @@ export function MeetingFinderPanel({
         />
       )}
 
-      <Button variant="accent" size="lg" fullWidth className={s.cta}>
+      <Button
+        variant="accent"
+        size="lg"
+        fullWidth
+        className={s.cta}
+        onClick={() => openGoogleCalendarDraft(best, teamName, members)}
+      >
         Создать встречу
       </Button>
     </Card>
   )
+}
+
+/**
+ * Открывает Google Calendar в новой вкладке с подготовленным draft-событием.
+ * Без интеграции с конкретным календарём пользователя (это пост-MVP) —
+ * deep-link работает в любом аккаунте, дальше пользователь подтверждает гостей.
+ */
+function openGoogleCalendarDraft(
+  slot: MeetingRecommendation,
+  teamName: string | null | undefined,
+  members: Employee[]
+): void {
+  const start = parseISO(slot.startDt)
+  const end = parseISO(slot.endDt)
+  const fmt = (d: Date): string =>
+    `${d.getUTCFullYear()}${String(d.getUTCMonth() + 1).padStart(2, '0')}${String(d.getUTCDate()).padStart(2, '0')}T${String(d.getUTCHours()).padStart(2, '0')}${String(d.getUTCMinutes()).padStart(2, '0')}00Z`
+  const title = teamName ? `Встреча команды «${teamName}»` : 'Встреча команды'
+  const dates = `${fmt(start)}/${fmt(end)}`
+  const memberEmails = members
+    .map((m) => m.email)
+    .filter((email): email is string => !!email)
+    .join(',')
+  const params = new URLSearchParams({
+    action: 'TEMPLATE',
+    text: title,
+    dates,
+    details: 'Подобрано AI WorkTime Sync — лучшее окно для всей команды.',
+  })
+  if (memberEmails) params.set('add', memberEmails)
+  const url = `https://calendar.google.com/calendar/render?${params.toString()}`
+  window.open(url, '_blank', 'noopener,noreferrer')
 }
 
 interface SlotCardProps {

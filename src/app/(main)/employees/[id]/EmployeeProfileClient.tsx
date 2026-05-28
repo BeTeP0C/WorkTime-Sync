@@ -41,6 +41,7 @@ import { Avatar } from '@/shared/ui/Avatar'
 import { Badge, BadgeTone } from '@/shared/ui/Badge'
 import { Button } from '@/shared/ui/Button'
 import { Card, CardHeader } from '@/shared/ui/Card'
+import { usePrompt } from '@/shared/ui/PromptDialog'
 import { AddExceptionDrawer } from '@/widgets/AddExceptionDrawer'
 import { AiResponseView } from '@/widgets/AiResponseView'
 import { AiRiBreakdownCard } from '@/widgets/AiRiBreakdownCard'
@@ -79,6 +80,7 @@ export const EmployeeProfileClient = observer(function EmployeeProfileClient({
   const teamsStore = useTeamsStore()
   const authStore = useAuthStore()
   const roadmapStore = useRoadmapStore()
+  const prompt = usePrompt()
 
   useEffect(() => {
     if (!store.loadingStage.isSuccessful) store.fetch()
@@ -135,9 +137,15 @@ export const EmployeeProfileClient = observer(function EmployeeProfileClient({
   ): Promise<boolean> => store.createEvent(payload)
 
   const handleRequest = async () => {
-    const reason =
-      typeof window !== 'undefined' ? window.prompt('Причина запроса (опционально)?') : ''
-    await store.requestConfirmation(reason && reason.trim() ? reason.trim() : null)
+    const reason = await prompt({
+      title: 'Запрос на подтверждение графика',
+      body: 'Сотрудник получит уведомление с просьбой подтвердить актуальность графика.',
+      placeholder: 'Например: график не обновлялся 2 месяца',
+      confirmLabel: 'Отправить запрос',
+      multiline: true,
+    })
+    if (reason === null) return // отмена — не создаём запрос
+    await store.requestConfirmation(reason.length > 0 ? reason : null)
   }
 
   const handleConfirm = async () => {
@@ -145,9 +153,15 @@ export const EmployeeProfileClient = observer(function EmployeeProfileClient({
   }
 
   const handleDecline = async (requestId: string) => {
-    const note =
-      typeof window !== 'undefined' ? window.prompt('Комментарий к отказу (опционально)?') : ''
-    await store.declineConfirmation(requestId, note && note.trim() ? note.trim() : null)
+    const note = await prompt({
+      title: 'Отклонить запрос?',
+      body: 'Запрос будет помечен как отклонённый. Комментарий увидит HR.',
+      placeholder: 'Например: график вернётся к стандартному после спринта',
+      confirmLabel: 'Отклонить',
+      multiline: true,
+    })
+    if (note === null) return // отмена — не отклоняем запрос
+    await store.declineConfirmation(requestId, note.length > 0 ? note : null)
   }
 
   const employeeTeams: Team[] = employee

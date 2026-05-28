@@ -173,7 +173,7 @@
 
 .textarea {
   flex: 1;
-  resize: vertical;
+  resize: none;
   padding: 10px 12px;
   border: $border-strong;
   border-radius: 10px;
@@ -182,6 +182,8 @@
   color: $gray-1;
   background: $white;
   min-height: 80px;
+  max-height: 200px;
+  overflow-y: auto;
 
   &:focus {
     outline: none;
@@ -196,4 +198,59 @@
 
 .textareaCompact {
   min-height: 56px;
+  max-height: 120px;
+}
+
+.streaming {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.streamingSummary {
+  font-size: 15px;
+  font-weight: 600;
+  line-height: 22px;
+  color: $gray-1;
+}
+
+.streamingThinking {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 14px;
+  color: $gray-3;
+  font-style: italic;
+}
+
+.thinkingDots {
+  display: inline-flex;
+  align-items: center;
+  gap: 3px;
+}
+
+.thinkingDot {
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+  background: $gray-3;
+  animation: thinkingBlink 1.2s infinite ease-in-out;
+
+  &:nth-child(2) {
+    animation-delay: 0.15s;
+  }
+
+  &:nth-child(3) {
+    animation-delay: 0.3s;
+  }
+}
+
+@keyframes thinkingBlink {
+  0%,
+  100% {
+    opacity: 0.3;
+  }
+  50% {
+    opacity: 1;
+  }
 }

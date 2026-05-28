@@ -1,5 +1,38 @@
 @use '@/styles/colors' as *;
 
+.weekSwitcher {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.weekArrow {
+  width: 32px;
+  height: 32px;
+  border-radius: $radius-md;
+  border: 1px solid #e5e7eb;
+  background: $white;
+  color: $gray-2;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  &:hover {
+    background: #f9fafb;
+    color: $gray-1;
+  }
+
+  svg {
+    width: 12px;
+    height: 12px;
+  }
+}
+
+.weekArrowFlip {
+  transform: rotate(180deg);
+}
+
 .topRow {
   display: grid;
   grid-template-columns: 1fr 280px;
