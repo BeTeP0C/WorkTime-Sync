@@ -1,0 +1,205 @@
+@use '@/styles/colors' as *;
+@use '@/styles/mixins' as *;
+
+$drawer-width: 480px;
+
+.backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(16, 24, 40, 0.32);
+  backdrop-filter: blur(2px);
+  z-index: 60;
+  animation: fadeIn 0.18s ease;
+}
+
+.drawer {
+  position: fixed;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  width: $drawer-width;
+  max-width: 100vw;
+  background: $bg-elevated;
+  box-shadow: -12px 0 32px rgba(16, 24, 40, 0.16);
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  padding: 20px;
+  overflow-y: auto;
+  z-index: 61;
+  animation: slideIn 0.22s ease;
+  @include scrollbar(6px);
+
+  @media (max-width: 640px) {
+    width: 100vw;
+  }
+}
+
+.header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.headerText {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  min-width: 0;
+  flex: 1;
+}
+
+.outsideBadge {
+  display: inline-flex;
+  align-self: flex-start;
+  align-items: center;
+  gap: 4px;
+  padding: 2px 8px;
+  font-size: 11px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: $error;
+  background: $error-bg;
+  border-radius: $radius-sm;
+}
+
+.title {
+  margin: 0;
+  font-size: 16px;
+  font-weight: 600;
+  color: $gray-1;
+}
+
+.closeBtn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  border: none;
+  background: transparent;
+  border-radius: $radius-sm;
+  color: $gray-3;
+  cursor: pointer;
+  font-size: 18px;
+  line-height: 1;
+  @include transition(background, color);
+
+  @include mediaHover {
+    background: $gray-7;
+    color: $gray-1;
+  }
+}
+
+.section {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.sectionTitle {
+  font-size: 11px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: $gray-3;
+  margin: 0;
+}
+
+.row {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  font-size: 13px;
+  color: $gray-1;
+}
+
+.rowLabel {
+  color: $gray-3;
+}
+
+.reasonBlock {
+  padding: 10px 12px;
+  background: $error-bg;
+  border-radius: $radius-md;
+  font-size: 12.5px;
+  color: $gray-1;
+  line-height: 1.5;
+}
+
+.altList {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.altCard {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  padding: 12px;
+  background: $white;
+  border: 1px solid $gray-6;
+  border-radius: $radius-md;
+}
+
+.altTime {
+  font-size: 14px;
+  font-weight: 600;
+  color: $gray-1;
+  font-variant-numeric: tabular-nums;
+}
+
+.altReason {
+  font-size: 12px;
+  color: $gray-3;
+}
+
+.altActions {
+  display: flex;
+  gap: 8px;
+  margin-top: 4px;
+}
+
+.proposedLabel {
+  font-size: 12px;
+  font-weight: 500;
+  color: $success;
+  padding: 6px 10px;
+}
+
+.emptyAlt {
+  font-size: 13px;
+  color: $gray-3;
+  padding: 12px 0;
+}
+
+.employeeLink {
+  color: $primary;
+  text-decoration: none;
+  font-weight: 500;
+
+  @include mediaHover {
+    text-decoration: underline;
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes slideIn {
+  from {
+    transform: translateX(100%);
+  }
+  to {
+    transform: translateX(0);
+  }
+}

@@ -5,12 +5,12 @@ import { observer } from 'mobx-react-lite'
 
 import { useEmployeesStore } from '@/app-store/context'
 import { RISK_SHORT_LABEL_RU } from '@/entities/employee/model/types'
-import { AlertIcon, MailIcon } from '@/shared/icons'
-import type { ProgressTone } from '@/shared/ui/ProgressBar'
+import { AlertIcon, MailIcon, ShieldCheckIcon } from '@/shared/icons'
 import { Avatar } from '@/shared/ui/Avatar'
 import { Badge } from '@/shared/ui/Badge'
 import { Button } from '@/shared/ui/Button'
 import { Card, CardHeader } from '@/shared/ui/Card'
+import type { ProgressTone } from '@/shared/ui/ProgressBar'
 import { ProgressBar } from '@/shared/ui/ProgressBar'
 
 import s from './AttentionList.module.scss'
@@ -39,7 +39,17 @@ export const AttentionList = observer(function AttentionList() {
       />
 
       <div className={s.list}>
-        {items.length === 0 && <div className={s.empty}>Все сотрудники в норме</div>}
+        {items.length === 0 && (
+          <div className={s.empty}>
+            <div className={s.emptyIcon}>
+              <ShieldCheckIcon width={28} height={28} />
+            </div>
+            <div className={s.emptyTitle}>Все сотрудники в норме</div>
+            <div className={s.emptyHint}>
+              Нет сотрудников с критическим или высоким уровнем риска
+            </div>
+          </div>
+        )}
         {items.map((emp) => {
           const m = emp.metric
           if (!m) return null

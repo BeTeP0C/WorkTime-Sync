@@ -4,9 +4,9 @@ import { useEffect, useRef, useState } from 'react'
 import { observer } from 'mobx-react-lite'
 
 import { useEmployeesStore, useTeamsStore } from '@/app-store/context'
+import { CalendarIcon, ChartTreeIcon, DownloadIcon } from '@/shared/icons'
 import { exportCsv } from '@/shared/lib/exportCsv'
 import { formatScore } from '@/shared/lib/format'
-import { CalendarIcon, ChartTreeIcon, DownloadIcon } from '@/shared/icons'
 
 import s from './MetricsHeaderControls.module.scss'
 
@@ -24,7 +24,20 @@ const MONTHS_RU = [
   'Ноябрь',
   'Декабрь',
 ]
-const MONTHS_SHORT_RU = ['Янв', 'Фев', 'Мар', 'Апр', 'Май', 'Июн', 'Июл', 'Авг', 'Сен', 'Окт', 'Ноя', 'Дек']
+const MONTHS_SHORT_RU = [
+  'Янв',
+  'Фев',
+  'Мар',
+  'Апр',
+  'Май',
+  'Июн',
+  'Июл',
+  'Авг',
+  'Сен',
+  'Окт',
+  'Ноя',
+  'Дек',
+]
 
 interface MonthValue {
   year: number
@@ -63,7 +76,7 @@ export const MetricsHeaderControls = observer(function MetricsHeaderControls() {
   const monthLabel = `${MONTHS_RU[month.month]} ${month.year}`
 
   const handleExport = () => {
-    const rows = employees.filteredItems
+    const rows = employees.list.items
       .filter((e) => e.metric)
       .map((e) => ({
         Сотрудник: e.fullName ?? '',
@@ -74,7 +87,10 @@ export const MetricsHeaderControls = observer(function MetricsHeaderControls() {
         'Дней без обновления': e.metric?.daysSinceUpdate ?? 0,
         Статус: STATUS_LABEL_RU[e.metric?.riskLevel ?? 'low'] ?? '',
       }))
-    exportCsv(`worktime-metrics-${month.year}-${String(month.month + 1).padStart(2, '0')}.csv`, rows)
+    exportCsv(
+      `worktime-metrics-${month.year}-${String(month.month + 1).padStart(2, '0')}.csv`,
+      rows
+    )
   }
 
   return (

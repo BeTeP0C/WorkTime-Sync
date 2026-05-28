@@ -1,13 +1,17 @@
 'use client'
 
+import { useMemo } from 'react'
+
 import { Employee } from '@/entities/employee/model/types'
 import { TeamAvailability } from '@/entities/team/model/types'
-import { buildHeatmapMatrix } from '@/shared/lib/availability'
-import { buildHeatmapLegendColors, heatmapColor, heatmapTextColor } from '@/shared/lib/colorScale'
+import { buildHeatmapMatrix, filterAvailability } from '@/shared/lib/availability'
+import { heatmapColor, heatmapTextColor } from '@/shared/lib/colorScale'
 import { Card, CardHeader } from '@/shared/ui/Card'
 import { Tooltip } from '@/shared/ui/Tooltip'
 
 import s from './HeatmapGrid.module.scss'
+
+export type HeatmapMode = 'majority' | 'all'
 
 interface HeatmapGridProps {
   availability: TeamAvailability
@@ -15,21 +19,47 @@ interface HeatmapGridProps {
   startDate: Date
   /** Подпись справа от заголовка */
   meta?: string
+  /** Сколько дней отрисовать (5 — рабочая, 7 — полная). */
+  daysCount?: number
+  /** Окно часов [startHour, endHour] включительно. */
+  startHour?: number
+  endHour?: number
+  /** 'majority' — градиент opacity; 'all' — бинарно «все/нет». */
+  mode?: HeatmapMode
+  /** Сотрудники, исключённые из подсчёта. */
+  excludedMemberIds?: ReadonlySet<string>
 }
 
-const HOURS_START = 9
-const HOURS_END = 18
-const DAYS_COUNT = 6
+const DEFAULT_EXCLUDED: ReadonlySet<string> = new Set<string>()
 
-export function HeatmapGrid({ availability, members, startDate, meta }: HeatmapGridProps) {
-  const matrix = buildHeatmapMatrix(availability, {
-    startDate,
-    daysCount: DAYS_COUNT,
-    startHour: HOURS_START,
-    endHour: HOURS_END,
-  })
+export function HeatmapGrid({
+  availability,
+  members,
+  startDate,
+  meta,
+  daysCount = 7,
+  startHour = 9,
+  endHour = 18,
+  mode = 'majority',
+  excludedMemberIds = DEFAULT_EXCLUDED,
+}: HeatmapGridProps) {
+  const effectiveAvailability = useMemo(
+    () => filterAvailability(availability, excludedMemberIds),
+    [availability, excludedMemberIds]
+  )
 
-  const employeeById = new Map(members.map((e) => [e.id, e]))
+  const matrix = useMemo(
+    () =>
+      buildHeatmapMatrix(effectiveAvailability, {
+        startDate,
+        daysCount,
+        startHour,
+        endHour,
+      }),
+    [effectiveAvailability, startDate, daysCount, startHour, endHour]
+  )
+
+  const employeeById = useMemo(() => new Map(members.map((e) => [e.id, e])), [members])
 
   return (
     <Card padding="md" className={s.card}>
@@ -39,10 +69,10 @@ export function HeatmapGrid({ availability, members, startDate, meta }: HeatmapG
       />
 
       <div className={s.gridWrapper}>
-        <div className={s.grid} style={{ gridTemplateColumns: `60px repeat(${DAYS_COUNT}, 1fr)` }}>
+        <div className={s.grid} style={{ gridTemplateColumns: `60px repeat(${daysCount}, 1fr)` }}>
           <div className={s.headerCell}>Час</div>
           {matrix.days.map((d) => (
-            <div key={d.label} className={s.headerCell}>
+            <div key={`${d.weekdayLabel}-${d.label}`} className={s.headerCell}>
               <span className={s.weekday}>{d.weekdayLabel}</span> {d.label}
             </div>
           ))}
@@ -56,20 +86,13 @@ export function HeatmapGrid({ availability, members, startDate, meta }: HeatmapG
               totalMembers={matrix.totalMembers}
               employeeById={employeeById}
               days={matrix.days}
+              mode={mode}
             />
           ))}
         </div>
       </div>
 
-      <div className={s.legend}>
-        <span className={s.legendLabel}>0 чел.</span>
-        <div className={s.legendBar}>
-          {buildHeatmapLegendColors(matrix.totalMembers).map((color, i) => (
-            <span key={i} className={s.legendChip} style={{ background: color }} />
-          ))}
-        </div>
-        <span className={s.legendLabel}>{matrix.totalMembers} чел.</span>
-      </div>
+      <Legend mode={mode} totalMembers={matrix.totalMembers} />
     </Card>
   )
 }
@@ -81,15 +104,31 @@ interface RowProps {
   totalMembers: number
   employeeById: Map<string, Employee>
   days: { date: Date; weekdayLabel: string; label: string }[]
+  mode: HeatmapMode
 }
 
-function Row({ hour, counts, available, totalMembers, employeeById, days }: RowProps) {
+function cellColor(count: number, total: number, mode: HeatmapMode): string {
+  if (mode === 'all') {
+    if (total > 0 && count === total) return heatmapColor(total, total)
+    return heatmapColor(0, Math.max(1, total))
+  }
+  return heatmapColor(count, total)
+}
+
+function cellTextColor(count: number, total: number, mode: HeatmapMode): string {
+  if (mode === 'all') {
+    return total > 0 && count === total ? '#ffffff' : '#909090'
+  }
+  return heatmapTextColor(count, total)
+}
+
+function Row({ hour, counts, available, totalMembers, employeeById, days, mode }: RowProps) {
   return (
     <>
       <div className={s.hourCell}>{`${String(hour).padStart(2, '0')}:00`}</div>
       {counts.map((count, dIdx) => {
-        const bg = heatmapColor(count, totalMembers)
-        const color = heatmapTextColor(count, totalMembers)
+        const bg = cellColor(count, totalMembers, mode)
+        const color = cellTextColor(count, totalMembers, mode)
         const availableNames = available[dIdx]
           .map((id) => employeeById.get(id)?.fullName)
           .filter(Boolean) as string[]
@@ -120,5 +159,51 @@ function Row({ hour, counts, available, totalMembers, employeeById, days }: RowP
         )
       })}
     </>
+  )
+}
+
+interface LegendProps {
+  mode: HeatmapMode
+  totalMembers: number
+}
+
+function Legend({ mode, totalMembers }: LegendProps) {
+  if (mode === 'all') {
+    return (
+      <div className={s.legend}>
+        <span className={s.legendLabel}>Не все</span>
+        <div className={s.legendBar}>
+          <span
+            className={s.legendChip}
+            style={{ background: heatmapColor(0, Math.max(1, totalMembers)) }}
+          />
+          <span
+            className={s.legendChip}
+            style={{ background: heatmapColor(totalMembers, Math.max(1, totalMembers)) }}
+          />
+        </div>
+        <span className={s.legendLabel}>Все {totalMembers} доступны</span>
+      </div>
+    )
+  }
+
+  const steps = [0, 0.25, 0.5, 0.75, 1]
+  const counts = steps.map((step) => Math.round(step * totalMembers))
+
+  return (
+    <div className={s.legend}>
+      <span className={s.legendLabel}>0 чел.</span>
+      <div className={s.legendBar}>
+        {counts.map((count, i) => (
+          <span
+            key={i}
+            className={s.legendChip}
+            title={`${count} чел.`}
+            style={{ background: heatmapColor(count, Math.max(1, totalMembers)) }}
+          />
+        ))}
+      </div>
+      <span className={s.legendLabel}>{totalMembers} чел.</span>
+    </div>
   )
 }

@@ -1,0 +1,89 @@
+@use '@/styles/colors' as *;
+@use '@/styles/mixins' as *;
+
+.row {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 12px 16px;
+  border: 1px solid $gray-4;
+  border-radius: 10px;
+  background: $bg-elevated;
+  @include transition(border-color, background);
+
+  @include mediaHover {
+    border-color: $gray-3;
+  }
+}
+
+.info {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.name {
+  font-family: 'Inter', sans-serif;
+  font-size: 16px;
+  line-height: 20px;
+  font-weight: 500;
+  color: $gray-1;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.position {
+  font-family: 'Inter', sans-serif;
+  font-size: 13px;
+  line-height: 16px;
+  color: $gray-3;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.tz {
+  flex-shrink: 0;
+  padding: 3px 10px;
+  font-family: 'Inter', sans-serif;
+  font-size: 12px;
+  font-weight: 500;
+  line-height: 16px;
+  color: $primary;
+  background: $primary-light;
+  border-radius: 999px;
+}
+
+.roleSelect {
+  flex-shrink: 0;
+  width: 140px;
+}
+
+.removeBtn {
+  flex-shrink: 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  padding: 0;
+  background: transparent;
+  border: none;
+  border-radius: 8px;
+  color: $gray-3;
+  cursor: pointer;
+  @include transition(color, background);
+
+  @include mediaHover {
+    color: $risk-critical;
+    background: $risk-critical-bg;
+  }
+}
+
+.removeIcon {
+  width: 16px;
+  height: 16px;
+}

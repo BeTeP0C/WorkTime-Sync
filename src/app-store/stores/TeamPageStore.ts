@@ -1,11 +1,36 @@
-import { addDays, endOfWeek, formatISO, startOfWeek } from 'date-fns'
+import { addDays, formatISO, startOfWeek } from 'date-fns'
 import { makeAutoObservable, runInAction } from 'mobx'
 
 import { getEmployees } from '@/entities/employee/api'
-import { Employee } from '@/entities/employee/model/types'
-import { getMeetingRecommendations, getTeam, getTeamAvailability } from '@/entities/team/api'
-import { MeetingRecommendation, Team, TeamAvailability } from '@/entities/team/model/types'
+import { normalizeEmployee } from '@/entities/employee/lib/normalize'
+import { Employee, EmployeeRaw } from '@/entities/employee/model/types'
+import {
+  getMeetingRecommendations,
+  getTeam,
+  getTeamAvailability,
+  removeTeamMember,
+} from '@/entities/team/api'
+import {
+  normalizeMeetingRecommendation,
+  normalizeTeam,
+  normalizeTeamAvailability,
+} from '@/entities/team/lib/normalize'
+import {
+  MeetingRecommendation,
+  MeetingRecommendationRaw,
+  Team,
+  TeamAvailability,
+  TeamAvailabilityRaw,
+  TeamRaw,
+} from '@/entities/team/model/types'
 import { LoadingStageModel, ValueModel } from '@/shared/model'
+
+export interface TeamPageInitialData {
+  team: TeamRaw
+  availability: TeamAvailabilityRaw | null
+  allEmployees: EmployeeRaw[]
+  meetingRecommendations: MeetingRecommendationRaw[]
+}
 
 export class TeamPageStore {
   teamId: string
@@ -14,12 +39,89 @@ export class TeamPageStore {
   availability = new ValueModel<TeamAvailability | null>(null)
   meetingRecommendations = new ValueModel<MeetingRecommendation[]>([])
   selectedWeekStart = new ValueModel<Date>(startOfWeek(new Date('2026-05-20'), { weekStartsOn: 1 }))
+  selectedDaysCount = new ValueModel<number>(7)
+  selectedHourRange = new ValueModel<[number, number]>([9, 18])
+  heatmapMode = new ValueModel<'majority' | 'all'>('majority')
+  excludedMemberIds = new ValueModel<Set<string>>(new Set())
   loadingStage = new LoadingStageModel()
   meetingLoadingStage = new LoadingStageModel()
 
-  constructor(teamId: string) {
+  constructor(teamId: string, initial?: TeamPageInitialData) {
     this.teamId = teamId
     makeAutoObservable(this)
+    if (initial) this.hydrate(initial)
+  }
+
+  /** Заполнить стор данными, полученными на сервере (SSR/ISR). Идемпотентно. */
+  hydrate(initial: TeamPageInitialData): void {
+    if (this.loadingStage.isSuccessful) return
+    const team = normalizeTeam(initial.team)
+    const memberIds = new Set(team.members.map((m) => m.employeeId))
+    const members = initial.allEmployees.map(normalizeEmployee).filter((e) => memberIds.has(e.id))
+    runInAction(() => {
+      this.team.change(team)
+      this.members.change(members)
+      this.availability.change(
+        initial.availability ? normalizeTeamAvailability(initial.availability) : null
+      )
+      this.loadingStage.success()
+    })
+    const recs = initial.meetingRecommendations.map(normalizeMeetingRecommendation)
+    const filtered = this.filterRecommendations(recs)
+    runInAction(() => {
+      this.meetingRecommendations.change(filtered)
+      this.meetingLoadingStage.success()
+    })
+  }
+
+  shiftWeek(delta: -1 | 1): void {
+    const next = addDays(this.selectedWeekStart.value, delta * 7)
+    this.selectedWeekStart.change(next)
+    void this.fetch()
+  }
+
+  setWeekToToday(): void {
+    const next = startOfWeek(new Date(), { weekStartsOn: 1 })
+    if (next.getTime() === this.selectedWeekStart.value.getTime()) return
+    this.selectedWeekStart.change(next)
+    void this.fetch()
+  }
+
+  toggleExcluded(employeeId: string): void {
+    const next = new Set(this.excludedMemberIds.value)
+    if (next.has(employeeId)) next.delete(employeeId)
+    else next.add(employeeId)
+    this.excludedMemberIds.change(next)
+  }
+
+  async removeMember(employeeId: string): Promise<boolean> {
+    try {
+      await removeTeamMember(this.teamId, employeeId)
+      runInAction(() => {
+        const team = this.team.value
+        if (team) {
+          this.team.change({
+            ...team,
+            members: team.members.filter((m) => m.employeeId !== employeeId),
+          })
+        }
+        this.members.change(this.members.value.filter((m) => m.id !== employeeId))
+        if (this.excludedMemberIds.value.has(employeeId)) {
+          const next = new Set(this.excludedMemberIds.value)
+          next.delete(employeeId)
+          this.excludedMemberIds.change(next)
+        }
+      })
+      return true
+    } catch (error) {
+      console.error('[TeamPageStore] removeMember failed', error)
+      return false
+    }
+  }
+
+  resetExcluded(): void {
+    if (this.excludedMemberIds.value.size === 0) return
+    this.excludedMemberIds.change(new Set())
   }
 
   async fetch(): Promise<void> {
@@ -27,7 +129,9 @@ export class TeamPageStore {
     this.loadingStage.loading()
     try {
       const start = formatISO(this.selectedWeekStart.value)
-      const end = formatISO(endOfWeek(this.selectedWeekStart.value, { weekStartsOn: 1 }))
+      const end = formatISO(
+        addDays(this.selectedWeekStart.value, Math.max(1, this.selectedDaysCount.value) - 1)
+      )
 
       const [team, availability, allEmployees] = await Promise.all([
         getTeam(this.teamId),

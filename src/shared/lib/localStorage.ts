@@ -1,4 +1,5 @@
-const isBrowser = (): boolean => typeof window !== 'undefined' && typeof window.localStorage !== 'undefined'
+const isBrowser = (): boolean =>
+  typeof window !== 'undefined' && typeof window.localStorage !== 'undefined'
 
 export function safeGet<T>(key: string): T | null {
   if (!isBrowser()) return null

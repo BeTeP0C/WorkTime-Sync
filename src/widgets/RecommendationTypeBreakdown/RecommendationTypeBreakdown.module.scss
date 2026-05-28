@@ -1,0 +1,61 @@
+@use '@/styles/colors' as *;
+
+.card {
+  height: 100%;
+}
+
+.list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.row {
+  display: grid;
+  grid-template-columns: 14px 1fr auto;
+  align-items: center;
+  gap: 10px;
+  padding: 6px 0;
+  border-bottom: 1px solid #f4f4f4;
+
+  &:last-child {
+    border-bottom: none;
+  }
+}
+
+.dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+}
+
+.dot_schedule {
+  background: $risk-critical;
+}
+
+.dot_meeting {
+  background: $risk-high;
+}
+
+.dot_load {
+  background: $primary;
+}
+
+.dot_tz {
+  background: $risk-medium;
+}
+
+.label {
+  font-size: 14px;
+  color: $gray-2;
+}
+
+.value {
+  font-size: 16px;
+  font-weight: 600;
+  color: $gray-1;
+  font-variant-numeric: tabular-nums;
+}

@@ -1,0 +1,53 @@
+@use '@/styles/colors' as *;
+
+.list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.row {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+}
+
+.iconBlue,
+.iconGreen {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 24px;
+  height: 24px;
+  border-radius: 6px;
+  flex-shrink: 0;
+}
+
+.iconBlue {
+  background: $primary-bg;
+  color: $primary;
+}
+
+.iconGreen {
+  background: $success-bg;
+  color: $success;
+}
+
+.text {
+  flex: 1;
+  font-size: 13px;
+  line-height: 18px;
+  color: $gray-2;
+
+  strong {
+    color: $gray-1;
+    font-weight: 600;
+  }
+}
+
+.empty {
+  padding: 4px 0;
+  font-size: 13px;
+  line-height: 18px;
+  color: $gray-3;
+}

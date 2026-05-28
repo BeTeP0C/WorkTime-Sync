@@ -1,0 +1,87 @@
+@use '@/styles/colors' as *;
+@use '@/styles/mixins' as *;
+
+.root {
+  display: inline-flex;
+  flex-direction: column;
+  gap: 6px;
+  min-width: 0;
+}
+
+.fullWidth {
+  width: 100%;
+}
+
+.label {
+  font-size: 13px;
+  font-weight: 500;
+  line-height: 16px;
+  color: $gray-2;
+
+  @media (max-width: 375px) {
+    font-size: 12px;
+  }
+}
+
+.field {
+  display: flex;
+  background: $white;
+  border: 1px solid $gray-4;
+  border-radius: $radius-md;
+  padding: 8px 12px;
+  width: 100%;
+  color: $gray-1;
+  @include transition(border-color, box-shadow);
+
+  &:focus-within {
+    border-color: $primary;
+    box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.15);
+  }
+}
+
+.fieldError {
+  border-color: $error;
+
+  &:focus-within {
+    border-color: $error;
+    box-shadow: 0 0 0 3px rgba(220, 38, 38, 0.15);
+  }
+}
+
+.textarea {
+  flex: 1;
+  min-width: 0;
+  width: 100%;
+  border: none;
+  outline: none;
+  background: transparent;
+  color: inherit;
+  font: inherit;
+  font-size: 13px;
+  line-height: 18px;
+  padding: 0;
+  resize: vertical;
+
+  &::placeholder {
+    color: $gray-3;
+  }
+
+  &:disabled {
+    color: $gray-3;
+    cursor: not-allowed;
+  }
+}
+
+.message {
+  font-size: 12px;
+  line-height: 16px;
+  color: $gray-3;
+
+  @media (max-width: 375px) {
+    font-size: 11px;
+  }
+}
+
+.messageError {
+  color: $error;
+}

@@ -15,6 +15,11 @@ import s from './DiagnosticsBoard.module.scss'
 const COLUMN_TITLE: Partial<Record<DiagnosticsCategory, string>> = {
   outside_schedule: 'Вне графика',
   pending_confirmation: 'Подтвердить',
+  hr_calendar_conflict: 'HR↔календарь',
+  timezone_conflict: 'Часовой пояс',
+  needs_review: 'Пересмотр',
+  in_absence: 'Отсутствуют',
+  no_response: 'Нет ответа',
 }
 
 const CATEGORY_AVATAR_BG: Record<DiagnosticsCategory, string> = {
@@ -22,7 +27,12 @@ const CATEGORY_AVATAR_BG: Record<DiagnosticsCategory, string> = {
   outdated: '#ef4444',
   outside_schedule: '#f97316',
   overloaded: '#f59e0b',
+  in_absence: '#94a3b8',
+  hr_calendar_conflict: '#a855f7',
+  timezone_conflict: '#0ea5e9',
+  needs_review: '#dc2626',
   pending_confirmation: '#3b6fe8',
+  no_response: '#3b6fe8',
 }
 
 const CATEGORY_BAR_TONE: Record<DiagnosticsCategory, ProgressTone> = {
@@ -30,7 +40,12 @@ const CATEGORY_BAR_TONE: Record<DiagnosticsCategory, ProgressTone> = {
   outdated: 'critical',
   outside_schedule: 'high',
   overloaded: 'medium',
+  in_absence: 'primary',
+  hr_calendar_conflict: 'critical',
+  timezone_conflict: 'high',
+  needs_review: 'critical',
   pending_confirmation: 'primary',
+  no_response: 'primary',
 }
 
 interface DiagnosticsBoardProps {
@@ -51,7 +66,9 @@ export const DiagnosticsBoard = observer(function DiagnosticsBoard({
         return (
           <div key={category} className={cn(s.column, s[`column_${category}`])}>
             <div className={s.columnHeader}>
-              <span className={s.columnTitle}>{COLUMN_TITLE[category] ?? CATEGORY_LABEL_RU[category]}</span>
+              <span className={s.columnTitle}>
+                {COLUMN_TITLE[category] ?? CATEGORY_LABEL_RU[category]}
+              </span>
               <span className={s.columnCount}>{list.length}</span>
             </div>
 
@@ -89,7 +106,7 @@ function EmployeeKanbanCard({ emp, category, reason }: CardProps) {
         ? 'Конфликты'
         : category === 'overloaded'
           ? 'Рекомендации'
-          : category === 'pending_confirmation'
+          : category === 'pending_confirmation' || category === 'no_response'
             ? 'Повторить запрос'
             : 'Профиль'
 
@@ -140,6 +157,6 @@ function labelByCategory(cat: DiagnosticsCategory, emp: Employee): string {
   const m = emp.metric
   if (!m) return ''
   if (cat === 'actual') return `Обновлено ${m.daysSinceUpdate} дней назад`
-  if (cat === 'pending_confirmation') return 'Запрос не получил ответа'
+  if (cat === 'pending_confirmation' || cat === 'no_response') return 'Запрос не получил ответа'
   return ''
 }

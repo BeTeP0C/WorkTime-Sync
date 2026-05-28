@@ -5,9 +5,13 @@ import { useRouter } from 'next/navigation'
 import { useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { observer } from 'mobx-react-lite'
+import { toast } from 'sonner'
 
 import { useAuthStore } from '@/app-store/context'
+import { startVkLogin } from '@/entities/auth/api'
+import { appendStateToUrl, generateState, storeState } from '@/features/auth/vk-oauth/state'
 import { ApiError } from '@/shared/api/client'
+import { VkIcon } from '@/shared/icons/VkIcon'
 import { Button } from '@/shared/ui/Button'
 import { Card } from '@/shared/ui/Card'
 import { Input } from '@/shared/ui/Input'
@@ -26,6 +30,8 @@ export const LoginClient = observer(function LoginClient() {
   const router = useRouter()
   const [showPassword, setShowPassword] = useState(false)
   const [submitError, setSubmitError] = useState<string | null>(null)
+  const [vkError, setVkError] = useState<string | null>(null)
+  const [isVkLoading, setIsVkLoading] = useState(false)
 
   const {
     register,
@@ -40,11 +46,31 @@ export const LoginClient = observer(function LoginClient() {
     setSubmitError(null)
     try {
       await auth.login(data)
+      toast.success('Добро пожаловать!')
       router.replace('/dashboard')
     } catch (error) {
-      const msg =
-        error instanceof ApiError ? error.message : 'Не удалось войти. Попробуйте ещё раз.'
+      const msg = error instanceof ApiError ? error.detail : 'Не удалось войти. Попробуйте ещё раз.'
       setSubmitError(msg)
+      toast.error(msg)
+    }
+  }
+
+  const onVkLogin = async () => {
+    setVkError(null)
+    setIsVkLoading(true)
+    try {
+      const { authorization_url } = await startVkLogin()
+      const state = generateState()
+      storeState(state)
+      window.location.assign(appendStateToUrl(authorization_url, state))
+    } catch (error) {
+      setIsVkLoading(false)
+      const msg =
+        error instanceof ApiError
+          ? error.detail
+          : 'Не удалось начать вход через VK. Попробуйте ещё раз.'
+      setVkError(msg)
+      toast.error(msg)
     }
   }
 
@@ -108,6 +134,23 @@ export const LoginClient = observer(function LoginClient() {
         </Button>
       </form>
 
+      <div className={s.divider}>или</div>
+
+      <div className={s.oauthBlock}>
+        <Button
+          type="button"
+          variant="secondary"
+          size="lg"
+          fullWidth
+          leftIcon={<VkIcon />}
+          disabled={isVkLoading}
+          onClick={onVkLogin}
+        >
+          {isVkLoading ? 'Открываем VK…' : 'Войти через VK ID'}
+        </Button>
+        {vkError && <div className={s.formError}>{vkError}</div>}
+      </div>
+
       <div className={s.footer}>
         <span className={s.footerText}>Нет аккаунта?</span>{' '}
         <Link href="/auth/register" className={s.link}>
@@ -117,7 +160,7 @@ export const LoginClient = observer(function LoginClient() {
 
       <div className={s.demo}>
         <span className={s.demoLabel}>Demo</span>
-        <code className={s.demoValue}>admin@worktime.sync / admin123</code>
+        <code className={s.demoValue}>test@example.com / pass1234</code>
       </div>
     </Card>
   )

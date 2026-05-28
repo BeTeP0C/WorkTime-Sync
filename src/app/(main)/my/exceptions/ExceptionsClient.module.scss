@@ -1,0 +1,95 @@
+@use '@/styles/colors' as *;
+
+.container {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  padding: 0 32px 48px;
+
+  @media (max-width: 768px) {
+    padding: 0 16px 32px;
+  }
+}
+
+.infoBanner {
+  display: flex;
+  align-items: flex-start;
+  flex-direction: row !important;
+  gap: 10px;
+  background: $primary-bg;
+  border-color: $primary-light;
+}
+
+.infoIcon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  border-radius: 8px;
+  background: $primary;
+  color: $white;
+  flex-shrink: 0;
+}
+
+.infoText {
+  flex: 1;
+  font-size: 13px;
+  line-height: 18px;
+  color: $gray-2;
+}
+
+.grid {
+  display: flex;
+  align-items: flex-start;
+  gap: 16px;
+
+  @media (min-width: 2048px) {
+    gap: 24px;
+  }
+
+  @media (max-width: 1024px) {
+    flex-direction: column;
+    gap: 16px;
+  }
+}
+
+.main {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.sidebar {
+  width: 320px;
+  flex-shrink: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+
+  @media (max-width: 1024px) {
+    width: 100%;
+  }
+}
+
+.list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.placeholder {
+  padding: 20px 0;
+  text-align: center;
+  color: $gray-3;
+  font-size: 13px;
+}
+
+.empty {
+  padding: 60px 0;
+  text-align: center;
+  color: $gray-3;
+  font-size: 14px;
+}

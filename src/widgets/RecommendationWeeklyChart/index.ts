@@ -1,0 +1,1 @@
+export { RecommendationWeeklyChart } from './RecommendationWeeklyChart'

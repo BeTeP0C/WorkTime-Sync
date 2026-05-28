@@ -36,7 +36,9 @@ export function StatCard({
         {icon && <span className={s.icon}>{icon}</span>}
         <span className={s.label}>{label}</span>
       </div>
-      <div className={s.value} style={valueColor ? { color: valueColor } : undefined}>{value}</div>
+      <div className={s.value} style={valueColor ? { color: valueColor } : undefined}>
+        {value}
+      </div>
       {(hint || trend) && (
         <div className={s.footer}>
           {trend && (

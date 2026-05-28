@@ -6,10 +6,14 @@ interface AvatarProps {
   initials: string
   fullName?: string
   size?: 'xs' | 'sm' | 'md' | 'lg' | 'xl'
-  /** seed-цвет — обычно id сотрудника, чтобы цвет был стабильным */
+  /** seed-цвет — обычно id сотрудника/команды, чтобы цвет был стабильным */
   colorSeed?: string
   /** явный цвет фона — переопределяет colorSeed */
   bg?: string
+  /** URL картинки. Если задан — рендерим изображение вместо инициалов. */
+  src?: string | null
+  /** Радиус: round (по умолчанию, для людей) или squircle (для команд/групп). */
+  shape?: 'round' | 'squircle'
   className?: string
 }
 
@@ -33,15 +37,25 @@ function pickColor(seed: string): string {
   return PALETTE[Math.abs(hash) % PALETTE.length]
 }
 
-export function Avatar({ initials, fullName, size = 'md', colorSeed, bg: bgProp, className }: AvatarProps) {
+export function Avatar({
+  initials,
+  fullName,
+  size = 'md',
+  colorSeed,
+  bg: bgProp,
+  src,
+  shape = 'round',
+  className,
+}: AvatarProps) {
   const bg = bgProp ?? pickColor(colorSeed ?? fullName ?? initials)
+  const classes = cn(s.avatar, s[`size_${size}`], s[`shape_${shape}`], className)
+
+  if (src) {
+    return <img className={classes} src={src} alt={fullName ?? initials} title={fullName} />
+  }
 
   return (
-    <div
-      className={cn(s.avatar, s[`size_${size}`], className)}
-      style={{ background: bg }}
-      title={fullName}
-    >
+    <div className={classes} style={{ background: bg }} title={fullName}>
       {initials}
     </div>
   )

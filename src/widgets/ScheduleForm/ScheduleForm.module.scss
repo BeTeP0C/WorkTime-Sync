@@ -1,0 +1,88 @@
+@use '@/styles/colors' as *;
+@use '@/styles/mixins' as *;
+
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.section {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.sectionLabel {
+  font-size: 11px;
+  font-weight: 600;
+  color: $gray-3;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.days {
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+}
+
+.day {
+  min-width: 40px;
+  height: 32px;
+  padding: 0 10px;
+  border-radius: $radius-md;
+  border: 1px solid $gray-5;
+  background: $bg-elevated;
+  color: $gray-2;
+  font-size: 12px;
+  font-weight: 500;
+  cursor: pointer;
+  @include transition(background, color, border-color);
+
+  @include mediaHover {
+    border-color: $primary;
+    color: $primary;
+  }
+}
+
+.dayActive,
+.dayActive:hover {
+  background: $primary;
+  border-color: $primary;
+  color: #fff;
+}
+
+.dayDisabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+
+  @media (max-width: 640px) {
+    grid-template-columns: 1fr;
+  }
+}
+
+.errorBlock {
+  padding: 10px 12px;
+  border-radius: $radius-md;
+  background: #fef2f2;
+  border: 1px solid #fecaca;
+  color: #991b1b;
+  font-size: 12px;
+  line-height: 1.4;
+}
+
+.footer {
+  margin-top: auto;
+  display: flex;
+  justify-content: flex-end;
+  gap: 8px;
+  padding-top: 12px;
+  border-top: 1px solid $gray-6;
+}

@@ -1,0 +1,89 @@
+@use '@/styles/colors' as *;
+
+.card {
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+  padding: 14px 16px;
+  background: $bg-elevated;
+  border: 1px solid $gray-5;
+  border-radius: 10px;
+}
+
+.muted {
+  background: $gray-7;
+  color: $gray-3;
+
+  .title {
+    color: $gray-2;
+  }
+
+  .iconBg {
+    background: $gray-5;
+    color: $gray-3;
+  }
+}
+
+.iconBg {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  border-radius: 8px;
+  flex-shrink: 0;
+}
+
+.bg_vacation {
+  background: $success-bg;
+  color: $success;
+}
+
+.bg_sick_leave {
+  background: $error-bg;
+  color: $error;
+}
+
+.bg_business_trip {
+  background: $primary-bg;
+  color: $primary;
+}
+
+.bg_personal_hours {
+  background: $warning-bg;
+  color: $warning;
+}
+
+.body {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.titleRow {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.title {
+  font-size: 15px;
+  line-height: 20px;
+  font-weight: 600;
+  color: $gray-1;
+}
+
+.range {
+  font-size: 13px;
+  line-height: 18px;
+  color: $gray-2;
+}
+
+.reason {
+  font-size: 13px;
+  line-height: 18px;
+  color: $gray-3;
+}

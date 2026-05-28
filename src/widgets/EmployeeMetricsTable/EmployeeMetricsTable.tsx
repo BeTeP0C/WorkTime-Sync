@@ -4,8 +4,8 @@ import { observer } from 'mobx-react-lite'
 
 import { useEmployeesStore } from '@/app-store/context'
 import { Employee, RiskLevel } from '@/entities/employee/model/types'
-import { formatScore, pluralizeRu } from '@/shared/lib/format'
 import { BookIcon } from '@/shared/icons'
+import { formatScore, pluralizeRu } from '@/shared/lib/format'
 import { Avatar } from '@/shared/ui/Avatar'
 import { Badge } from '@/shared/ui/Badge'
 import { Card, CardHeader } from '@/shared/ui/Card'
@@ -23,12 +23,6 @@ const STATUS_LABEL_RU: Record<RiskLevel, string> = {
 function aiTone(value: number): ProgressTone {
   if (value >= 0.7) return 'success'
   if (value >= 0.4) return 'high'
-  return 'critical'
-}
-
-function ciTone(rate: number): ProgressTone {
-  if (rate <= 0.15) return 'success'
-  if (rate <= 0.35) return 'high'
   return 'critical'
 }
 
@@ -81,12 +75,7 @@ function rowFromEmployee(emp: Employee) {
   return (
     <div className={s.row} key={emp.id}>
       <div className={s.colName}>
-        <Avatar
-          initials={emp.initials}
-          fullName={emp.fullName}
-          size="sm"
-          colorSeed={emp.id}
-        />
+        <Avatar initials={emp.initials} fullName={emp.fullName} size="sm" colorSeed={emp.id} />
         <span className={s.name}>{shortName(emp.fullName)}</span>
       </div>
       <MetricCell
@@ -115,13 +104,16 @@ function rowFromEmployee(emp: Employee) {
 
 export const EmployeeMetricsTable = observer(function EmployeeMetricsTable() {
   const employees = useEmployeesStore()
-  const rows = [...employees.filteredItems]
+  const rows = [...employees.list.items]
     .filter((e) => e.metric)
     .sort((a, b) => (b.metric?.riskScore ?? 0) - (a.metric?.riskScore ?? 0))
 
   return (
     <Card padding="lg" className={s.card}>
-      <CardHeader title="Все показатели по сотрудникам" icon={<BookIcon width={20} height={20} />} />
+      <CardHeader
+        title="Все показатели по сотрудникам"
+        icon={<BookIcon width={20} height={20} />}
+      />
       <div className={s.scroll}>
         <div className={s.table}>
           <div className={s.tableHead}>
@@ -135,7 +127,9 @@ export const EmployeeMetricsTable = observer(function EmployeeMetricsTable() {
           </div>
           <div className={s.body}>
             {rows.length === 0 ? (
-              <div className={s.empty}>Нет данных — выберите другую команду или загрузите свежие графики.</div>
+              <div className={s.empty}>
+                Нет данных — выберите другую команду или загрузите свежие графики.
+              </div>
             ) : (
               rows.map(rowFromEmployee)
             )}

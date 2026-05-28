@@ -1,0 +1,83 @@
+@use '@/styles/colors' as *;
+
+.card {
+  position: sticky;
+  top: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.lead {
+  font-size: 14px;
+  line-height: 1.45;
+  color: $gray-2;
+}
+
+.meta {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 12px;
+  border-radius: 10px;
+  background: $gray-7;
+}
+
+.metaRow {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 13px;
+  gap: 12px;
+}
+
+.metaLabel {
+  color: $gray-3;
+  font-weight: 500;
+}
+
+.metaValue {
+  color: $gray-1;
+  font-weight: 500;
+  text-align: right;
+}
+
+.metaStatusPending {
+  color: $risk-high;
+}
+
+.metaStatusConfirmed {
+  color: $risk-low;
+}
+
+.actions {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.confirmButton {
+  width: 100%;
+  background: $risk-low-bg;
+  color: $risk-low;
+  border: 1px solid $risk-low;
+  border-radius: 10px;
+  font-size: 14px;
+  font-weight: 600;
+  padding: 12px;
+  cursor: pointer;
+  transition: filter 0.15s ease;
+
+  &:hover:not(:disabled) {
+    filter: brightness(0.97);
+  }
+
+  &:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+  }
+}
+
+.updateButton {
+  width: 100%;
+}

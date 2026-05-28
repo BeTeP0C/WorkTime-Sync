@@ -1,0 +1,110 @@
+@use '@/styles/colors' as *;
+
+.card {
+  display: flex;
+  flex-direction: column;
+}
+
+.head {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.icon {
+  font-size: 18px;
+  line-height: 1;
+}
+
+.title {
+  font-size: 15px;
+  font-weight: 600;
+  color: $gray-1;
+}
+
+.sub {
+  margin: 4px 0 12px;
+  font-size: 13px;
+  color: $gray-3;
+}
+
+.list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.row {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 6px 12px;
+  padding: 8px 10px;
+  border-radius: 8px;
+  background: $gray-7;
+}
+
+.rowLabel {
+  font-size: 13px;
+  font-weight: 500;
+  color: $gray-1;
+}
+
+.rowContribution {
+  font-size: 13px;
+  font-weight: 600;
+  color: $risk-critical;
+  font-variant-numeric: tabular-nums;
+}
+
+.rowHint {
+  grid-column: 1 / -1;
+  font-size: 12px;
+  color: $gray-3;
+}
+
+.forecast {
+  margin-top: 14px;
+  padding: 12px 14px;
+  border-radius: 10px;
+  background: $gray-7;
+  font-size: 13px;
+  line-height: 18px;
+  color: $gray-1;
+}
+
+.forecastHint {
+  color: $gray-3;
+  margin-bottom: 4px;
+}
+
+.forecastStrong {
+  font-weight: 600;
+  color: $gray-1;
+}
+
+.forecastAccent {
+  color: #22a06b;
+  font-weight: 700;
+}
+
+.narrative {
+  margin-top: 12px;
+  padding-top: 12px;
+  border-top: $border-default;
+  font-size: 13px;
+  line-height: 18px;
+  color: $gray-2;
+}
+
+.error {
+  font-size: 13px;
+  color: $risk-critical;
+}
+
+.loading {
+  font-size: 13px;
+  color: $gray-3;
+}

@@ -11,12 +11,7 @@ export const InfoIcon = (props: SVGProps<SVGSVGElement>) => {
       {...props}
     >
       <circle cx="9" cy="9" r="7.5" stroke="currentColor" strokeWidth="1.4" />
-      <path
-        d="M9 8V13"
-        stroke="currentColor"
-        strokeWidth="1.6"
-        strokeLinecap="round"
-      />
+      <path d="M9 8V13" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" />
       <circle cx="9" cy="5.5" r="0.75" fill="currentColor" />
     </svg>
   )

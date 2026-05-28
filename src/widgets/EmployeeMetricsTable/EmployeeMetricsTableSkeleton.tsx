@@ -10,7 +10,10 @@ const ROW_COUNT = 6
 export function EmployeeMetricsTableSkeleton() {
   return (
     <Card padding="lg" className={s.card}>
-      <CardHeader title="Все показатели по сотрудникам" icon={<BookIcon width={20} height={20} />} />
+      <CardHeader
+        title="Все показатели по сотрудникам"
+        icon={<BookIcon width={20} height={20} />}
+      />
       <div className={s.scroll}>
         <div className={s.table}>
           <div className={s.tableHead}>

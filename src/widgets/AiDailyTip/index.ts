@@ -1,0 +1,1 @@
+export { AiDailyTip } from './AiDailyTip'

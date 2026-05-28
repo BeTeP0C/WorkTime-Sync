@@ -3,7 +3,7 @@ import { apiClient } from '@/shared/api/client'
 
 import { DashboardSummary, DashboardSummaryRaw } from '../model/types'
 
-function normalize(raw: DashboardSummaryRaw): DashboardSummary {
+export function normalizeDashboardSummary(raw: DashboardSummaryRaw): DashboardSummary {
   return {
     totalEmployees: raw.total_employees,
     totalTeams: raw.total_teams,
@@ -22,11 +22,14 @@ function normalize(raw: DashboardSummaryRaw): DashboardSummary {
     conflictsRate: raw.conflicts_rate ?? 0,
     conflictsRateDelta: raw.conflicts_rate_delta ?? 0,
     teamSize: raw.team_size ?? raw.total_employees,
-    averageActualityScoreHistory: raw.average_actuality_score_history ?? [],
+    actualSchedulesCount:
+      raw.actual_schedules_count ?? Math.max(raw.total_employees - raw.outdated_schedules_count, 0),
+    actualSchedulesDelta: raw.actual_schedules_delta ?? 0,
+    vacationsThisMonth: raw.vacations_this_month ?? 0,
   }
 }
 
 export async function getDashboardSummary(): Promise<DashboardSummary> {
   const data = await apiClient<DashboardSummaryRaw>('GET', API_URLS.dashboardSummary())
-  return normalize(data)
+  return normalizeDashboardSummary(data)
 }

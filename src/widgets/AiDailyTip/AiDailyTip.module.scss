@@ -1,0 +1,55 @@
+@use '@/styles/colors' as *;
+
+.card {
+  display: flex;
+  flex-direction: column;
+}
+
+.head {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 8px;
+}
+
+.icon {
+  font-size: 18px;
+  line-height: 1;
+}
+
+.title {
+  font-size: 15px;
+  font-weight: 600;
+  color: $gray-1;
+}
+
+.body {
+  font-size: 13px;
+  line-height: 18px;
+  color: $gray-2;
+}
+
+.empty {
+  font-size: 13px;
+  color: $gray-3;
+}
+
+.error {
+  font-size: 13px;
+  color: $risk-critical;
+}
+
+.action {
+  margin-top: 10px;
+  padding: 8px 10px;
+  border-radius: 8px;
+  background: $gray-7;
+  font-size: 12px;
+  color: $gray-2;
+}
+
+.actionTitle {
+  font-weight: 600;
+  color: $gray-1;
+  margin-bottom: 2px;
+}

@@ -97,3 +97,7 @@ $sidebar-active: $primary-bg;
 $header-height: 64px;
 $content-max-width: 1440px;
 $content-padding: 32px;
+
+// Z-index уровни (модалки поверх всего)
+$z-modal-backdrop: 1000;
+$z-modal: 1001;

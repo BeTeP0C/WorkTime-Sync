@@ -1,0 +1,46 @@
+@use '@/styles/colors' as *;
+@use '@/styles/mixins' as *;
+
+.card {
+  width: 100%;
+  max-width: 440px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  text-align: center;
+}
+
+.title {
+  font-family: 'Inter', sans-serif;
+  font-size: 18px;
+  line-height: 24px;
+  font-weight: 600;
+  color: $gray-1;
+  margin: 0;
+}
+
+.body {
+  font-size: 13px;
+  line-height: 18px;
+  color: $gray-3;
+  margin: 0;
+}
+
+.error {
+  font-size: 13px;
+  line-height: 18px;
+  color: $error;
+  background: $error-bg;
+  border-radius: $radius-md;
+  padding: 10px 12px;
+}
+
+.link {
+  font-weight: 500;
+  color: $primary;
+  @include transition(color);
+
+  @include mediaHover {
+    color: $primary-hover;
+  }
+}

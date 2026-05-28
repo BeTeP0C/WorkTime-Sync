@@ -17,7 +17,12 @@ export default function NotFound() {
       title="Страница не найдена"
       description="Похоже, такой страницы не существует или она была перемещена."
       primaryAction={{ label: 'На дашборд', href: '/dashboard', icon: <HomeIcon /> }}
-      secondaryAction={{ label: 'На главную', href: '/', variant: 'ghost', icon: <ArrowSmallRightIcon /> }}
+      secondaryAction={{
+        label: 'На главную',
+        href: '/',
+        variant: 'ghost',
+        icon: <ArrowSmallRightIcon />,
+      }}
     />
   )
 }

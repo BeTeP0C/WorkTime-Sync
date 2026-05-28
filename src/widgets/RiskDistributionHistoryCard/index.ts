@@ -1,0 +1,1 @@
+export { RiskDistributionHistoryCard } from './RiskDistributionHistoryCard'

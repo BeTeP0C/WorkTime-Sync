@@ -1,0 +1,156 @@
+@use '@/styles/colors' as *;
+
+.root {
+  position: relative;
+  display: inline-block;
+}
+
+.bell {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  border-radius: 10px;
+  border: $border-default;
+  background: $white;
+  cursor: pointer;
+  color: $gray-2;
+  transition: background 0.15s ease;
+
+  &:hover {
+    background: #f5f5f7;
+    color: $gray-1;
+  }
+}
+
+.bellIcon {
+  width: 20px;
+  height: 20px;
+}
+
+.badge {
+  position: absolute;
+  top: -4px;
+  right: -4px;
+  min-width: 18px;
+  height: 18px;
+  padding: 0 4px;
+  border-radius: 9px;
+  background: $risk-critical;
+  color: $white;
+  font-size: 11px;
+  line-height: 18px;
+  font-weight: 600;
+  text-align: center;
+}
+
+.dropdown {
+  position: absolute;
+  top: calc(100% + 8px);
+  right: 0;
+  width: 360px;
+  max-width: calc(100vw - 32px);
+  background: $white;
+  border: $border-default;
+  border-radius: 12px;
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.12);
+  z-index: 20;
+  overflow: hidden;
+}
+
+.dropdownHeader {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  padding: 14px 16px;
+  border-bottom: $border-default;
+}
+
+.dropdownTitle {
+  font-weight: 600;
+  font-size: 15px;
+}
+
+.dropdownCount {
+  font-size: 13px;
+  color: $gray-3;
+}
+
+.empty {
+  padding: 20px 16px;
+  color: $gray-3;
+  font-size: 14px;
+  text-align: center;
+}
+
+.list {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  max-height: 320px;
+  overflow-y: auto;
+}
+
+.item {
+  padding: 12px 16px;
+  border-bottom: 1px solid $gray-5;
+
+  &:last-child {
+    border-bottom: none;
+  }
+}
+
+.itemTitle {
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 18px;
+  color: $gray-1;
+}
+
+.itemMeta {
+  margin-top: 4px;
+  font-size: 12px;
+  color: $gray-3;
+}
+
+.itemReason {
+  margin-top: 4px;
+  font-size: 13px;
+  color: $gray-2;
+}
+
+.dropdownFooter {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 12px 16px;
+  border-top: $border-default;
+}
+
+.confirmBtn {
+  padding: 8px 12px;
+  border-radius: 8px;
+  background: $gray-1;
+  color: $white;
+  font-size: 13px;
+  font-weight: 600;
+  border: none;
+  cursor: pointer;
+
+  &:hover {
+    opacity: 0.9;
+  }
+}
+
+.viewAll {
+  text-align: center;
+  font-size: 13px;
+  color: $gray-3;
+  text-decoration: none;
+
+  &:hover {
+    color: $gray-1;
+  }
+}

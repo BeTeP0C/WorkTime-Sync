@@ -1,5 +1,6 @@
 import { Metadata } from 'next'
 import { ReactNode } from 'react'
+import { Toaster } from 'sonner'
 
 import { RootStoreProvider } from '@/app-store/context'
 import { OfflineOverlay } from '@/widgets/OfflineStub'
@@ -22,6 +23,7 @@ export default function RootLayout({ children }: RootLayoutProps) {
         <RootStoreProvider>
           {children}
           <OfflineOverlay />
+          <Toaster richColors position="top-right" closeButton toastOptions={{ duration: 4000 }} />
         </RootStoreProvider>
       </body>
     </html>

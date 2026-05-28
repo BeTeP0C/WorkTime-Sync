@@ -1,0 +1,30 @@
+@use '@/styles/colors' as *;
+
+.banner {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  padding: 14px 16px;
+  background: $primary-bg;
+  border: 1px solid $primary-light;
+  border-radius: 10px;
+  color: $primary;
+}
+
+.icon {
+  display: inline-flex;
+  flex-shrink: 0;
+  margin-top: 1px;
+
+  svg {
+    width: 18px;
+    height: 18px;
+  }
+}
+
+.text {
+  font-family: 'Inter', sans-serif;
+  font-size: 14px;
+  line-height: 20px;
+  color: $primary;
+}

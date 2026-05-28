@@ -10,6 +10,18 @@ export type RecommendationSeverity = 'medium' | 'high' | 'critical'
 
 export type RecommendationSubject = 'employee' | 'team'
 
+export type RecommendationTargetStatus = 'requested' | 'deferred' | 'ignored'
+
+export type BackendRoadmapStatus =
+  | 'pending'
+  | 'requested'
+  | 'acknowledged'
+  | 'updated'
+  | 'completed'
+  | 'deferred'
+  | 'ignored'
+  | 'dismissed'
+
 export interface RecommendationRaw {
   code: RecommendationCode
   reason: string
@@ -17,6 +29,8 @@ export interface RecommendationRaw {
   action: string
   subject_type: RecommendationSubject
   subject_id: string
+  status: BackendRoadmapStatus | null
+  roadmap_item_id: string | null
 }
 
 export interface Recommendation {
@@ -27,6 +41,8 @@ export interface Recommendation {
   subjectType: RecommendationSubject
   subjectId: string
   title: string
+  status: BackendRoadmapStatus | null
+  roadmapItemId: string | null
 }
 
 export const RECOMMENDATION_TITLE_RU: Record<RecommendationCode, string> = {

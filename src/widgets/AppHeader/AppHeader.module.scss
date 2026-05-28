@@ -93,6 +93,22 @@
   }
 }
 
+.titleColumn {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 0;
+}
+
+.subtitle {
+  font-size: 13px;
+  line-height: 16px;
+  color: #909090;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
 .title {
   font-size: 24px;
   line-height: 28px;

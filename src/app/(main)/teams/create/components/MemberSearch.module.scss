@@ -1,0 +1,106 @@
+@use '@/styles/colors' as *;
+@use '@/styles/mixins' as *;
+
+.wrapper {
+  position: relative;
+  width: 100%;
+}
+
+.dropdown {
+  position: absolute;
+  top: calc(100% + 6px);
+  left: 0;
+  right: 0;
+  z-index: 20;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  padding: 6px;
+  background: $bg-elevated;
+  border: 1px solid $gray-4;
+  border-radius: 10px;
+  box-shadow: $shadow-popup;
+  max-height: 320px;
+  overflow-y: auto;
+}
+
+.empty {
+  padding: 16px;
+  text-align: center;
+  font-size: 14px;
+  color: $gray-3;
+}
+
+.item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  width: 100%;
+  padding: 8px 12px;
+  background: transparent;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  text-align: left;
+  @include transition(background);
+
+  @include mediaHover {
+    background: $primary-bg;
+  }
+}
+
+.itemInfo {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.itemName {
+  font-family: 'Inter', sans-serif;
+  font-size: 14px;
+  font-weight: 500;
+  color: $gray-1;
+  line-height: 18px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.itemPosition {
+  font-family: 'Inter', sans-serif;
+  font-size: 12px;
+  color: $gray-3;
+  line-height: 16px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.itemTz {
+  flex-shrink: 0;
+  padding: 2px 8px;
+  font-family: 'Inter', sans-serif;
+  font-size: 11px;
+  font-weight: 500;
+  line-height: 14px;
+  color: $primary;
+  background: $primary-light;
+  border-radius: 999px;
+}
+
+.itemAddIcon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 24px;
+  height: 24px;
+  color: $primary;
+  flex-shrink: 0;
+
+  svg {
+    width: 16px;
+    height: 16px;
+  }
+}

@@ -1,4 +1,4 @@
-export type ExceptionType = 'vacation' | 'sick_leave' | 'business_trip'
+export type ExceptionType = 'vacation' | 'sick_leave' | 'business_trip' | 'personal_hours'
 
 export type ExceptionStatus = 'planned' | 'active' | 'completed'
 
@@ -26,6 +26,7 @@ export const EXCEPTION_LABEL_RU: Record<ExceptionType, string> = {
   vacation: 'Ежегодный отпуск',
   sick_leave: 'Больничный',
   business_trip: 'Командировка',
+  personal_hours: 'Личные часы',
 }
 
 export const EXCEPTION_STATUS_RU: Record<ExceptionStatus, string> = {

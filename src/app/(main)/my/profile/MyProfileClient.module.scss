@@ -1,0 +1,128 @@
+@use '@/styles/colors' as *;
+
+.skeleton {
+  padding: 32px 0;
+  text-align: center;
+  color: $gray-3;
+  font-size: 14px;
+}
+
+.hero {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+  margin-bottom: 24px;
+
+  @media (max-width: 720px) {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 16px;
+  }
+}
+
+.heroInfo {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.heroName {
+  font-size: 22px;
+  font-weight: 700;
+  color: $gray-1;
+  margin: 0;
+}
+
+.heroPosition {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px 12px;
+  font-size: 14px;
+  color: $gray-2;
+}
+
+.heroPosition span + span::before {
+  content: '·';
+  margin-right: 8px;
+  color: $gray-3;
+}
+
+.heroTags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 4px;
+}
+
+.heroAi {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 4px;
+  min-width: 120px;
+
+  @media (max-width: 720px) {
+    align-items: flex-start;
+  }
+}
+
+.heroAiLabel {
+  font-size: 12px;
+  color: $gray-3;
+  font-weight: 500;
+}
+
+.heroAiValue {
+  font-size: 48px;
+  line-height: 1;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+}
+
+.heroAiHint {
+  font-size: 12px;
+  font-weight: 500;
+}
+
+.tone_critical {
+  color: $risk-critical;
+}
+
+.tone_high {
+  color: $risk-high;
+}
+
+.tone_medium {
+  color: $risk-medium;
+}
+
+.tone_success {
+  color: $risk-low;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: minmax(0, 2fr) minmax(280px, 1fr);
+  gap: 24px;
+  align-items: flex-start;
+
+  @media (max-width: 1100px) {
+    grid-template-columns: 1fr;
+  }
+}
+
+.col {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  min-width: 0;
+}
+
+.sideCol {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  min-width: 0;
+}

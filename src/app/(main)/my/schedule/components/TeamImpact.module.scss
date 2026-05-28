@@ -1,0 +1,30 @@
+@use '@/styles/colors' as *;
+
+.list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  font-size: 13px;
+  line-height: 18px;
+  color: $gray-2;
+}
+
+.item {
+  display: grid;
+  grid-template-columns: 18px 1fr;
+  gap: 8px;
+  align-items: start;
+}
+
+.bullet {
+  line-height: 18px;
+  font-size: 14px;
+}
+
+.strong {
+  color: $gray-1;
+  font-weight: 600;
+}

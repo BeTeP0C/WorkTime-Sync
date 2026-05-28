@@ -1,0 +1,1 @@
+export { ConflictsFilterBar } from './ConflictsFilterBar'

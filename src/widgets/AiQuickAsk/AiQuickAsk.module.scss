@@ -1,0 +1,86 @@
+@use '@/styles/colors' as *;
+
+.card {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  background: $accent-bg;
+  border-color: $accent-light;
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+}
+
+.titleRow {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  border-radius: 8px;
+  background: $accent;
+  color: $white;
+}
+
+.title {
+  font-family: 'Inter', sans-serif;
+  font-size: 15px;
+  font-weight: 600;
+  color: $gray-1;
+}
+
+.badge {
+  display: inline-flex;
+  align-items: center;
+  padding: 2px 8px;
+  border-radius: 999px;
+  background: $primary-light;
+  color: $primary;
+  font-family: 'Inter', sans-serif;
+  font-size: 11px;
+  font-weight: 600;
+}
+
+.hint {
+  font-family: 'Inter', sans-serif;
+  font-size: 14px;
+  line-height: 1.5;
+  color: $gray-1;
+  background: $white;
+  padding: 12px 14px;
+  border-radius: 10px;
+  border: 1px solid $accent-light;
+}
+
+.textarea {
+  width: 100%;
+  min-height: 56px;
+  resize: vertical;
+  padding: 10px 12px;
+  border: 1px solid $gray-4;
+  border-radius: 10px;
+  background: $white;
+  font-family: 'Inter', sans-serif;
+  font-size: 14px;
+  color: $gray-1;
+  outline: none;
+
+  &:focus {
+    border-color: $accent;
+    box-shadow: 0 0 0 3px $accent-light;
+  }
+
+  &::placeholder {
+    color: $gray-3;
+  }
+}

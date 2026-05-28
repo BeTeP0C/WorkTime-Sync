@@ -1,9 +1,7 @@
 import { RiskLevel } from '@/entities/employee/model/types'
 
-export interface ActualityHistoryPoint {
-  month: string
-  value: number
-}
+// Re-export для обратной совместимости (RiskAndDynamicsCard ждёт этот тип).
+export type { ActualityHistoryPoint } from '@/entities/analytics/model/types'
 
 export interface DashboardSummaryRaw {
   total_employees: number
@@ -26,7 +24,10 @@ export interface DashboardSummaryRaw {
   conflicts_rate?: number
   conflicts_rate_delta?: number
   team_size?: number
-  average_actuality_score_history?: ActualityHistoryPoint[]
+  // HR-дашборд
+  actual_schedules_count?: number
+  actual_schedules_delta?: number
+  vacations_this_month?: number
 }
 
 export interface DashboardSummary {
@@ -47,5 +48,7 @@ export interface DashboardSummary {
   conflictsRate: number
   conflictsRateDelta: number
   teamSize: number
-  averageActualityScoreHistory: ActualityHistoryPoint[]
+  actualSchedulesCount: number
+  actualSchedulesDelta: number
+  vacationsThisMonth: number
 }

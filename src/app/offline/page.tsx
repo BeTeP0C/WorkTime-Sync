@@ -1,17 +1,13 @@
-'use client'
+import { Metadata } from 'next'
 
-import { OfflineStub } from '@/widgets/OfflineStub'
+import { OfflineClient } from './OfflineClient'
 
-import s from './page.module.scss'
+export const metadata: Metadata = {
+  title: 'Нет связи · WorkTime Sync',
+}
+
+export const dynamic = 'force-static'
 
 export default function OfflinePage() {
-  const handleRetry = () => {
-    window.location.reload()
-  }
-
-  return (
-    <div className={s.root}>
-      <OfflineStub onRetry={handleRetry} />
-    </div>
-  )
+  return <OfflineClient />
 }

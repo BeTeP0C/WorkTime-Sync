@@ -50,6 +50,26 @@
   }
 }
 
+.analystGrid {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  gap: 16px;
+  margin-top: 16px;
+
+  @media (min-width: 2048px) {
+    gap: 20px;
+    margin-top: 20px;
+  }
+
+  @media (max-width: 1024px) {
+    grid-template-columns: 1fr;
+  }
+}
+
+.analystGridFull {
+  grid-column: 1 / -1;
+}
+
 .kpiCard {
   // Иконка KPI — чёрная по дизайну
   > div:first-child > span:first-child svg {

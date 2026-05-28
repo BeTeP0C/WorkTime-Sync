@@ -1,0 +1,186 @@
+@use '@/styles/colors' as *;
+
+.scopeCard {
+  margin-bottom: 16px;
+}
+
+.scopeRow {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+  margin-top: 12px;
+
+  @media (max-width: 640px) {
+    grid-template-columns: 1fr;
+  }
+}
+
+.scopeField {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.scopeLabel {
+  font-size: 13px;
+  font-weight: 500;
+  color: $gray-2;
+}
+
+.chatCard {
+  display: flex;
+  flex-direction: column;
+  min-height: 480px;
+}
+
+.messages {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin: 12px 0;
+  padding: 4px;
+  overflow-y: auto;
+  max-height: 60vh;
+}
+
+.emptyState {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  padding: 24px;
+  text-align: center;
+  background: $gray-7;
+  border-radius: 12px;
+}
+
+.emptyHint {
+  margin: 0;
+  font-size: 14px;
+  color: $gray-3;
+}
+
+.suggestions {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.suggestion {
+  width: 100%;
+  padding: 10px 12px;
+  border-radius: 10px;
+  border: $border-default;
+  background: $white;
+  text-align: left;
+  font-size: 13px;
+  color: $gray-1;
+  cursor: pointer;
+
+  &:hover {
+    background: $gray-6;
+  }
+}
+
+.bubble {
+  padding: 12px 14px;
+  border-radius: 12px;
+  max-width: 86%;
+}
+
+.bubbleUser {
+  align-self: flex-end;
+  background: $gray-1;
+  color: $white;
+}
+
+.bubbleAssistant {
+  align-self: flex-start;
+  background: $white;
+  border: $border-default;
+  width: 86%;
+}
+
+.bubbleError {
+  align-self: flex-start;
+  background: $risk-critical-bg;
+  color: $risk-critical;
+  border: 1px solid $risk-critical;
+}
+
+.bubbleText {
+  font-size: 14px;
+  line-height: 20px;
+  white-space: pre-wrap;
+}
+
+.thinking {
+  align-self: flex-start;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 12px 14px;
+  border-radius: 12px;
+  border: $border-default;
+  background: $white;
+}
+
+.dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: $gray-3;
+  animation: pulse 1s infinite ease-in-out;
+
+  &:nth-child(2) {
+    animation-delay: 0.15s;
+  }
+
+  &:nth-child(3) {
+    animation-delay: 0.3s;
+  }
+}
+
+@keyframes pulse {
+  0%,
+  100% {
+    opacity: 0.3;
+  }
+  50% {
+    opacity: 1;
+  }
+}
+
+.inputRow {
+  display: flex;
+  gap: 8px;
+  align-items: flex-end;
+  padding-top: 12px;
+  border-top: $border-default;
+  margin-top: auto;
+}
+
+.textarea {
+  flex: 1;
+  resize: vertical;
+  padding: 10px 12px;
+  border: $border-strong;
+  border-radius: 10px;
+  font-size: 14px;
+  font-family: inherit;
+  color: $gray-1;
+  background: $white;
+  min-height: 80px;
+
+  &:focus {
+    outline: none;
+    border-color: $gray-3;
+  }
+
+  &:disabled {
+    background: $gray-7;
+    color: $gray-3;
+  }
+}

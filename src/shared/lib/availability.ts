@@ -77,6 +77,21 @@ export function buildHeatmapMatrix(
   return { days, hours, counts, available, totalMembers }
 }
 
+/**
+ * Возвращает новый `TeamAvailability` без сотрудников, чьи id есть в excluded.
+ * Сам исходный объект не мутируется. Если `excluded` пустой — возвращает исходный объект.
+ */
+export function filterAvailability(
+  availability: TeamAvailability,
+  excluded: ReadonlySet<string>
+): TeamAvailability {
+  if (!excluded || excluded.size === 0) return availability
+  return {
+    ...availability,
+    employees: availability.employees.filter((e) => !excluded.has(e.employeeId)),
+  }
+}
+
 export function findFullAvailabilityWindows(
   matrix: HeatmapMatrix
 ): { dayIdx: number; startHour: number; endHour: number }[] {
@@ -96,4 +111,44 @@ export function findFullAvailabilityWindows(
     }
   }
   return windows
+}
+
+/**
+ * Находит «окна большинства» — слоты с >= majorityRatio участников.
+ * Возвращает диапазоны и среднее количество доступных.
+ */
+export function findMajorityWindows(
+  matrix: HeatmapMatrix,
+  majorityRatio = 0.75
+): { dayIdx: number; startHour: number; endHour: number; avgAvailable: number }[] {
+  const result: { dayIdx: number; startHour: number; endHour: number; avgAvailable: number }[] = []
+  const threshold = Math.ceil(matrix.totalMembers * majorityRatio)
+  for (let d = 0; d < matrix.days.length; d++) {
+    let start: number | null = null
+    let sum = 0
+    let countSlots = 0
+    for (let h = 0; h < matrix.hours.length; h++) {
+      const ok = matrix.counts[h][d] >= threshold && matrix.totalMembers > 0
+      if (ok && start === null) {
+        start = matrix.hours[h]
+        sum = 0
+        countSlots = 0
+      }
+      if (ok) {
+        sum += matrix.counts[h][d]
+        countSlots += 1
+      }
+      if ((!ok || h === matrix.hours.length - 1) && start !== null) {
+        const endHour = matrix.hours[h] + (ok ? 1 : 0)
+        result.push({
+          dayIdx: d,
+          startHour: start,
+          endHour,
+          avgAvailable: countSlots > 0 ? sum / countSlots : 0,
+        })
+        start = null
+      }
+    }
+  }
+  return result
 }

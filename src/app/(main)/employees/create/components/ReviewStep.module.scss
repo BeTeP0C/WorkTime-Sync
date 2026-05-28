@@ -1,0 +1,79 @@
+@use '@/styles/colors' as *;
+
+.root {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.card {
+  border: $border-default;
+  border-radius: $radius-lg;
+  background: $bg-elevated;
+  padding: 20px;
+}
+
+.cardHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 12px;
+}
+
+.cardTitle {
+  margin: 0;
+  font-family: 'Inter', sans-serif;
+  font-size: 16px;
+  font-weight: 600;
+  line-height: 22px;
+  color: $gray-1;
+}
+
+.editBtn {
+  background: none;
+  border: none;
+  padding: 4px 8px;
+  margin-right: -8px;
+  font-family: 'Inter', sans-serif;
+  font-size: 13px;
+  font-weight: 500;
+  color: $primary;
+  cursor: pointer;
+  border-radius: $radius-sm;
+
+  &:hover {
+    background: $primary-bg;
+  }
+}
+
+.list {
+  margin: 0;
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 8px;
+}
+
+.row {
+  display: grid;
+  grid-template-columns: 180px 1fr;
+  gap: 16px;
+
+  @media (max-width: 600px) {
+    grid-template-columns: 1fr;
+    gap: 2px;
+  }
+}
+
+.rowLabel {
+  margin: 0;
+  font-family: 'Inter', sans-serif;
+  font-size: 13px;
+  color: $gray-3;
+}
+
+.rowValue {
+  margin: 0;
+  font-family: 'Inter', sans-serif;
+  font-size: 14px;
+  color: $gray-1;
+}

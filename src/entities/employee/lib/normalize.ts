@@ -23,6 +23,8 @@ function normalizeMetric(raw: EmployeeMetricRaw | null | undefined): EmployeeMet
     actualityScore: raw.actuality_score,
     conflictRate: raw.conflict_rate,
     loadLevel: raw.load_level,
+    zoneFactor: raw.zone_factor ?? 0,
+    hrFactor: raw.hr_factor ?? 0,
     riskScore: raw.risk_score,
     riskLevel: raw.risk_level,
     outsideEventsCount: raw.outside_events_count,
@@ -43,11 +45,14 @@ export function normalizeEmployee(raw: EmployeeRaw): Employee {
     position: raw.position ?? '',
     department: raw.department ?? '',
     email: raw.email,
+    hireDate: raw.hire_date ?? null,
     timezone: raw.timezone,
     timezoneLabel: raw.timezone_label ?? raw.timezone,
     workFormat: raw.work_format,
+    employmentType: raw.employment_type ?? 'full_time',
     teamIds: raw.team_ids ?? [],
     metric: normalizeMetric(raw.metric ?? null),
     updatedAt: raw.updated_at,
+    hasPendingConfirmation: raw.has_pending_confirmation ?? false,
   }
 }

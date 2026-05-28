@@ -5,6 +5,7 @@ import { useRouter } from 'next/navigation'
 import { useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { observer } from 'mobx-react-lite'
+import { toast } from 'sonner'
 
 import { useAuthStore } from '@/app-store/context'
 import { ApiError } from '@/shared/api/client'
@@ -49,13 +50,13 @@ export const RegisterClient = observer(function RegisterClient() {
         email: data.email,
         password: data.password,
       })
+      toast.success('Аккаунт создан')
       router.replace('/dashboard')
     } catch (error) {
       const msg =
-        error instanceof ApiError
-          ? error.message
-          : 'Не удалось создать аккаунт. Попробуйте ещё раз.'
+        error instanceof ApiError ? error.detail : 'Не удалось создать аккаунт. Попробуйте ещё раз.'
       setSubmitError(msg)
+      toast.error(msg)
     }
   }
 

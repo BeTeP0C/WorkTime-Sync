@@ -1,0 +1,111 @@
+@use '@/styles/colors' as *;
+
+.root {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.month {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.monthTitle {
+  font-size: 14px;
+  line-height: 18px;
+  font-weight: 600;
+  color: $gray-1;
+  text-transform: capitalize;
+}
+
+.weekdays {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 2px;
+}
+
+.weekday {
+  text-align: center;
+  font-size: 11px;
+  line-height: 14px;
+  color: $gray-3;
+  padding: 4px 0;
+}
+
+.days {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 2px;
+}
+
+.day {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  aspect-ratio: 1 / 1;
+  font-size: 12px;
+  line-height: 16px;
+  color: $gray-1;
+  border-radius: 6px;
+}
+
+.outside {
+  color: $gray-4;
+}
+
+.today {
+  outline: 1.5px solid $primary;
+  outline-offset: -1.5px;
+  font-weight: 700;
+}
+
+.markedBg {
+  font-weight: 600;
+}
+
+.mark_vacation {
+  background: $success-bg;
+  color: $success;
+}
+
+.mark_sick_leave {
+  background: $error-bg;
+  color: $error;
+}
+
+.mark_business_trip {
+  background: $primary-bg;
+  color: $primary;
+}
+
+.mark_personal_hours {
+  background: $warning-bg;
+  color: $warning;
+}
+
+.legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 14px;
+  font-size: 12px;
+  line-height: 16px;
+  color: $gray-2;
+  border-top: 1px solid $gray-5;
+  padding-top: 12px;
+}
+
+.legendItem {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.legendDot {
+  display: inline-block;
+  width: 10px;
+  height: 10px;
+  border-radius: 3px;
+  background-color: currentColor;
+}

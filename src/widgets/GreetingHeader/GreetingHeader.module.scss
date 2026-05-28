@@ -1,0 +1,92 @@
+@use '@/styles/colors' as *;
+
+.header {
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 16px 32px;
+  background: $white;
+  border-bottom: $border-default;
+  margin: 0 -32px 24px;
+
+  @media (max-width: 1440px) {
+    padding: 14px 28px;
+    margin: 0 -28px 20px;
+  }
+
+  @media (max-width: 1024px) {
+    padding: 14px 20px;
+    margin: 0 -20px 20px;
+  }
+
+  @media (max-width: 768px) {
+    position: relative;
+    top: auto;
+    padding: 12px 16px;
+    margin: 0 -16px 16px;
+    flex-direction: column;
+    align-items: flex-start;
+  }
+}
+
+.text {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  min-width: 0;
+}
+
+.title {
+  margin: 0;
+  font-family: 'Inter', sans-serif;
+  font-size: 24px;
+  font-weight: 600;
+  line-height: 1.2;
+  color: $gray-1;
+
+  @media (max-width: 768px) {
+    font-size: 20px;
+  }
+}
+
+.wave {
+  display: inline-block;
+  margin-left: 4px;
+}
+
+.meta {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-family: 'Inter', sans-serif;
+  font-size: 13px;
+  color: $gray-3;
+  flex-wrap: wrap;
+}
+
+.subtitle {
+  font-weight: 500;
+  color: $gray-2;
+}
+
+.dot {
+  color: $gray-4;
+}
+
+.date {
+  color: $gray-3;
+}
+
+.actions {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+
+  @media (max-width: 768px) {
+    align-self: flex-end;
+  }
+}

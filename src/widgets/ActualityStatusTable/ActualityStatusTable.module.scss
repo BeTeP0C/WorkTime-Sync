@@ -1,0 +1,163 @@
+@use '@/styles/colors' as *;
+@use '@/styles/mixins' as *;
+
+.card {
+  height: 100%;
+}
+
+.link {
+  font-size: 12px;
+  font-weight: 400;
+  color: $primary;
+
+  @include mediaHover {
+    color: $primary-hover;
+  }
+}
+
+.list {
+  display: flex;
+  flex-direction: column;
+}
+
+.empty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 32px 16px;
+  text-align: center;
+}
+
+.emptyIcon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 48px;
+  height: 48px;
+  margin-bottom: 4px;
+  border-radius: $radius-pill;
+  background: $gray-7;
+  color: $gray-3;
+}
+
+.emptyTitle {
+  font-size: 14px;
+  font-weight: 500;
+  color: $gray-2;
+}
+
+.emptyHint {
+  font-size: 12px;
+  color: $gray-3;
+  max-width: 240px;
+  line-height: 1.4;
+}
+
+.row {
+  display: grid;
+  grid-template-columns: 28px 1fr 80px 100px auto;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 8px;
+  min-height: 50px;
+  border-bottom: 1px solid #f9f9f9;
+  @include transition(background);
+
+  &:last-child {
+    border-bottom: none;
+  }
+
+  @include mediaHover {
+    background: $gray-7;
+  }
+
+  @media (max-width: 1280px) {
+    grid-template-columns: 28px 1fr 80px auto;
+
+    .format {
+      display: none;
+    }
+  }
+
+  @media (max-width: 768px) {
+    grid-template-columns: 28px 1fr auto;
+    grid-template-areas:
+      'avatar info badge'
+      'avatar metric metric';
+    column-gap: 10px;
+    row-gap: 6px;
+    padding: 10px 6px;
+
+    > :nth-child(1) {
+      grid-area: avatar;
+      align-self: start;
+    }
+
+    .info {
+      grid-area: info;
+    }
+
+    .format {
+      display: none;
+    }
+
+    .metric {
+      grid-area: metric;
+      width: 100%;
+    }
+
+    > :last-child {
+      grid-area: badge;
+      align-self: start;
+      justify-self: end;
+    }
+  }
+}
+
+.info {
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.name {
+  font-size: 12.5px;
+  font-weight: 500;
+  color: $gray-2;
+  @include ellipsis;
+}
+
+.position {
+  font-size: 11px;
+  color: $gray-3;
+  @include ellipsis;
+}
+
+.format {
+  justify-self: start;
+}
+
+.metric {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  width: 100px;
+
+  @media (max-width: 1024px) {
+    width: 80px;
+  }
+}
+
+.bar {
+  flex: 1;
+}
+
+.score {
+  font-size: 10.5px;
+  font-weight: 500;
+  color: $gray-2;
+  font-variant-numeric: tabular-nums;
+}

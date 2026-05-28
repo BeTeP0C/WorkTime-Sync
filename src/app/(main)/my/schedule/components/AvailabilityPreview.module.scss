@@ -1,0 +1,66 @@
+@use '@/styles/colors' as *;
+@use '@/styles/mixins' as *;
+
+.subtitle {
+  font-size: 12px;
+  color: $gray-3;
+  margin-bottom: 12px;
+}
+
+.skeletons {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.row {
+  display: grid;
+  grid-template-columns: 48px 8px 1fr;
+  gap: 10px;
+  align-items: center;
+  font-size: 13px;
+  line-height: 18px;
+}
+
+.time {
+  color: $gray-3;
+  font-variant-numeric: tabular-nums;
+}
+
+.dot {
+  display: inline-block;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: $gray-4;
+}
+
+.dot_work {
+  background: #93c5fd;
+}
+
+.dot_event {
+  background: $primary;
+}
+
+.dot_outside {
+  background: $error;
+}
+
+.title {
+  color: $gray-1;
+}
+
+.titleOutside {
+  color: $error;
+  font-weight: 500;
+}

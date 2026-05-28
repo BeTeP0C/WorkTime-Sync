@@ -1,0 +1,69 @@
+@use '@/styles/colors' as *;
+
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  margin-bottom: 20px;
+}
+
+.title {
+  height: 32px;
+  width: 320px;
+  max-width: 60%;
+}
+
+.button {
+  height: 40px;
+  width: 160px;
+}
+
+.stats {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 16px;
+  margin-bottom: 24px;
+
+  @media (max-width: 1280px) {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+.stat {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.statLabel {
+  height: 14px;
+  width: 60%;
+}
+
+.statValue {
+  height: 24px;
+  width: 40%;
+}
+
+.list {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.card {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.cardTitle {
+  height: 20px;
+  width: 50%;
+}
+
+.cardText {
+  height: 14px;
+  width: 90%;
+}

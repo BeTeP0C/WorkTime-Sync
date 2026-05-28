@@ -1,0 +1,97 @@
+@use '@/styles/colors' as *;
+
+.card {
+  display: flex;
+  flex-direction: column;
+}
+
+.empty {
+  font-family: 'Inter', sans-serif;
+  font-size: 13px;
+  color: $gray-3;
+  padding: 8px 0;
+}
+
+.list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.item {
+  position: relative;
+  padding: 10px 12px 10px 16px;
+  border-radius: 10px;
+  background: $gray-7;
+  border-left: 3px solid $primary;
+}
+
+.tone_now {
+  background: $primary-bg;
+  border-left-color: $primary;
+}
+
+.tone_conflict {
+  background: $risk-high-bg;
+  border-left-color: $risk-high;
+}
+
+.tone_planned {
+  background: $gray-7;
+  border-left-color: $primary;
+}
+
+.head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  margin-bottom: 2px;
+}
+
+.title {
+  font-family: 'Inter', sans-serif;
+  font-size: 14px;
+  font-weight: 600;
+  color: $gray-1;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.when {
+  font-family: 'Inter', sans-serif;
+  font-size: 12px;
+  color: $gray-3;
+}
+
+.badge {
+  flex-shrink: 0;
+  display: inline-flex;
+  align-items: center;
+  padding: 2px 8px;
+  border-radius: 999px;
+  font-family: 'Inter', sans-serif;
+  font-size: 11px;
+  font-weight: 600;
+  text-transform: none;
+}
+
+.badge_now {
+  background: $primary;
+  color: $white;
+}
+
+.badge_conflict {
+  background: $risk-high;
+  color: $white;
+}
+
+.badge_planned {
+  background: $primary-light;
+  color: $primary;
+}

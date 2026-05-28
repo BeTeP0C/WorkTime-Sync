@@ -1,0 +1,82 @@
+@use '@/styles/colors' as *;
+
+.page {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  max-width: 960px;
+  margin: 0 auto;
+  padding: 24px 0 48px;
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.title {
+  margin: 0;
+  font-family: 'Inter', sans-serif;
+  font-size: 28px;
+  font-weight: 700;
+  line-height: 36px;
+  color: $gray-1;
+}
+
+.stepperWrap {
+  padding: 16px 24px;
+  background: $bg-elevated;
+  border: $border-default;
+  border-radius: $radius-lg;
+}
+
+.card {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.cardHeader {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.cardTitle {
+  margin: 0;
+  font-family: 'Inter', sans-serif;
+  font-size: 20px;
+  font-weight: 600;
+  line-height: 28px;
+  color: $gray-1;
+}
+
+.cardSubtitle {
+  margin: 0;
+  font-family: 'Inter', sans-serif;
+  font-size: 14px;
+  line-height: 20px;
+  color: $gray-3;
+}
+
+.errorBox {
+  padding: 12px 16px;
+  background: $error-bg;
+  border: 1px solid $error;
+  border-radius: $radius-md;
+  font-family: 'Inter', sans-serif;
+  font-size: 14px;
+  line-height: 20px;
+  color: $error;
+}
+
+.actions {
+  display: flex;
+  gap: 12px;
+  justify-content: space-between;
+}
+
+.submit {
+  margin-left: auto;
+}

@@ -1,5 +1,5 @@
-import { ReactNode } from 'react'
 import Link from 'next/link'
+import { ReactNode } from 'react'
 import cn from 'classnames'
 
 import { Button } from '@/shared/ui/Button'

@@ -1,0 +1,152 @@
+@use '@/styles/colors' as *;
+@use '@/styles/mixins' as *;
+
+.root {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.identity {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 16px;
+  border: 1px solid $gray-5;
+  border-radius: $radius-lg;
+  background: $gray-7;
+}
+
+.identityInfo {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  min-width: 0;
+}
+
+.teamName {
+  font-family: 'Inter', sans-serif;
+  font-size: 20px;
+  font-weight: 600;
+  line-height: 24px;
+  color: $gray-1;
+  @include ellipsis;
+}
+
+.identityMeta {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 13px;
+  color: $gray-3;
+}
+
+.metaDot {
+  color: $gray-4;
+}
+
+.section {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.sectionTitle {
+  font-family: 'Inter', sans-serif;
+  font-size: 11px;
+  font-weight: 600;
+  color: $gray-3;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+
+.membersList {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.memberRow {
+  display: grid;
+  grid-template-columns: 32px 1fr auto auto;
+  align-items: center;
+  gap: 12px;
+  padding: 8px 12px;
+  border: 1px solid $gray-5;
+  border-radius: $radius-md;
+  background: $bg-elevated;
+}
+
+.memberInfo {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 0;
+}
+
+.memberName {
+  font-size: 13px;
+  font-weight: 500;
+  color: $gray-1;
+  @include ellipsis;
+}
+
+.memberPosition {
+  font-size: 11.5px;
+  color: $gray-3;
+  @include ellipsis;
+}
+
+.memberTz {
+  font-size: 11.5px;
+  color: $gray-3;
+  font-variant-numeric: tabular-nums;
+}
+
+.warnings {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.warning {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  padding: 10px 12px;
+  border-radius: $radius-md;
+  background: $warning-bg;
+  color: #92400e;
+  font-size: 12.5px;
+  line-height: 1.4;
+}
+
+.warningIcon {
+  width: 16px;
+  height: 16px;
+  flex-shrink: 0;
+  color: $warning;
+  margin-top: 1px;
+}
+
+.hint {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  padding: 10px 12px;
+  border-radius: $radius-md;
+  background: $primary-bg;
+  color: $primary;
+  font-size: 12px;
+  line-height: 1.4;
+}
+
+.hintIcon {
+  width: 16px;
+  height: 16px;
+  flex-shrink: 0;
+  margin-top: 1px;
+}

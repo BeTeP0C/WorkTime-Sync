@@ -2,12 +2,20 @@
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  border-radius: 50%;
   color: #ffffff;
   font-weight: 700;
   text-transform: uppercase;
   user-select: none;
   flex-shrink: 0;
+  object-fit: cover;
+}
+
+.shape_round {
+  border-radius: 50%;
+}
+
+.shape_squircle {
+  border-radius: 8px;
 }
 
 .size_xs {

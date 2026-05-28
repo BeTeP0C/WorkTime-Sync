@@ -33,10 +33,10 @@ export function Select<T extends string = string>({
   ...rest
 }: SelectProps<T>) {
   return (
-    <div className={cn(s.wrap, leftIcon && s.hasIcon, className)}>
+    <div className={cn(s.wrap, Boolean(leftIcon) && s.hasIcon, className)}>
       {leftIcon && <span className={s.icon}>{leftIcon}</span>}
       <select
-        className={cn(s.select, s[`size_${size}`], leftIcon && s.selectWithIcon)}
+        className={cn(s.select, s[`size_${size}`], Boolean(leftIcon) && s.selectWithIcon)}
         value={value}
         onChange={(e) => onValueChange(e.target.value as T | '')}
         {...rest}

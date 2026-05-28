@@ -1,0 +1,64 @@
+@use '@/styles/colors' as *;
+
+.card {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.title {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: $gray-1;
+  font-size: 16px;
+  font-weight: 600;
+
+  svg {
+    color: #000000;
+  }
+}
+
+.exportBtn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 10px;
+  border: 1px solid $gray-5;
+  border-radius: 8px;
+  background: #ffffff;
+  color: $gray-2;
+  font-size: 13px;
+  cursor: pointer;
+  transition:
+    background 0.15s ease,
+    border-color 0.15s ease;
+
+  &:hover:not(:disabled) {
+    background: $gray-6;
+    border-color: $gray-4;
+  }
+
+  &:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+}
+
+.empty {
+  padding: 40px 0;
+  text-align: center;
+  color: $gray-3;
+  font-size: 14px;
+}
+
+.chartWrap {
+  width: 100%;
+}

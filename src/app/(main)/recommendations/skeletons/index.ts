@@ -1,0 +1,1 @@
+export { RecommendationsSkeleton } from './RecommendationsSkeleton'

@@ -2,8 +2,8 @@
 
 import { Cell, Line, LineChart, Pie, PieChart, ResponsiveContainer, XAxis, YAxis } from 'recharts'
 
-import { RiskLevel } from '@/entities/employee/model/types'
 import { ActualityHistoryPoint } from '@/entities/dashboard/model/types'
+import { RiskLevel } from '@/entities/employee/model/types'
 import { ChartHistogramIcon, ChartPieIcon } from '@/shared/icons'
 import { Card } from '@/shared/ui/Card'
 

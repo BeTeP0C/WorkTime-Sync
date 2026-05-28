@@ -6,15 +6,18 @@
   flex-direction: column;
 }
 
-.scroll {
-  overflow-x: auto;
-  @include scrollbar(6px);
+.title {
+  margin: 0 0 20px;
+  font-size: 20px;
+  font-weight: 600;
+  line-height: 1.2;
+  color: $black;
 }
 
 .grid {
   display: grid;
-  grid-template-columns: 160px 1fr 56px;
-  column-gap: 12px;
+  grid-template-columns: minmax(140px, max-content) minmax(0, 1fr) minmax(48px, max-content);
+  column-gap: 16px;
   row-gap: 12px;
   align-items: center;
 }
@@ -24,18 +27,18 @@
 }
 
 .hoursRow {
+  position: relative;
   display: flex;
+  justify-content: space-between;
   align-items: center;
   height: 24px;
-  position: relative;
 }
 
 .hourLabel {
-  font-size: 14px;
+  font-size: 16px;
   font-weight: 500;
   color: #909090;
   font-variant-numeric: tabular-nums;
-  text-align: left;
   flex-shrink: 0;
 }
 
@@ -44,18 +47,20 @@
 }
 
 .name {
-  font-size: 15px;
+  font-size: 17px;
   font-weight: 500;
-  color: #000000;
+  color: $black;
   @include ellipsis;
   padding-right: 8px;
 }
 
 .track {
   position: relative;
-  height: 32px;
+  width: 100%;
+  height: 35px;
   background: rgba(217, 217, 217, 0.6);
   border-radius: 10px;
+  overflow: hidden;
 }
 
 .seg {
@@ -69,7 +74,7 @@
   background: rgba(59, 111, 232, 0.5);
 }
 
-.seg_meeting {
+.seg_busy {
   background: #3b6fe8;
 }
 
@@ -82,18 +87,43 @@
 }
 
 .tz {
-  font-size: 14px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 8px;
+  font-size: 16px;
   font-weight: 500;
   color: #909090;
-  text-align: right;
   font-variant-numeric: tabular-nums;
+}
+
+.removeBtn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 24px;
+  height: 24px;
+  padding: 0;
+  border: none;
+  border-radius: $radius-sm;
+  background: $gray-7;
+  color: $gray-3;
+  cursor: pointer;
+  @include transition(background, color);
+
+  &:hover,
+  &:focus-visible {
+    background: $risk-critical-bg;
+    color: $risk-critical;
+    outline: none;
+  }
 }
 
 .legend {
   display: flex;
   flex-wrap: wrap;
-  gap: 18px;
-  margin-top: 20px;
+  gap: 24px;
+  margin-top: 24px;
   padding-top: 16px;
   border-top: $border-default;
 }
@@ -101,14 +131,15 @@
 .legendChip {
   display: inline-flex;
   align-items: center;
-  gap: 8px;
-  font-size: 14px;
+  gap: 12px;
+  font-size: 15px;
   font-weight: 500;
   color: #909090;
 }
 
 .legendSwatch {
-  width: 40px;
-  height: 18px;
-  border-radius: 9px;
+  width: 50px;
+  height: 20px;
+  border-radius: 10px;
+  flex-shrink: 0;
 }

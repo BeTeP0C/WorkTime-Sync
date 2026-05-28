@@ -1,6 +1,10 @@
+'use client'
+
+import { useState } from 'react'
 import { format, parseISO } from 'date-fns'
 import { ru } from 'date-fns/locale'
 
+import { askAi } from '@/entities/ai/api'
 import { Employee } from '@/entities/employee/model/types'
 import { MeetingRecommendation } from '@/entities/team/model/types'
 import { pluralizeRu } from '@/shared/lib/format'
@@ -12,9 +16,24 @@ import s from './MeetingFinderPanel.module.scss'
 interface MeetingFinderPanelProps {
   recommendations: MeetingRecommendation[]
   members: Employee[]
+  teamId?: string | null
+  teamName?: string | null
 }
 
-export function MeetingFinderPanel({ recommendations, members }: MeetingFinderPanelProps) {
+type ExplainState =
+  | { status: 'idle' }
+  | { status: 'loading' }
+  | { status: 'success'; text: string }
+  | { status: 'error'; message: string }
+
+export function MeetingFinderPanel({
+  recommendations,
+  members,
+  teamId,
+  teamName,
+}: MeetingFinderPanelProps) {
+  const [explainBySlot, setExplainBySlot] = useState<Record<string, ExplainState>>({})
+
   if (recommendations.length === 0) {
     return (
       <Card padding="md" className={s.card}>
@@ -26,6 +45,37 @@ export function MeetingFinderPanel({ recommendations, members }: MeetingFinderPa
   const [best, alt] = recommendations
   const totalMembers = members.length
   const memberById = new Map(members.map((m) => [m.id, m]))
+
+  const handleExplain = async (
+    slotKey: string,
+    slot: MeetingRecommendation,
+    isBest: boolean
+  ): Promise<void> => {
+    const current = explainBySlot[slotKey]
+    if (current?.status === 'success' || current?.status === 'loading') return
+    setExplainBySlot((prev) => ({ ...prev, [slotKey]: { status: 'loading' } }))
+    try {
+      const start = parseISO(slot.startDt)
+      const end = parseISO(slot.endDt)
+      const date = format(start, 'EE d MMMM', { locale: ru })
+      const time = `${format(start, 'HH:mm')}–${format(end, 'HH:mm')}`
+      const question =
+        `Объясни кратко (1–2 предложения), почему встреча ${date} ${time} — ` +
+        `${isBest ? 'лучший' : 'альтернативный'} вариант для команды ` +
+        `${teamName ? `«${teamName}»` : ''}. Учти доступность участников, ` +
+        `часовые пояса и существующие события календаря.`
+      const response = await askAi({
+        question,
+        teamId: teamId ?? null,
+        useRag: true,
+      })
+      const text = response.summary || response.answer || 'AI не смог сформулировать объяснение.'
+      setExplainBySlot((prev) => ({ ...prev, [slotKey]: { status: 'success', text } }))
+    } catch (error) {
+      const message = error instanceof Error ? error.message : 'Не удалось получить объяснение.'
+      setExplainBySlot((prev) => ({ ...prev, [slotKey]: { status: 'error', message } }))
+    }
+  }
 
   return (
     <Card padding="md" className={s.card}>
@@ -52,6 +102,8 @@ export function MeetingFinderPanel({ recommendations, members }: MeetingFinderPa
         totalMembers={totalMembers}
         memberById={memberById}
         accent
+        explainState={explainBySlot['best'] ?? { status: 'idle' }}
+        onExplain={() => handleExplain('best', best, true)}
       />
 
       {alt && (
@@ -60,6 +112,8 @@ export function MeetingFinderPanel({ recommendations, members }: MeetingFinderPa
           slot={alt}
           totalMembers={totalMembers}
           memberById={memberById}
+          explainState={explainBySlot['alt'] ?? { status: 'idle' }}
+          onExplain={() => handleExplain('alt', alt, false)}
         />
       )}
 
@@ -76,9 +130,19 @@ interface SlotCardProps {
   totalMembers: number
   memberById: Map<string, Employee>
   accent?: boolean
+  explainState: ExplainState
+  onExplain: () => void
 }
 
-function SlotCard({ label, slot, totalMembers, memberById, accent }: SlotCardProps) {
+function SlotCard({
+  label,
+  slot,
+  totalMembers,
+  memberById,
+  accent,
+  explainState,
+  onExplain,
+}: SlotCardProps) {
   const start = parseISO(slot.startDt)
   const end = parseISO(slot.endDt)
   const dateLine = format(start, 'EE d MMMM', { locale: ru })
@@ -113,6 +177,34 @@ function SlotCard({ label, slot, totalMembers, memberById, accent }: SlotCardPro
           </>
         )}
       </div>
+
+      <button
+        type="button"
+        className={s.explainToggle}
+        onClick={onExplain}
+        disabled={explainState.status === 'loading'}
+      >
+        {renderExplainCta(explainState)}
+      </button>
+      {explainState.status === 'success' && (
+        <div className={s.explainBody}>{explainState.text}</div>
+      )}
+      {explainState.status === 'error' && (
+        <div className={`${s.explainBody} ${s.explainError}`}>{explainState.message}</div>
+      )}
     </div>
   )
+}
+
+function renderExplainCta(state: ExplainState): string {
+  switch (state.status) {
+    case 'loading':
+      return '🤖 AI думает…'
+    case 'success':
+      return '🤖 Объяснение получено'
+    case 'error':
+      return '🤖 Попробовать снова'
+    default:
+      return '🤖 Почему AI выбрал этот вариант?'
+  }
 }

@@ -126,7 +126,8 @@
   }
 }
 
-.column_pending_confirmation {
+.column_pending_confirmation,
+.column_no_response {
   .columnTitle {
     color: $primary;
   }
@@ -323,7 +324,8 @@
   }
 }
 
-.cardBtn_pending_confirmation {
+.cardBtn_pending_confirmation,
+.cardBtn_no_response {
   background: rgba($primary, 0.2);
   color: $primary;
 

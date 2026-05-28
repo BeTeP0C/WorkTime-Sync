@@ -1,0 +1,79 @@
+@use '@/styles/colors' as *;
+@use '@/styles/mixins' as *;
+
+.counters {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-bottom: 10px;
+}
+
+.placeholder {
+  padding: 16px 4px;
+  font-size: 12.5px;
+  color: $gray-3;
+  line-height: 1.5;
+}
+
+.list {
+  list-style: none;
+  margin: 0 0 12px;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.row {
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  align-items: center;
+  gap: 10px;
+  padding: 8px 10px;
+  border: 1px solid $gray-5;
+  border-radius: $radius-md;
+  background: $bg-elevated;
+}
+
+.rowText {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 0;
+}
+
+.rowTitle {
+  font-size: 12.5px;
+  font-weight: 500;
+  color: $gray-1;
+  @include ellipsis;
+}
+
+.rowReason {
+  font-size: 11.5px;
+  color: $gray-3;
+  line-height: 1.4;
+  @include ellipsis;
+}
+
+.rowDue {
+  font-size: 11px;
+  color: $gray-3;
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+
+.openAll {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 12px;
+  font-weight: 500;
+  color: $primary;
+  text-decoration: none;
+  margin-top: 4px;
+
+  @include mediaHover {
+    color: $primary-hover;
+  }
+}

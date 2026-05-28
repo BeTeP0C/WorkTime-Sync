@@ -1,0 +1,121 @@
+@use '@/styles/colors' as *;
+@use '@/styles/mixins' as *;
+
+.card {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+
+  @media (max-width: 1024px) {
+    gap: 12px;
+  }
+}
+
+.header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.title {
+  margin: 0;
+  font-size: 18px;
+  font-weight: 600;
+  line-height: 1.3;
+  color: $gray-1;
+
+  @media (min-width: 2048px) {
+    font-size: 20px;
+  }
+
+  @media (max-width: 375px) {
+    font-size: 16px;
+  }
+}
+
+.severity {
+  flex-shrink: 0;
+  text-transform: lowercase;
+}
+
+.subject {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.subjectLink {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 14px;
+  color: $gray-2;
+  text-decoration: none;
+  @include transition(color);
+
+  @include mediaHover {
+    color: $primary;
+  }
+
+  @media (max-width: 375px) {
+    flex-wrap: wrap;
+  }
+}
+
+.subjectName {
+  font-weight: 500;
+}
+
+.subjectDot {
+  color: $gray-4;
+}
+
+.subjectRole {
+  color: $gray-3;
+}
+
+.reason {
+  margin: 0;
+  font-size: 14px;
+  line-height: 1.55;
+  color: $gray-2;
+  white-space: pre-wrap;
+
+  @media (min-width: 2048px) {
+    font-size: 15px;
+  }
+
+  @media (max-width: 375px) {
+    font-size: 13px;
+  }
+}
+
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 4px;
+}
+
+.actionBtn {
+  height: 38px;
+  padding: 0 16px;
+  font-size: 13px;
+
+  @media (max-width: 375px) {
+    flex: 1 1 100%;
+    justify-content: center;
+  }
+}
+
+.actionBtnGhost {
+  background: transparent;
+  color: $gray-3;
+  box-shadow: none;
+
+  @include mediaHover {
+    background: $gray-7;
+    color: $gray-2;
+  }
+}

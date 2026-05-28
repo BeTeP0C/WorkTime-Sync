@@ -1,5 +1,6 @@
-export const USE_MOCKS = process.env.NEXT_PUBLIC_USE_MOCKS === 'true'
+/** Для браузера — относительный путь, чтобы Next rewrites делал same-origin
+ *  прокси на бэк и httpOnly cookie работали без cross-site проблем. */
+export const API_BASE = process.env.NEXT_PUBLIC_API_URL ?? '/api/v1'
 
-export const API_BASE = process.env.NEXT_PUBLIC_API_URL ?? 'http://localhost:8000/api/v1'
-
-export const MOCK_DELAY_MS = Number(process.env.NEXT_PUBLIC_MOCK_DELAY ?? 300)
+/** Для SSR (Node) — абсолютный URL: rewrites не сработают, нужно ходить напрямую. */
+export const SERVER_API_BASE = process.env.SERVER_API_URL ?? 'http://localhost:8000/api/v1'

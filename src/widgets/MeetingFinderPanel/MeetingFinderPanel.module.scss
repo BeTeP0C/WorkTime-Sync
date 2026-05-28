@@ -84,6 +84,41 @@
   color: $gray-3;
 }
 
+.explainToggle {
+  margin-top: 6px;
+  align-self: flex-start;
+  padding: 0;
+  background: none;
+  border: none;
+  font-size: 12px;
+  color: $accent;
+  cursor: pointer;
+
+  &:hover:not(:disabled) {
+    text-decoration: underline;
+  }
+
+  &:disabled {
+    color: $gray-3;
+    cursor: progress;
+  }
+}
+
+.explainBody {
+  margin-top: 6px;
+  padding: 8px 10px;
+  border-radius: $radius-md;
+  background: $white;
+  border: $border-default;
+  font-size: 12px;
+  line-height: 16px;
+  color: $gray-2;
+}
+
+.explainError {
+  color: $risk-critical;
+}
+
 .cta {
   margin-top: 4px;
 }

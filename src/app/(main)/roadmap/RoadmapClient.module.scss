@@ -1,0 +1,237 @@
+@use '@/styles/colors' as *;
+@use '@/styles/mixins' as *;
+
+.stats {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 16px;
+  margin-bottom: 20px;
+
+  @media (max-width: 1280px) {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  @media (max-width: 375px) {
+    grid-template-columns: 1fr;
+    gap: 12px;
+  }
+}
+
+.viewToggle {
+  display: inline-flex;
+  align-items: center;
+  gap: 2px;
+  padding: 2px;
+  background: $gray-7;
+  border: 1px solid $gray-5;
+  border-radius: $radius-md;
+}
+
+.viewBtn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  height: 28px;
+  padding: 0 10px;
+  border: none;
+  background: transparent;
+  color: $gray-3;
+  font-size: 12.5px;
+  font-weight: 500;
+  border-radius: $radius-sm;
+  cursor: pointer;
+  @include transition(background, color);
+
+  @include mediaHover {
+    color: $gray-1;
+  }
+}
+
+.viewBtnActive,
+.viewBtnActive:hover {
+  background: $bg-elevated;
+  color: $primary;
+  box-shadow: 0 1px 2px rgba(16, 24, 40, 0.06);
+}
+
+.activeFilter {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  padding: 8px 12px;
+  margin-bottom: 16px;
+  background: $primary-bg;
+  border: 1px solid #c7d6fa;
+  border-radius: $radius-md;
+  font-size: 12.5px;
+  color: $primary;
+}
+
+.activeFilterClear {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 4px 8px;
+  border: none;
+  background: $bg-elevated;
+  color: $primary;
+  border-radius: $radius-sm;
+  font-size: 11.5px;
+  font-weight: 500;
+  cursor: pointer;
+  @include transition(background);
+
+  @include mediaHover {
+    background: $primary-light;
+  }
+}
+
+.filters {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-bottom: 20px;
+}
+
+.chipGroup {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+}
+
+.chipGroupLabel {
+  font-size: 13px;
+  color: $gray-3;
+  font-weight: 500;
+  margin-right: 4px;
+}
+
+.chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  height: 34px;
+  padding: 0 12px;
+  background: $white;
+  color: $gray-2;
+  font-size: 13px;
+  font-weight: 600;
+  border: 1px solid $gray-6;
+  border-radius: $radius-lg;
+  cursor: pointer;
+  @include transition(background, color, border-color);
+
+  @include mediaHover {
+    background: $gray-7;
+  }
+}
+
+.chipActive {
+  background: $primary;
+  border-color: $primary;
+  color: $white;
+
+  @include mediaHover {
+    background: $primary-hover;
+  }
+
+  .chipCount {
+    background: rgba(255, 255, 255, 0.25);
+    color: $white;
+  }
+}
+
+.chipCount {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 22px;
+  height: 20px;
+  padding: 0 6px;
+  background: $gray-6;
+  color: $gray-2;
+  border-radius: $radius-pill;
+  font-size: 11px;
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+}
+
+.content {
+  display: grid;
+  grid-template-columns: 1fr 300px;
+  align-items: start;
+  gap: 20px;
+
+  @media (max-width: 1280px) {
+    grid-template-columns: 1fr;
+  }
+}
+
+.list {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  min-width: 0;
+}
+
+.sidebar {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.sidebarCard {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.sidebarTitle {
+  margin: 0;
+  font-size: 15px;
+  font-weight: 600;
+  color: $gray-1;
+}
+
+.legend {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  font-size: 13px;
+  color: $gray-2;
+
+  strong {
+    color: $gray-1;
+  }
+}
+
+.empty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 48px 24px;
+  text-align: center;
+}
+
+.emptyIcon {
+  width: 32px;
+  height: 32px;
+  color: $primary;
+}
+
+.emptyTitle {
+  font-size: 16px;
+  font-weight: 600;
+  color: $gray-1;
+}
+
+.emptyHint {
+  font-size: 13px;
+  color: $gray-3;
+}
