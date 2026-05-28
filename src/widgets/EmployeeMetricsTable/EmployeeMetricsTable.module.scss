@@ -33,6 +33,7 @@
   overflow-x: auto;
   margin: 0 -8px;
   padding: 0 8px;
+  -webkit-overflow-scrolling: touch;
 
   // Тонкий нативный скроллбар
   &::-webkit-scrollbar {
@@ -51,6 +52,11 @@
   min-width: 890px;
   display: flex;
   flex-direction: column;
+
+  // На мобиле колонки ужимаем — горизонтальный scroll остаётся, но плотнее.
+  @media (max-width: 640px) {
+    min-width: 720px;
+  }
 }
 
 .tableHead,
@@ -60,6 +66,11 @@
   align-items: center;
   gap: 10px;
   width: 100%;
+
+  @media (max-width: 640px) {
+    grid-template-columns: 120px 100px 90px 110px 60px 110px 1fr;
+    gap: 6px;
+  }
 }
 
 .tableHead {

@@ -27,10 +27,29 @@
   line-height: 32px;
   color: $gray-1;
   margin: 0;
+  word-break: break-word;
+
+  @media (max-width: 768px) {
+    font-size: 20px;
+    line-height: 26px;
+  }
+
+  @media (max-width: 375px) {
+    font-size: 17px;
+    line-height: 22px;
+  }
 }
 
 .stepperWrap {
   padding: 6px 0 2px;
+  // Stepper из 3+ шагов имеет фиксированную ширину labels и не сжимается —
+  // на мобиле даём горизонтальный скролл, чтобы шаги не выходили за viewport.
+  @media (max-width: 640px) {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    margin: 0 -8px;
+    padding: 6px 8px 2px;
+  }
 }
 
 .card {

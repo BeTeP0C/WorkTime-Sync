@@ -234,7 +234,11 @@ function extractJsonStringField(buffer: string, field: string): string | null {
   const match = buffer.match(re)
   if (!match) return null
   const raw = match[1]
+  // Подстраховка от обрыва на середине escape-секвенции.
   const safe = raw.endsWith('\\') ? raw.slice(0, -1) : raw
+  // Не возвращаем чисто пустую/пробельную строку — иначе UI на 1-2 секунды
+  // показывает «бледный» typewriter без контента и снова дёргается.
+  if (safe.trim() === '') return null
   try {
     return JSON.parse(`"${safe}"`) as string
   } catch {

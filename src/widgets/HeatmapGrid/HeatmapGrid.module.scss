@@ -1,4 +1,5 @@
 @use '@/styles/colors' as *;
+@use '@/styles/mixins' as *;
 
 .card {
   display: flex;
@@ -13,12 +14,22 @@
 .gridWrapper {
   overflow-x: auto;
   margin: 8px 0;
+  // На сенсорных экранах добавляем impressive момент скролла.
+  -webkit-overflow-scrolling: touch;
+  @include scrollbar(6px);
 }
 
 .grid {
   display: grid;
   gap: 6px;
+  // Десктоп: фиксированный min-width, как раньше. На мобиле уменьшаем сетку
+  // и шрифт, чтобы недельный обзор помещался без длинного скролла.
   min-width: 540px;
+
+  @media (max-width: 640px) {
+    min-width: 420px;
+    gap: 4px;
+  }
 }
 
 .headerCell {
@@ -27,10 +38,19 @@
   color: #909090;
   padding: 8px 4px;
   text-align: center;
+
+  @media (max-width: 640px) {
+    font-size: 11px;
+    padding: 6px 2px;
+  }
 }
 
 .weekday {
   margin-right: 4px;
+
+  @media (max-width: 640px) {
+    margin-right: 2px;
+  }
 }
 
 .hourCell {
@@ -42,6 +62,12 @@
   align-items: center;
   height: 40px;
   font-variant-numeric: tabular-nums;
+
+  @media (max-width: 640px) {
+    font-size: 11px;
+    padding: 0 4px;
+    height: 30px;
+  }
 }
 
 .cell {
@@ -58,6 +84,12 @@
   &:hover {
     transform: scale(1.04);
   }
+
+  @media (max-width: 640px) {
+    height: 30px;
+    font-size: 12px;
+    border-radius: 4px;
+  }
 }
 
 .legend {
@@ -67,6 +99,12 @@
   margin-top: 16px;
   font-size: 14px;
   color: #292929;
+
+  @media (max-width: 640px) {
+    flex-wrap: wrap;
+    gap: 8px;
+    font-size: 12px;
+  }
 }
 
 .legendBar {
@@ -79,6 +117,11 @@
   width: 28px;
   height: 14px;
   border-radius: 3px;
+
+  @media (max-width: 640px) {
+    width: 20px;
+    height: 12px;
+  }
 }
 
 .legendLabel {

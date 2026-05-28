@@ -10,6 +10,7 @@ import { Employee } from '@/entities/employee/model/types'
 import { getTeamInitials } from '@/entities/team/lib/normalize'
 import { TeamRole } from '@/entities/team/model/types'
 import { ApiError } from '@/shared/api/client'
+import { useUnsavedChangesPrompt } from '@/shared/hooks'
 import { AngleRightIcon, PlusIcon, UndoIcon } from '@/shared/icons'
 import { Avatar } from '@/shared/ui/Avatar'
 import { Button } from '@/shared/ui/Button'
@@ -80,6 +81,16 @@ export const CreateTeamClient = observer(function CreateTeamClient() {
       employeesStore.fetch()
     }
   }, [employeesStore])
+
+  // Грязная форма == заполнено название / описание / выбран хотя бы один
+  // сотрудник. Если submit ещё не прошёл — предупреждаем при закрытии вкладки.
+  const isDirty =
+    !isSubmitting &&
+    (teamName.trim().length > 0 ||
+      description.trim().length > 0 ||
+      avatarUrl.trim().length > 0 ||
+      selectedIds.length > 0)
+  useUnsavedChangesPrompt(isDirty)
 
   const allEmployees = employeesStore.list.items
 

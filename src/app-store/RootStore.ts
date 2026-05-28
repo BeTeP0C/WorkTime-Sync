@@ -39,4 +39,12 @@ export class RootStore {
 
     makeAutoObservable(this)
   }
+
+  /**
+   * Снять подписки и таймеры всех subordinate-сторов. Без этого при HMR
+   * накапливаются `auth:logout` window-listener'ы и refresh-таймеры.
+   */
+  dispose(): void {
+    this.authStore.dispose()
+  }
 }

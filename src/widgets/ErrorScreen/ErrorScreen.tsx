@@ -47,6 +47,33 @@ function renderAction(action: ErrorAction, fallbackVariant: 'primary' | 'ghost')
   )
 }
 
+/**
+ * Готовый fallback для случая «страница не смогла загрузить данные».
+ * Используется в Client-компонентах при `loadingStage.isError`, чтобы не
+ * показывать вечный skeleton при упавшем fetch.
+ */
+export function PageLoadError({
+  onRetry,
+  description,
+}: {
+  onRetry: () => void
+  description?: ReactNode
+}) {
+  return (
+    <ErrorScreen
+      icon={<span aria-hidden>⚠</span>}
+      iconTone="warning"
+      title="Не удалось загрузить данные"
+      description={
+        description ?? 'Проверьте соединение или повторите попытку через несколько секунд.'
+      }
+      primaryAction={{ label: 'Повторить', onClick: onRetry }}
+      secondaryAction={{ label: 'На главную', href: '/dashboard', variant: 'ghost' }}
+      variant="inline"
+    />
+  )
+}
+
 export function ErrorScreen({
   code,
   title,

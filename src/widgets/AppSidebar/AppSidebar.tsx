@@ -269,13 +269,13 @@ export const AppSidebar = observer(function AppSidebar() {
   return (
     <aside className={cn(s.sidebar, isMenuOpen && s.sidebarMenuOpen)}>
       <div className={s.topBar}>
-        <div className={s.logo}>
+        <Link href="/dashboard" className={s.logo} aria-label="WorkTime Sync — на главную">
           <LogoIcon className={s.logoIcon} />
           <div className={s.logoText}>
             <span className={s.logoTitle}>WorkTime</span>
             <span className={s.logoSubtitle}>Sync</span>
           </div>
-        </div>
+        </Link>
 
         <button
           type="button"

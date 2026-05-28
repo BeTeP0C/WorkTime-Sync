@@ -14,6 +14,7 @@ import { TIMEZONE_OPTIONS, WORK_FORMAT_OPTIONS } from '@/entities/schedule/model
 import { WeekDayIndex, WorkFormat } from '@/entities/schedule/model/types'
 import { validateSchedulePayload } from '@/entities/schedule/model/validation'
 import { WeekdayChips } from '@/entities/schedule/ui/WeekdayChips'
+import { useUnsavedChangesPrompt } from '@/shared/hooks'
 import { AlertBanner } from '@/shared/ui/AlertBanner'
 import { Button } from '@/shared/ui/Button'
 import { Card, CardHeader } from '@/shared/ui/Card'
@@ -119,6 +120,16 @@ export const MyScheduleClient = observer(function MyScheduleClient() {
   const isSubmitting = store?.editStage.isLoading ?? false
   const isConfirming = store?.confirmStage.isLoading ?? false
   const apiError = store?.lastEditError ?? null
+  // Если форма грязная и пользователь закрывает вкладку — браузер спросит.
+  useUnsavedChangesPrompt(
+    (store?.editStage.isLoading ?? false) === false &&
+      (form.startTime !== initial.startTime ||
+        form.endTime !== initial.endTime ||
+        form.timezone !== initial.timezone ||
+        form.workFormat !== initial.workFormat ||
+        form.workDays.length !== initial.workDays.length ||
+        comment.trim().length > 0)
+  )
 
   const isDirty = useMemo(() => {
     if (

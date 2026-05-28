@@ -199,18 +199,29 @@ export class ChatStore {
               resolve()
               return
             }
-            const text =
+            const errorText =
               status === 503 || isAiNotConfiguredError(detail)
                 ? AI_NOT_CONFIGURED_MESSAGE
                 : detail || 'Не удалось получить ответ AI.'
+            // Если LLM успел прислать кусок до обрыва — показываем то, что
+            // есть, а ошибку складываем рядом. Иначе пользователь видел просто
+            // «не удалось», теряя контекст уже начавшейся мысли AI.
+            const placeholderMessage = this.messages.value.find((m) => m.id === placeholderId)
+            const partial =
+              placeholderMessage?.streamingText?.trim() ||
+              placeholderMessage?.streamingSummary?.trim() ||
+              ''
+            const finalText = partial
+              ? `${partial}\n\n⚠ ${errorText} (ответ не завершён)`
+              : errorText
             runInAction(() => {
               this.replaceMessage(placeholderId, {
                 id: placeholderId,
                 role: 'error',
-                text,
+                text: finalText,
                 createdAt: placeholder.createdAt,
               })
-              this.lastError = text
+              this.lastError = errorText
               this.askStage.error()
             })
             this.persist()

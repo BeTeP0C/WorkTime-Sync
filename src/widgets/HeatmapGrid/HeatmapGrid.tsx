@@ -1,6 +1,6 @@
 'use client'
 
-import { useMemo } from 'react'
+import { memo, useMemo } from 'react'
 
 import { Employee } from '@/entities/employee/model/types'
 import { TeamAvailability } from '@/entities/team/model/types'
@@ -122,45 +122,58 @@ function cellTextColor(count: number, total: number, mode: HeatmapMode): string 
   return heatmapTextColor(count, total)
 }
 
-function Row({ hour, counts, available, totalMembers, employeeById, days, mode }: RowProps) {
-  return (
-    <>
-      <div className={s.hourCell}>{`${String(hour).padStart(2, '0')}:00`}</div>
-      {counts.map((count, dIdx) => {
-        const bg = cellColor(count, totalMembers, mode)
-        const color = cellTextColor(count, totalMembers, mode)
-        const availableNames = available[dIdx]
-          .map((id) => employeeById.get(id)?.fullName)
-          .filter(Boolean) as string[]
+const Row = memo(
+  function Row({ hour, counts, available, totalMembers, employeeById, days, mode }: RowProps) {
+    return (
+      <>
+        <div className={s.hourCell}>{`${String(hour).padStart(2, '0')}:00`}</div>
+        {counts.map((count, dIdx) => {
+          const bg = cellColor(count, totalMembers, mode)
+          const color = cellTextColor(count, totalMembers, mode)
+          const availableNames = available[dIdx]
+            .map((id) => employeeById.get(id)?.fullName)
+            .filter(Boolean) as string[]
 
-        return (
-          <Tooltip
-            key={dIdx}
-            content={
-              <div>
-                <div style={{ marginBottom: 4, fontWeight: 600 }}>
-                  {days[dIdx].weekdayLabel} {days[dIdx].label}, {String(hour).padStart(2, '0')}:00
-                </div>
+          return (
+            <Tooltip
+              key={dIdx}
+              content={
                 <div>
-                  {count} из {totalMembers} доступны
-                </div>
-                {availableNames.length > 0 && (
-                  <div style={{ marginTop: 4, fontSize: 11, opacity: 0.85 }}>
-                    {availableNames.join(', ')}
+                  <div style={{ marginBottom: 4, fontWeight: 600 }}>
+                    {days[dIdx].weekdayLabel} {days[dIdx].label}, {String(hour).padStart(2, '0')}:00
                   </div>
-                )}
+                  <div>
+                    {count} из {totalMembers} доступны
+                  </div>
+                  {availableNames.length > 0 && (
+                    <div style={{ marginTop: 4, fontSize: 11, opacity: 0.85 }}>
+                      {availableNames.join(', ')}
+                    </div>
+                  )}
+                </div>
+              }
+            >
+              <div className={s.cell} style={{ background: bg, color }}>
+                {count}
               </div>
-            }
-          >
-            <div className={s.cell} style={{ background: bg, color }}>
-              {count}
-            </div>
-          </Tooltip>
-        )
-      })}
-    </>
-  )
-}
+            </Tooltip>
+          )
+        })}
+      </>
+    )
+  },
+  // На каждой смене недели/режима пересчитывались все Row, хотя меняется только
+  // одна-две ячейки. Сравниваем сами массивы counts/available по ссылке (они
+  // мемоизируются через buildHeatmapMatrix), плюс примитивные props.
+  (prev, next) =>
+    prev.hour === next.hour &&
+    prev.totalMembers === next.totalMembers &&
+    prev.mode === next.mode &&
+    prev.counts === next.counts &&
+    prev.available === next.available &&
+    prev.days === next.days &&
+    prev.employeeById === next.employeeById
+)
 
 interface LegendProps {
   mode: HeatmapMode

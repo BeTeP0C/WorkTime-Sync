@@ -27,6 +27,7 @@ import { Button } from '@/shared/ui/Button'
 import { Card } from '@/shared/ui/Card'
 import { Modal } from '@/shared/ui/Modal'
 import { AppHeader } from '@/widgets/AppHeader'
+import { PageLoadError } from '@/widgets/ErrorScreen'
 import { RoadmapItemCard } from '@/widgets/RoadmapItemCard'
 import { RoadmapItemDrawer } from '@/widgets/RoadmapItemDrawer'
 import { RoadmapKanban } from '@/widgets/RoadmapKanban'
@@ -155,6 +156,17 @@ export const RoadmapClient = observer(function RoadmapClient() {
     if (!store.filterTeamId.value) return null
     return teamsStore.getTeam(store.filterTeamId.value)?.name ?? store.filterTeamId.value
   }, [store.filterTeamId.value, teamsStore.list.items])
+
+  if (store.list.loadingStage.isError && store.list.items.length === 0) {
+    return (
+      <PageLoadError
+        description="Не удалось загрузить дорожную карту. Попробуйте ещё раз."
+        onRetry={() => {
+          void store.fetch()
+        }}
+      />
+    )
+  }
 
   if (!store.list.loadingStage.isFinished && store.list.items.length === 0) {
     return <RoadmapSkeleton />

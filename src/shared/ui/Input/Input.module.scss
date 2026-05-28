@@ -92,6 +92,13 @@
     color: $gray-3;
     cursor: not-allowed;
   }
+
+  // iOS Safari автоматически зумит viewport при focus на input с шрифтом
+  // <16px — ломает layout. На мобиле увеличиваем шрифт самого input
+  // (label/wrapper остаются прежними).
+  @media (max-width: 640px) {
+    font-size: 16px;
+  }
 }
 
 .leftIcon,

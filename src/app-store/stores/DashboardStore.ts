@@ -128,7 +128,7 @@ export class DashboardStore {
         void this.fetch()
         return
       }
-      const events = await buildSampleActivityEvents()
+      const events = await buildSampleActivityEvents(source)
       const result = await uploadActivityEventsJson(events, IMPORT_SOURCE_API_CODE[source])
       runInAction(() => {
         this.lastImportResult = result

@@ -19,6 +19,10 @@
   &:disabled {
     cursor: not-allowed;
     opacity: 0.5;
+    // Без pointer-events:none быстрый второй клик может проскочить до того,
+    // как React успеет переотрисовать disabled-state — это давало двойные
+    // submit'ы форм.
+    pointer-events: none;
   }
 }
 

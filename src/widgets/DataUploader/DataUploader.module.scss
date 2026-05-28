@@ -9,15 +9,16 @@
   display: flex;
   gap: 8px;
   margin-bottom: 16px;
-  flex-wrap: wrap;
+  flex-wrap: nowrap;
+  overflow-x: auto;
+  margin-left: -4px;
+  margin-right: -4px;
+  padding: 0 4px;
+  @include scrollbar(0);
 
   @media (max-width: 375px) {
     gap: 6px;
-    flex-wrap: nowrap;
-    overflow-x: auto;
-    margin: 0 -4px 12px;
-    padding: 0 4px;
-    @include scrollbar(0);
+    margin-bottom: 12px;
   }
 }
 
@@ -30,6 +31,8 @@
   color: #6b7280;
   font-size: 12px;
   font-weight: 400;
+  flex-shrink: 0;
+  white-space: nowrap;
   @include transition(background, color, border-color);
 
   @include mediaHover {
@@ -38,7 +41,6 @@
   }
 
   @media (max-width: 375px) {
-    flex-shrink: 0;
     padding: 0 10px;
     font-size: 11.5px;
   }

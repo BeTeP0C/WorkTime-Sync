@@ -29,6 +29,15 @@ export function RiskDistributionChart({ distribution }: RiskDistributionChartPro
 
   const total = data.reduce((acc, d) => acc + d.value, 0)
 
+  if (total === 0) {
+    return (
+      <Card padding="md" className={s.card}>
+        <CardHeader title="Распределение по риску" className={s.title} />
+        <div className={s.empty}>Нет данных за период</div>
+      </Card>
+    )
+  }
+
   return (
     <Card padding="md" className={s.card}>
       <CardHeader title="Распределение по риску" className={s.title} />

@@ -12,6 +12,7 @@ import { Card, CardHeader } from '@/shared/ui/Card'
 import { usePrompt } from '@/shared/ui/PromptDialog'
 import { AiDailyTip } from '@/widgets/AiDailyTip'
 import { AppHeader } from '@/widgets/AppHeader'
+import { PageLoadError } from '@/widgets/ErrorScreen'
 
 import s from './NotificationsClient.module.scss'
 
@@ -33,6 +34,18 @@ export const NotificationsClient = observer(function NotificationsClient() {
         <Card padding="lg">
           <p>Авторизуйтесь, чтобы видеть уведомления.</p>
         </Card>
+      </>
+    )
+  }
+
+  if (notifications.loadingStage.isError && notifications.requests.value.length === 0) {
+    return (
+      <>
+        <AppHeader title="Уведомления" />
+        <PageLoadError
+          description="Не удалось загрузить уведомления. Попробуйте ещё раз."
+          onRetry={() => notifications.loadForCurrentUser(userId)}
+        />
       </>
     )
   }

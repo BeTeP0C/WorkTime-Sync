@@ -1,6 +1,6 @@
 'use client'
 
-import { createContext, ReactNode, useContext, useState } from 'react'
+import { createContext, ReactNode, useContext, useEffect, useState } from 'react'
 
 import { ConfirmProvider } from '@/shared/ui/ConfirmDialog'
 import { PromptProvider } from '@/shared/ui/PromptDialog'
@@ -15,6 +15,13 @@ interface RootStoreProviderProps {
 
 export function RootStoreProvider({ children }: RootStoreProviderProps) {
   const [store] = useState(() => new RootStore())
+  // На HMR/unmount чистим window-listener'ы и refresh-таймеры — иначе они
+  // накапливаются (см. AuthStore.dispose()).
+  useEffect(() => {
+    return () => {
+      store.dispose()
+    }
+  }, [store])
   return (
     <RootStoreContext.Provider value={store}>
       <ConfirmProvider>

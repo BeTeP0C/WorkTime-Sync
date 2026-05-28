@@ -32,6 +32,7 @@ import { ProgressBar } from '@/shared/ui/ProgressBar'
 import { Select, SelectOption } from '@/shared/ui/Select'
 import { AiRiBreakdownCard } from '@/widgets/AiRiBreakdownCard'
 import { AppHeader } from '@/widgets/AppHeader'
+import { PageLoadError } from '@/widgets/ErrorScreen'
 import { RecommendationCard } from '@/widgets/RecommendationCard'
 import { RecommendationTypeBreakdown } from '@/widgets/RecommendationTypeBreakdown'
 import { RecommendationWeeklyChart } from '@/widgets/RecommendationWeeklyChart'
@@ -80,6 +81,18 @@ export const RecommendationsClient = observer(function RecommendationsClient() {
     })
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [store.filteredItems, filterTeamId, employees.list.items])
+
+  if (store.list.loadingStage.isError) {
+    return (
+      <PageLoadError
+        description="Не удалось получить список рекомендаций. Попробуйте ещё раз."
+        onRetry={() => {
+          const scopedEmployeeId = showSelfBreakdown ? currentUser?.id : undefined
+          store.fetch(scopedEmployeeId)
+        }}
+      />
+    )
+  }
 
   if (!store.list.loadingStage.isFinished) {
     return <RecommendationsSkeleton />

@@ -74,20 +74,20 @@
 
 .counters {
   display: grid;
-  grid-template-columns: repeat(5, 1fr);
+  grid-template-columns: repeat(6, 1fr);
   gap: 12px;
 
   @media (min-width: 2048px) {
     gap: 16px;
   }
 
-  @media (max-width: 1024px) {
-    grid-template-columns: repeat(2, 1fr);
+  @media (max-width: 1280px) {
+    grid-template-columns: repeat(3, 1fr);
     gap: 10px;
   }
 
-  @media (max-width: 375px) {
-    grid-template-columns: 1fr;
+  @media (max-width: 640px) {
+    grid-template-columns: repeat(2, 1fr);
     gap: 8px;
   }
 }
@@ -149,6 +149,10 @@
 
 .counterDot_overloaded {
   background: $risk-medium;
+}
+
+.counterDot_timezone_conflict {
+  background: #0ea5e9;
 }
 
 .counterDot_no_response {

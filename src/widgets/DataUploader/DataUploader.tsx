@@ -41,6 +41,16 @@ const STATUS_ICON = {
 }
 
 const MAX_VISIBLE_ERRORS = 5
+// 10 MB — больше уже не помещается в одной транзакции импорта на бэке
+// без особой настройки; на UI лучше дать понятный отказ, чем повесить вкладку
+// на чтении 100MB-файла или получить таймаут upload'а.
+const MAX_FILE_BYTES = 10 * 1024 * 1024
+
+function formatBytes(bytes: number): string {
+  if (bytes < 1024) return `${bytes} B`
+  if (bytes < 1024 * 1024) return `${(bytes / 1024).toFixed(1)} KB`
+  return `${(bytes / 1024 / 1024).toFixed(1)} MB`
+}
 
 export const DataUploader = observer(function DataUploader() {
   const dashboard = useDashboardStore()
@@ -51,6 +61,14 @@ export const DataUploader = observer(function DataUploader() {
   const handleFiles = async (files: File[]): Promise<void> => {
     const file = files[0]
     if (!file) return
+    if (file.size > MAX_FILE_BYTES) {
+      dashboard.reportLocalError(
+        activeTab,
+        file.name,
+        `Файл слишком большой: ${formatBytes(file.size)}. Максимум ${formatBytes(MAX_FILE_BYTES)}.`
+      )
+      return
+    }
     const lower = file.name.toLowerCase()
     if (lower.endsWith('.csv')) {
       await dashboard.uploadCsv(activeTab, file)

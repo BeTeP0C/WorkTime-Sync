@@ -1,21 +1,27 @@
 'use client'
 
 import { useState } from 'react'
+import cn from 'classnames'
 import { format, parseISO } from 'date-fns'
 import { ru } from 'date-fns/locale'
 
 import { askAi } from '@/entities/ai/api'
 import { Employee } from '@/entities/employee/model/types'
 import { MeetingRecommendation } from '@/entities/team/model/types'
+import { SparkleIcon } from '@/shared/icons'
 import { pluralizeRu } from '@/shared/lib/format'
 import { Button } from '@/shared/ui/Button'
 import { Card } from '@/shared/ui/Card'
 
 import s from './MeetingFinderPanel.module.scss'
 
+export type MeetingFinderStatus = 'initial' | 'loading' | 'success' | 'error'
+
 interface MeetingFinderPanelProps {
   recommendations: MeetingRecommendation[]
   members: Employee[]
+  loadingStatus: MeetingFinderStatus
+  onRetry: () => void
   teamId?: string | null
   teamName?: string | null
 }
@@ -29,15 +35,58 @@ type ExplainState =
 export function MeetingFinderPanel({
   recommendations,
   members,
+  loadingStatus,
+  onRetry,
   teamId,
   teamName,
 }: MeetingFinderPanelProps) {
   const [explainBySlot, setExplainBySlot] = useState<Record<string, ExplainState>>({})
 
-  if (recommendations.length === 0) {
+  const hasRecommendations = recommendations.length > 0
+  const isLoading = loadingStatus === 'loading'
+
+  // Loading без ранее полученных данных — чистый плейсхолдер со спиннером.
+  if (isLoading && !hasRecommendations) {
     return (
       <Card padding="md" className={s.card}>
-        <div className={s.empty}>Подбираем оптимальное время…</div>
+        <div className={s.statusBlock}>
+          <div className={s.spinner} aria-hidden />
+          <div className={s.statusText}>Подбираем оптимальное время…</div>
+        </div>
+      </Card>
+    )
+  }
+
+  // Ошибка без ранее полученных данных — текст + retry.
+  if (loadingStatus === 'error' && !hasRecommendations) {
+    return (
+      <Card padding="md" className={s.card}>
+        <div className={s.statusBlock}>
+          <div className={s.statusTitle}>Не удалось подобрать окно</div>
+          <div className={s.statusHint}>
+            Проверьте соединение или повторите попытку через несколько секунд.
+          </div>
+          <Button variant="secondary" size="md" onClick={onRetry} className={s.retryButton}>
+            Попробовать снова
+          </Button>
+        </div>
+      </Card>
+    )
+  }
+
+  // Успех, но 0 окон — явный empty-state.
+  if (!hasRecommendations) {
+    return (
+      <Card padding="md" className={s.card}>
+        <div className={s.statusBlock}>
+          <div className={s.statusTitle}>Нет общих окон на этой неделе</div>
+          <div className={s.statusHint}>
+            Попробуйте сменить неделю в расписании ниже или сократить длительность встречи.
+          </div>
+          <Button variant="secondary" size="md" onClick={onRetry} className={s.retryButton}>
+            Подобрать заново
+          </Button>
+        </div>
       </Card>
     )
   }
@@ -78,17 +127,18 @@ export function MeetingFinderPanel({
   }
 
   return (
-    <Card padding="md" className={s.card}>
+    <Card padding="md" className={cn(s.card, isLoading && s.cardReloading)}>
+      {/* Reload-overlay: повторный поиск поверх уже отрисованных слотов. */}
+      {isLoading && (
+        <div className={s.reloadOverlay} aria-live="polite">
+          <div className={s.spinner} aria-hidden />
+          <div className={s.statusText}>Обновляем подборку…</div>
+        </div>
+      )}
+
       <div className={s.header}>
         <div className={s.iconWrap}>
-          <svg width="18" height="18" viewBox="0 0 18 18" fill="none">
-            <path
-              d="M9 2v3M9 13v3M2 9h3M13 9h3M4.5 4.5l2 2M11.5 11.5l2 2M4.5 13.5l2-2M11.5 6.5l2-2"
-              stroke="white"
-              strokeWidth="1.4"
-              strokeLinecap="round"
-            />
-          </svg>
+          <SparkleIcon style={{ color: 'white' }} aria-hidden />
         </div>
         <div>
           <div className={s.title}>AI: лучшее время для встречи</div>

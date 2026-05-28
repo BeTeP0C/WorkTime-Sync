@@ -16,6 +16,11 @@
   flex-direction: column;
   gap: 4px;
   min-width: 160px;
+
+  @media (max-width: 640px) {
+    min-width: 0;
+    width: 100%;
+  }
 }
 
 .label {
@@ -45,6 +50,10 @@
 .searchField {
   min-width: 240px;
   flex: 1;
+
+  @media (max-width: 640px) {
+    min-width: 0;
+  }
 }
 
 .actions {
@@ -52,4 +61,10 @@
   align-items: center;
   gap: 8px;
   margin-left: auto;
+
+  @media (max-width: 640px) {
+    margin-left: 0;
+    width: 100%;
+    justify-content: flex-end;
+  }
 }

@@ -1,4 +1,4 @@
-import { Metadata } from 'next'
+import { Metadata, Viewport } from 'next'
 import { ReactNode } from 'react'
 import { Toaster } from 'sonner'
 
@@ -10,6 +10,14 @@ import './globals.scss'
 export const metadata: Metadata = {
   title: 'WorkTime Sync',
   description: 'Система актуализации рабочего времени сотрудников',
+}
+
+// Без явного viewport мобильные браузеры рендерят страницу в desktop-режиме
+// шириной ~980px, поэтому ни одно media query <768 не сработает.
+export const viewport: Viewport = {
+  width: 'device-width',
+  initialScale: 1,
+  maximumScale: 5,
 }
 
 interface RootLayoutProps {

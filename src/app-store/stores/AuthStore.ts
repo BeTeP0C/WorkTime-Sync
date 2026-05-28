@@ -211,4 +211,12 @@ export class AuthStore {
       this.loadingStage.reset()
     })
   }
+
+  /** Снять все window-listener'ы и таймеры. Вызывается из RootStore.dispose(). */
+  dispose(): void {
+    this.cancelProactiveRefresh()
+    if (typeof window !== 'undefined') {
+      window.removeEventListener('auth:logout', this.handleAuthLogoutEvent)
+    }
+  }
 }

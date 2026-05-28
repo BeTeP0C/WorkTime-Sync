@@ -1,6 +1,7 @@
 'use client'
 
 import Link from 'next/link'
+import { memo } from 'react'
 import cn from 'classnames'
 import { observer } from 'mobx-react-lite'
 
@@ -96,7 +97,22 @@ interface CardProps {
   reason: string
 }
 
-function EmployeeKanbanCard({ emp, category, reason }: CardProps) {
+const EmployeeKanbanCard = memo(
+  function EmployeeKanbanCard({ emp, category, reason }: CardProps) {
+    return <EmployeeKanbanCardInner emp={emp} category={category} reason={reason} />
+  },
+  // На больших командах (500+) каждая смена фильтра приводила к перерисовке
+  // всех карточек. Достаточно сравнить id+категорию+ключевые метрики, остальное
+  // не влияет на видимую часть карточки.
+  (prev, next) =>
+    prev.emp.id === next.emp.id &&
+    prev.category === next.category &&
+    prev.reason === next.reason &&
+    prev.emp.metric?.actualityScore === next.emp.metric?.actualityScore &&
+    prev.emp.metric?.daysSinceUpdate === next.emp.metric?.daysSinceUpdate
+)
+
+function EmployeeKanbanCardInner({ emp, category, reason }: CardProps) {
   const m = emp.metric
   if (!m) return null
   const buttonLabel =

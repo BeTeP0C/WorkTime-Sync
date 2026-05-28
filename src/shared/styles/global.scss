@@ -22,6 +22,10 @@ body {
   line-height: 20px;
   color: $gray-1;
   background: $bg;
+  // Запрещаем горизонтальный scroll на корневом уровне: широкие таблицы и
+  // канбан-доски используют свои внутренние overflow-x: auto, а body должен
+  // оставаться в пределах viewport, иначе на мобиле «уезжает» layout.
+  overflow-x: hidden;
 }
 
 body {
@@ -33,5 +37,30 @@ a {
 
   @include mediaHover {
     color: $primary-hover;
+  }
+}
+
+// Глобальный focus-ring для клавиатурной навигации. :focus-visible
+// срабатывает только при tab-нав (не при click) — это стандартная практика
+// 2024 года, не мешает мыши и видна скрин-ридеру.
+:focus-visible {
+  @include focus-ring;
+}
+
+button,
+a,
+input,
+select,
+textarea,
+[role='button'],
+[role='link'],
+[role='menuitem'],
+[role='tab'] {
+  &:focus {
+    // Отключаем дефолтный outline, чтобы не было «двойного» при click.
+    outline: none;
+  }
+  &:focus-visible {
+    @include focus-ring;
   }
 }

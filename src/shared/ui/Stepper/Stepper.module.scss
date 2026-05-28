@@ -5,6 +5,13 @@
   align-items: center;
   gap: 16px;
   width: 100%;
+
+  @media (max-width: 640px) {
+    gap: 8px;
+    // Содержимое больше viewport — Stepper-обёртка на странице даёт scroll.
+    width: max-content;
+    min-width: 100%;
+  }
 }
 
 .item {
@@ -14,6 +21,11 @@
   flex: 1;
 
   &:last-child {
+    flex: 0 0 auto;
+  }
+
+  @media (max-width: 640px) {
+    gap: 8px;
     flex: 0 0 auto;
   }
 }
@@ -48,6 +60,12 @@
   font-weight: 600;
   font-size: 16px;
   flex-shrink: 0;
+
+  @media (max-width: 640px) {
+    width: 30px;
+    height: 30px;
+    font-size: 14px;
+  }
 }
 
 .circle_done {
@@ -80,6 +98,22 @@
   font-weight: 500;
   line-height: 20px;
   white-space: nowrap;
+
+  @media (max-width: 640px) {
+    font-size: 12px;
+    line-height: 16px;
+  }
+}
+
+.line {
+  flex: 1;
+  height: 2px;
+  background: $gray-5;
+  border-radius: 2px;
+
+  @media (max-width: 640px) {
+    min-width: 16px;
+  }
 }
 
 .label_done {
@@ -92,13 +126,6 @@
 
 .label_pending {
   color: $gray-3;
-}
-
-.line {
-  flex: 1;
-  height: 2px;
-  background: $gray-5;
-  border-radius: 2px;
 }
 
 .line_done {

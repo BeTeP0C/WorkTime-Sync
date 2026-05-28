@@ -33,11 +33,18 @@
   @media (max-width: 768px) {
     top: auto;
     position: relative;
+    // На мобиле title и action разносим в две строки, чтобы длинное
+    // название + 2 кнопки не сжимались в нечитаемую полоску.
+    flex-wrap: wrap;
+    height: auto;
+    min-height: 64px;
+    padding: 12px 20px;
+    align-items: flex-start;
   }
 
   @media (max-width: 375px) {
-    height: 56px;
-    padding: 0 16px;
+    min-height: 56px;
+    padding: 10px 16px;
     margin: 0 -16px 16px;
     gap: 8px;
   }
@@ -141,6 +148,14 @@
   align-items: center;
   gap: 8px;
   flex-shrink: 0;
+
+  @media (max-width: 768px) {
+    // Если кнопок несколько — переносим, чтобы не уезжали за вьюпорт.
+    flex-wrap: wrap;
+    width: 100%;
+    justify-content: flex-end;
+    margin-top: 4px;
+  }
 
   @media (max-width: 375px) {
     gap: 6px;

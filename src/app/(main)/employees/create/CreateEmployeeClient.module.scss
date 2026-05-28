@@ -7,12 +7,21 @@
   max-width: 960px;
   margin: 0 auto;
   padding: 24px 0 48px;
+  min-width: 0;
+  width: 100%;
+
+  @media (max-width: 640px) {
+    gap: 16px;
+    padding: 16px 0 32px;
+  }
 }
 
 .header {
   display: flex;
   align-items: center;
   justify-content: space-between;
+  gap: 12px;
+  flex-wrap: wrap;
 }
 
 .title {
@@ -22,6 +31,19 @@
   font-weight: 700;
   line-height: 36px;
   color: $gray-1;
+  // На мобиле длинный «Добавление сотрудника» уезжал за viewport,
+  // потому что был фиксированный 28px без переноса. Ужимаем + позволяем wrap.
+  word-break: break-word;
+
+  @media (max-width: 768px) {
+    font-size: 22px;
+    line-height: 28px;
+  }
+
+  @media (max-width: 375px) {
+    font-size: 18px;
+    line-height: 24px;
+  }
 }
 
 .stepperWrap {
@@ -29,6 +51,29 @@
   background: $bg-elevated;
   border: $border-default;
   border-radius: $radius-lg;
+
+  @media (max-width: 640px) {
+    padding: 12px;
+    // На узком экране stepper из 3-4 шагов не помещается — даём
+    // горизонтальный скролл вместо обрезки шага «3».
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+}
+
+.actions {
+  display: flex;
+  gap: 12px;
+  justify-content: space-between;
+  flex-wrap: wrap;
+
+  @media (max-width: 480px) {
+    .submit,
+    button {
+      flex: 1;
+      min-width: 0;
+    }
+  }
 }
 
 .card {
@@ -69,12 +114,6 @@
   font-size: 14px;
   line-height: 20px;
   color: $error;
-}
-
-.actions {
-  display: flex;
-  gap: 12px;
-  justify-content: space-between;
 }
 
 .submit {

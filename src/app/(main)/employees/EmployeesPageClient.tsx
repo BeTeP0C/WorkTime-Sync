@@ -326,6 +326,11 @@ export const EmployeesPageClient = observer(function EmployeesPageClient({
             onPageChange={(p) => {
               page.change(p)
               employees.fetchPage()
+              // Скроллим к началу таблицы — иначе после смены страницы
+              // пользователь видит пустое место (страница уехала вниз).
+              if (typeof window !== 'undefined') {
+                window.scrollTo({ top: 0, behavior: 'smooth' })
+              }
             }}
           />
         </div>

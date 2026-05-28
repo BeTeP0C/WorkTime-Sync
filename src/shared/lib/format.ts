@@ -1,34 +1,60 @@
 import { format, formatDistanceToNowStrict, parseISO } from 'date-fns'
 import { ru } from 'date-fns/locale'
 
-export function formatScore(score: number, digits = 2): string {
+const EMPTY_DASH = '—'
+
+export function formatScore(score: number | null | undefined, digits = 2): string {
+  if (typeof score !== 'number' || !Number.isFinite(score)) return EMPTY_DASH
   return score.toFixed(digits)
 }
 
-export function formatPercent(value: number): string {
+export function formatPercent(value: number | null | undefined): string {
+  if (typeof value !== 'number' || !Number.isFinite(value)) return EMPTY_DASH
   return `${Math.round(value * 100)}%`
 }
 
+function safeFormat(iso: string, pattern: string): string {
+  try {
+    const dt = parseISO(iso)
+    if (Number.isNaN(dt.getTime())) return EMPTY_DASH
+    return format(dt, pattern, { locale: ru })
+  } catch {
+    return EMPTY_DASH
+  }
+}
+
 export function formatDateShort(iso: string): string {
-  return format(parseISO(iso), 'd MMM yyyy', { locale: ru })
+  return safeFormat(iso, 'd MMM yyyy')
 }
 
 export function formatDateMonth(iso: string): string {
-  return format(parseISO(iso), 'd MMMM yyyy', { locale: ru })
+  return safeFormat(iso, 'd MMMM yyyy')
 }
 
 export function formatDateRange(startIso: string, endIso: string): string {
-  const start = parseISO(startIso)
-  const end = parseISO(endIso)
-  const sameMonth = start.getMonth() === end.getMonth() && start.getFullYear() === end.getFullYear()
-  if (sameMonth) {
-    return `${format(start, 'd', { locale: ru })} — ${format(end, 'd MMMM yyyy', { locale: ru })}`
+  try {
+    const start = parseISO(startIso)
+    const end = parseISO(endIso)
+    if (Number.isNaN(start.getTime()) || Number.isNaN(end.getTime())) return EMPTY_DASH
+    const sameMonth =
+      start.getMonth() === end.getMonth() && start.getFullYear() === end.getFullYear()
+    if (sameMonth) {
+      return `${format(start, 'd', { locale: ru })} — ${format(end, 'd MMMM yyyy', { locale: ru })}`
+    }
+    return `${format(start, 'd MMM', { locale: ru })} — ${format(end, 'd MMM yyyy', { locale: ru })}`
+  } catch {
+    return EMPTY_DASH
   }
-  return `${format(start, 'd MMM', { locale: ru })} — ${format(end, 'd MMM yyyy', { locale: ru })}`
 }
 
 export function formatRelativeUpdated(iso: string): string {
-  return `Обновлено ${formatDistanceToNowStrict(parseISO(iso), { locale: ru, addSuffix: false })} назад`
+  try {
+    const dt = parseISO(iso)
+    if (Number.isNaN(dt.getTime())) return EMPTY_DASH
+    return `Обновлено ${formatDistanceToNowStrict(dt, { locale: ru, addSuffix: false })} назад`
+  } catch {
+    return EMPTY_DASH
+  }
 }
 
 /** Русская плюрализация */

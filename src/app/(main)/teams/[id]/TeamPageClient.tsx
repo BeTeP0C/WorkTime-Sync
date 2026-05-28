@@ -2,7 +2,7 @@
 
 import Link from 'next/link'
 import { useEffect, useMemo, useState } from 'react'
-import { addDays } from 'date-fns'
+import { addDays, startOfWeek } from 'date-fns'
 import { observer } from 'mobx-react-lite'
 
 import { useAuthStore } from '@/app-store/context'
@@ -68,6 +68,17 @@ export const TeamPageClient = observer(function TeamPageClient({ teamId, initial
   const excludedMemberIds = store.excludedMemberIds.value
   const weekEnd = addDays(weekStart, Math.max(1, daysCount) - 1)
   const middleDay = addDays(weekStart, Math.min(2, Math.max(0, daysCount - 1)))
+  const isCurrentWeek =
+    weekStart.getTime() === startOfWeek(new Date(), { weekStartsOn: 1 }).getTime()
+
+  const meetingLoadingStatus: 'initial' | 'loading' | 'success' | 'error' = store
+    .meetingLoadingStage.isLoading
+    ? 'loading'
+    : store.meetingLoadingStage.isError
+      ? 'error'
+      : store.meetingLoadingStage.isSuccessful
+        ? 'success'
+        : 'initial'
 
   const fullWindows = useMemo(() => {
     if (!availability || !members.length) return []
@@ -170,7 +181,14 @@ export const TeamPageClient = observer(function TeamPageClient({ teamId, initial
         }
         action={
           <>
-            <Button variant="secondary" size="md" leftIcon={<CalendarIcon />}>
+            <Button
+              variant="secondary"
+              size="md"
+              leftIcon={<CalendarIcon />}
+              onClick={() => store.setWeekToToday()}
+              disabled={isCurrentWeek}
+              title={isCurrentWeek ? 'Текущая неделя' : 'Перейти на текущую неделю'}
+            >
               {formatDateRange(weekStart.toISOString(), weekEnd.toISOString())}
             </Button>
             <Button
@@ -260,6 +278,8 @@ export const TeamPageClient = observer(function TeamPageClient({ teamId, initial
           <MeetingFinderPanel
             recommendations={meetings}
             members={members}
+            loadingStatus={meetingLoadingStatus}
+            onRetry={() => store.findMeeting()}
             teamId={teamId}
             teamName={team.name}
           />
