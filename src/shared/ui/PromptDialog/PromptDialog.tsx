@@ -48,7 +48,7 @@ export function PromptDialog({
     if (!open) return
     const id = window.setTimeout(
       () => (multiline ? textareaRef.current : inputRef.current)?.focus(),
-      0,
+      0
     )
     return () => window.clearTimeout(id)
   }, [open, multiline])

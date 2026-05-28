@@ -4,10 +4,7 @@ import { createContext, ReactNode, useCallback, useContext, useState } from 'rea
 
 import { PromptDialog, PromptDialogProps } from './PromptDialog'
 
-export type PromptOptions = Omit<
-  PromptDialogProps,
-  'open' | 'onConfirm' | 'onCancel' | 'loading'
->
+export type PromptOptions = Omit<PromptDialogProps, 'open' | 'onConfirm' | 'onCancel' | 'loading'>
 
 type PromptFn = (opts: PromptOptions) => Promise<string | null>
 

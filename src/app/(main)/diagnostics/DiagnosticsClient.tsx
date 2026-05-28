@@ -86,10 +86,7 @@ export const DiagnosticsClient = observer(function DiagnosticsClient({
   // Лейбл текущей недели — статичен. Фильтр диагностики по произвольной неделе
   // бэком пока не поддерживается (метрики считаются на фиксированном 14-дневном окне),
   // поэтому переключатель убран до появления API.
-  const weekLabel = useMemo(
-    () => formatWeekLabel(startOfWeek(new Date(), { weekStartsOn: 1 })),
-    []
-  )
+  const weekLabel = useMemo(() => formatWeekLabel(startOfWeek(new Date(), { weekStartsOn: 1 })), [])
 
   if (!employees.list.loadingStage.isFinished) {
     return <DiagnosticsSkeleton />
